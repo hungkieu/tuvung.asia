@@ -981,10 +981,12 @@ Vue.component('example', __webpack_require__(38));
 
 var routes = [{
   path: '/'
-
 }];
 
-var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({ routes: routes });
+var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
+  mode: 'history',
+  routes: routes
+});
 
 var app = new Vue({ router: router }).$mount('#app');
 
