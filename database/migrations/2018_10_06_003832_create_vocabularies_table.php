@@ -17,8 +17,7 @@ class CreateVocabulariesTable extends Migration
       $table->increments('id');
       $table->string('en', 191)->nullable();
       $table->string('vi', 191)->nullable();
-      $table->string('type', 191)->default('Danh từ');
-      $table->integer('type_value')->default(0);
+      $table->string('type', 191)->nullable();
       $table->string('image', 191)->nullable();
       $table->integer('parent_id')->default(0);
       $table->text('pedigree')->nullable();
