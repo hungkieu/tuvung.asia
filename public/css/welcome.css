@@ -1,0 +1,386 @@
+.limit {
+  max-width: 1200px;
+  margin: auto;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  padding: 10px 0;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+header .header-title {
+  color: #fff;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header a:hover {
+  text-decoration: none;
+}
+
+header .btn-login {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #000;
+  background: #fff;
+  font-weight: 600;
+  border: 1px solid #fff;
+  padding: 5px 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+header .btn-login:hover {
+  border: 1px solid #0097a7;
+  color: #0097a7;
+}
+
+.header-add {
+  -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  color: #0097a7;
+}
+
+.header-add .btn-login {
+  border: 1px solid black;
+}
+
+.header-add .header-title {
+  color: #0097a7;
+  color: #0097a7;
+}
+
+.banner {
+  position: relative;
+}
+
+.banner .home_background {
+  width: 100%;
+  height: 400px;
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.banner .home_content {
+  position: absolute;
+  left: 0;
+  top: 40%;
+  width: 100%;
+}
+
+.banner .home_button button {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #ffffff;
+  font-weight: 600;
+  background: #0097a7;
+  line-height: 43px;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 3px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.banner .home_button button:hover {
+  -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.intro {
+  width: 100%;
+  padding: 50px 0;
+  background: #fff;
+  background-size: cover;
+  background-position: top center;
+}
+
+.intro .card {
+  margin-bottom: 25px;
+}
+
+.intro .card .card-top {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.intro .card .card-top img {
+  max-height: 200px;
+  width: 110%;
+}
+
+.intro .card .card-top h4.card-title {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: #fff;
+}
+
+.intro .card:hover {
+  -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.intro .card:hover .card-top img {
+  -webkit-transform: scale(1.2, 1.2);
+          transform: scale(1.2, 1.2);
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+}
+
+.intro_content {
+  width: 100%;
+  padding: 30px 50px;
+  border: solid 1px #ebebeb;
+}
+
+.intro_title {
+  font-size: 30px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.intro_text {
+  margin-top: 29px;
+}
+
+.contact {
+  padding: 50px 0 80px;
+  background-size: cover;
+}
+
+.contact_details {
+  width: 100%;
+  padding-right: 68px;
+}
+
+.contact_details_title {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.contact_details ul {
+  -webkit-columns: 2;
+  columns: 2;
+  margin-top: 26px;
+}
+
+.contact_details ul li {
+  position: relative;
+  margin-bottom: 17px;
+  padding-left: 33px;
+}
+
+.contact_details ul li span {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.contact_details ul li svg {
+  position: absolute;
+  top: -1px;
+  left: -2px;
+  width: 22px;
+  height: 22px;
+  color: rgba(0, 0, 0, 0.4);
+  vertical-align: middle;
+}
+
+.contact_form_container {
+  background: #ffffff;
+  border: solid 1px #ebebeb;
+  padding: 30px 50px 50px;
+}
+
+.form_title {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.contact_row {
+  margin-top: 20px;
+}
+
+.contact_col {
+  margin-bottom: 20px;
+}
+
+.contact_col:nth-child(odd) {
+  padding-right: 20px;
+}
+
+.contact_col:nth-child(even) {
+  padding-left: 20px;
+}
+
+.form_input {
+  width: 100%;
+  height: 36px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: solid 1px #b2b2b2;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.form_text {
+  height: 101px;
+  padding-top: 13px;
+}
+
+.form_input:hover,
+.form_input:focus {
+  border-bottom: solid 2px #0097a7;
+}
+
+.form_input::-webkit-input-placeholder {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.form_input:-moz-placeholder {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.form_input::-moz-placeholder {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.form_input:-ms-input-placeholder {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+.form_input::input-placeholder {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
+
+/*Input Hover*/
+
+.form_input:hover::-webkit-input-placeholder,
+.form_input:focus::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.form_input:hover:-moz-placeholder,
+.form_input:focus:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.form_input:hover::-moz-placeholder,
+.form_input:focus::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.form_input:hover:-ms-input-placeholder,
+.form_input:focus:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.form_input:hover::input-placeholder,
+.form_input:focus::input-placeholder {
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.form_button {
+  width: 100%;
+  height: 43px;
+  background: #0097a7;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 30px;
+}
+
+.form_button:hover {
+  -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.form_button:focus {
+  outline: none;
+}
+
+footer {
+  width: 100%;
+  height: 200px;
+  padding: 50px 0;
+  background: #0097a7;
+  color: #fff;
+}
+
+footer .home_button button {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #0097a7;
+  font-weight: 600;
+  background: #ffffff;
+  letter-spacing: 0.2em;
+  border: 1px solid #ffffff;
+  padding: 10px 20px;
+  border-radius: 3px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer .home_button button:hover {
+  -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
+}
+
