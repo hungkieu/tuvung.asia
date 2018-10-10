@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/v1/users/{id}/vocabularies', 'Api\V1\vocabulariesController@index');
+Route::get('/v1/vocabularies/{id}', 'Api\V1\vocabulariesController@show');

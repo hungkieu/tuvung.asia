@@ -32,7 +32,7 @@
        <li><i>Mật khẩu </i> : <span ><a href="#modal-password" uk-toggle style="color: lightseagreen">Thay đổi mật khẩu</a></span></li>
      </ul>
    </div>
-   
+
    <div class="profile-info">
     <h4 class="heading">Giới thiệu bản thân</h4>
     <p>{{user.description}}</p>
@@ -81,7 +81,7 @@
 </div>
 <hr/>
 <!-- END AWARDS -->
-<!-- TABBED CONTENT --> 
+<!-- TABBED CONTENT -->
 <div class="custom-tabs-line tabs-line-bottom left-aligned">
 
   <ul class="uk-subnav uk-subnav-pill mb-0" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
@@ -94,7 +94,7 @@
     <div class="tab">
       <div class="uk-width-1-1  mb-2 d-inline-block" >
         <div class="uk-width-1-4 float-left">
-          <h6 class="py-2">Ngôn ngữ</h6> 
+          <h6 class="py-2">Ngôn ngữ</h6>
         </div>
         <div class="uk-width-1-2 float-left">
           <select class="uk-select  uk-form-small">
@@ -109,7 +109,7 @@
         <div class="uk-width-1-2 float-left">
           <div v-for="item in message" :key="item.key">
             <label class="d-block">
-              <input class="uk-checkbox" type="checkbox" name="item.key" id="item.key" 
+              <input class="uk-checkbox" type="checkbox" name="item.key" id="item.key"
               :checked="item.status ? true : false"  @change="item.status = !item.status">
               <span for="item.key">{{item.name}}</span>
             </label>
@@ -121,8 +121,8 @@
         <h6 class="py-2">Thời gian học tập</h6>
         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
           <span v-for="item in week" :key="item.key">
-            <input class="uk-checkbox" type="checkbox" 
-            :checked="item.status ? true : false" value="item.key"   @change="item.status = !item.status" > {{item.name}} 
+            <input class="uk-checkbox" type="checkbox"
+            :checked="item.status ? true : false" value="item.key"   @change="item.status = !item.status" > {{item.name}}
           </span>
         </div>
         <p class="w-100">Vào lúc <input type="time" class="uk-input  uk-form-small w-25 mx-2  "  v-model="time"/> hằng ngày</p>
@@ -149,7 +149,7 @@
       <button class="uk-modal-close-default" type="button" uk-close></button>
     </div>
     <div class="uk-modal-body">
-      
+
      <form class="uk-grid-small" uk-grid  id="form_edit_user">
       <div class="uk-width-3-4">
         <input class="uk-input" type="text" name="fullname" v-model="user.fullname" placeholder="Họ và tên">
@@ -188,7 +188,7 @@
   <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
 
     <div class="uk-modal-body">
-      
+
      <form class="uk-grid-small" uk-grid>
       <div class="uk-width-1-1">
          <div class="uk-inline w-100">
@@ -295,8 +295,6 @@ export default {
       .then(function(res) {
         console.log(res.data);
         app.user = res.data;
-        let a = moment(app.user.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY');
-        console.log('a' + app.user.birthday);
       })
       .catch(res => {
         alert('khong load duoc');

@@ -55,7 +55,7 @@
 
     <div class="uk-container">
       <div class="uk-margin-top">
-        <router-view></router-view>
+        <router-view :key="$route.path"></router-view>
       </div>
     </div>
   </div>

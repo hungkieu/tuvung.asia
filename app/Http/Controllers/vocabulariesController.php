@@ -14,6 +14,29 @@ class vocabulariesController extends Controller
     $vocab->en = $request->en;
     $vocab->vi = $request->vi;
     $vocab->type = json_encode($request->type);
+    $vocab->parent_id = $request->parent_id;
+
+    if($request->hasFile('image'))
+    {
+      $vocab->image = '/storage/'.str_replace('public/', '', $request->file('image')->store('public/images'));
+    }
+
+    $vocab->user_id = Auth::user()->id;
+
+    if($vocab->save())
+    {
+      return response('create success', 200);
+    } else {
+      return response('create failed', 400);
+    }
+  }
+
+  public function update(Request $request, $id) {
+    $vocab = Vocabulary::find($id);
+    $vocab->en = $request->en;
+    $vocab->vi = $request->vi;
+    $vocab->type = json_encode($request->type);
+    $vocab->parent_id = $request->parent_id;
 
     if($request->hasFile('image'))
     {
