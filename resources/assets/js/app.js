@@ -1,6 +1,5 @@
 require('./bootstrap');
 window.Vue = require('vue');
-Vue.use(require('vue-moment'));
 import VueRouter from 'vue-router';
 window.Vue.use(VueRouter);
 
@@ -8,6 +7,8 @@ import index from './components/home/index';
 import vocabularies from './components/vocabularies/index';
 import newVocab from './components/vocabularies/new';
 import UserProfile from './components/users/show';
+import editVocab from './components/vocabularies/edit';
+import showVocab from './components/vocabularies/show';
 
 const routes = [
   {
@@ -28,6 +29,21 @@ const routes = [
     path: '/user-profile/:id',
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/vocabularies/:id/new',
+    name: 'newChildVocab',
+    component: newVocab,
+  },
+  {
+    path: '/vocabularies/:id/edit',
+    name: 'editVocab',
+    component: editVocab,
+  },
+  {
+    path: '/vocabularies/:id',
+    name: 'showVocab',
+    component: showVocab,
   }
 ];
 
