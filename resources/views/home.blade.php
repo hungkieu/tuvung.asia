@@ -32,19 +32,20 @@
       <div class="uk-offcanvas-bar sosd-background-white">
 
         <ul class="uk-nav uk-nav-default">
-          <li class="uk-active"><a href="#">Active</a></li>
-          <li class="uk-parent">
-            <a href="#">Parent</a>
-            <ul class="uk-nav-sub">
-              <li><a href="#">Sub item</a></li>
-              <li><a href="#">Sub item</a></li>
-            </ul>
+
+          <li class="uk-nav-header text-center">
+
+            <img src= "{{ Auth::user()->avatar }}" class="rounded-circle w-25"  />
+            <b class="color-primary d-block my-3">{{ Auth::user()->name }}</b>
+            
           </li>
-          <li class="uk-nav-header">Header</li>
-          <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Item</a></li>
-          <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Item</a></li>
+          <li>
+            <router-link to="/user-profile/{{ Auth::user()->id }}">
+              <span class="uk-margin-small-right" uk-icon="icon: user"></span> Hồ sơ cá nhân
+            </router-link>
+          </li>
           <li class="uk-nav-divider"></li>
-          <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: trash"></span> Item</a></li>
+          <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt </a></li>
         </ul>
 
       </div>

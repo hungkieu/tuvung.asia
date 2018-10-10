@@ -10,7 +10,12 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <script type="text/javascript">
     window.Laravel = {
-      csrf_token: "{{ csrf_token() }}"
+      csrf_token: "{{ csrf_token() }}",
+      user: {
+        id: "{{ Auth::user()->id }}",
+        name: "{{ Auth::user()->name }}",
+        avatar: "{{ Auth::user()->avatar }}",
+      }
     }
   </script>
 </head>
