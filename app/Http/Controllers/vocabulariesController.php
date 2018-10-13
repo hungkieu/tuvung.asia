@@ -52,4 +52,10 @@ class vocabulariesController extends Controller
       return response('create failed', 400);
     }
   }
+  public function destroy(Request $request,$id)
+    { 
+      $vocab = Vocabulary::find($id);
+      $vocab->delete();
+      return response('delete success', 200);
+    }
 }
