@@ -29,15 +29,23 @@
        <li v-if="user.phone != null"><i>Số điện thoại</i> : <span>{{user.phone}}</span></li>
        <li v-if="user.email != null"><i>Email</i> : <span>{{user.email}}</span></li>
        <li v-if="user.address != null"><i>Địa chỉ</i> : <span >{{user.address}}</span></li>
-       <li><i>Mật khẩu </i> : <span ><a href="#modal-password" uk-toggle style="color: lightseagreen">Thay đổi mật khẩu</a></span></li>
+       <li v-if="user.role !== 'guest'" ><i>Mật khẩu </i> : <span ><a href="#modal-password" uk-toggle style="color: lightseagreen">Thay đổi mật khẩu</a></span></li>
      </ul>
    </div>
 
    <div class="profile-info">
     <h4 class="heading">Giới thiệu bản thân</h4>
-    <p>{{user.description}}</p>
+    <p>{{user.description}}</p> 
   </div>
-  <div class="text-center"><a href="#modal-info" uk-toggle class="btn btn-primary">Chỉnh sửa hồ sơ</a></div>
+
+ 
+    <div class="text-center">
+      <router-link to="/login" v-if="user.role == 'guest'"> 
+      <a href="" class="btn btn-primary">Đăng nhập</a>
+      </router-link>
+      <a v-else href="#modal-info" uk-toggle class="btn btn-primary">Chỉnh sửa hồ sơ</a>
+    </div>
+  
 </div>
 </div>
 <!-- END LEFT COLUMN -->

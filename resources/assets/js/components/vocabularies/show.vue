@@ -1,7 +1,15 @@
 <template>
   <div>
+    <nav class=" pb-3" uk-navbar>
+        <div class="uk-navbar-left">
+            <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
+            <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
+            <router-link to="">{{ vocabulary.en }}</router-link> 
+        </div>
+        <div class="uk-navbar-right">
+        </div>
+      </nav>
     <div class=" sosd-box-shadow uk-padding sosd-no-margin" uk-grid  style="position: relative;">
-      <button class="btn-back"><span uk-icon="icon: arrow-left; ratio: 2" @click="back"></span></button>
       <div class="uk-width-1-4" v-if="vocabulary.image">
         <img :src="vocabulary.image" :alt="vocabulary.en">
       </div>
@@ -99,29 +107,31 @@ export default {
         .catch(function(res) {
           console.log(res.data);
         });
-    },
-    back() {
-      this.$router.push('/vocabularies');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+nav {
+  background: transparent;
+  span.uk-icon {
+    display: inherit;
+    padding: 0 10px;
+  }
+  a {
+    font-weight: bold;
+    &:hover {
+      text-decoration: none;
+      color: tomato;
+    }
+  }
+}
 a {
   text-decoration: none;
   &:hover {
     text-decoration: none;
     color: lightseagreen !important ;
   }
-}
-.btn-back {
-  background: transparent;
-  border: none;
-  padding: 0;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  cursor: pointer;
 }
 </style>

@@ -1,6 +1,15 @@
 <template>
-  <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid style="position: relative;">
-    <button class="btn-back"><span uk-icon="icon: arrow-left; ratio: 2" @click="back"></span></button>
+  <div>
+      <nav class="pb-3" uk-navbar>
+        <div class="uk-navbar-left">
+            <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
+            <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
+            <router-link :to="{name: 'showVocab', params: {id: form.id}}">{{form.en}}</router-link> 
+        </div>
+        <div class="uk-navbar-right">
+        </div>
+      </nav>
+  <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
     <div class="uk-width-1-1">
       <form id="form_create_vocab" class="uk-form-stacked">
         <div uk-grid>
@@ -82,6 +91,8 @@
 
     </div>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -168,14 +179,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-back {
-  background: transparent;
-  border: none;
-  padding: 0;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  cursor: pointer;
+nav {
+  span.uk-icon {
+    display: inherit;
+    padding: 0 10px;
+  }
+  a {
+    font-weight: bold;
+    &:hover {
+      text-decoration: none;
+      color: tomato;
+    }
+  }
 }
 .preview {
   width: 150px;
