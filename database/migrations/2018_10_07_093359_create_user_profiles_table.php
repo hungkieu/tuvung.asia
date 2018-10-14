@@ -20,6 +20,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('description')->nullable();
+            $table->string('role')->default('guest');
         });
     }
 
