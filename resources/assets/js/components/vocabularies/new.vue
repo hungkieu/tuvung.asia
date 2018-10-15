@@ -162,9 +162,6 @@ export default {
         reader.readAsDataURL(files[0]);
         this.preview = true;
       }
-    },
-    back() {
-      this.$router.push('/vocabularies');
     }
   }
 };
@@ -172,6 +169,7 @@ export default {
 
 <style lang="scss" scoped>
 nav {
+  text-transform: uppercase;
   span.uk-icon {
     display: inherit;
     padding: 0 10px;

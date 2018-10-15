@@ -114,6 +114,7 @@ export default {
 
 <style lang="scss" scoped>
 nav {
+  text-transform: uppercase;
   background: transparent;
   span.uk-icon {
     display: inherit;
