@@ -35,7 +35,7 @@
                  </router-link>
               </li>
           @endif
-          @if($user->role !== 'guest')
+          @if($user->role == 'guest')
             <li class="uk-active uk-margin-right">
               <a class="uk-navbar-toggle sosd-color-white" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-menu"></a>
             </li>
@@ -46,6 +46,7 @@
 
     <!-- Off canvas -->
     @if($user->role !== 'guest')
+
       <div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true">
         <div class="uk-offcanvas-bar sosd-background-white">
 
@@ -63,7 +64,7 @@
               </router-link>
             </li>
             <li class="uk-nav-divider"></li>
-            <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt </a></li>
+            <li><router-link to="/setting"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt </router-link></li>
           </ul>
 
         </div>

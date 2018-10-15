@@ -11,6 +11,9 @@ import editVocab from './components/vocabularies/edit';
 import showVocab from './components/vocabularies/show';
 import indexGrammar from './components/grammar/index';
 import grammarArticle from './components/grammar/grammar_article';
+import indexSetting from './components/setting/index';
+
+
 const routes = [
   {
     path: '/',
@@ -55,6 +58,11 @@ const routes = [
     path: '/grammars/grammar-article',
     name: 'grammarArticle',
     component: grammarArticle
+  },
+  {
+    path: '/setting',
+    name: 'indexSetting',
+    component: indexSetting,
   }
 ];
 
