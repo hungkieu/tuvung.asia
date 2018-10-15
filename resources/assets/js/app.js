@@ -9,7 +9,8 @@ import newVocab from './components/vocabularies/new';
 import UserProfile from './components/users/show';
 import editVocab from './components/vocabularies/edit';
 import showVocab from './components/vocabularies/show';
-
+import indexGrammar from './components/grammar/index';
+import grammarArticle from './components/grammar/grammar_article';
 const routes = [
   {
     path: '/',
@@ -33,17 +34,27 @@ const routes = [
   {
     path: '/vocabularies/:id/new',
     name: 'newChildVocab',
-    component: newVocab,
+    component: newVocab
   },
   {
     path: '/vocabularies/:id/edit',
     name: 'editVocab',
-    component: editVocab,
+    component: editVocab
   },
   {
     path: '/vocabularies/:id',
     name: 'showVocab',
-    component: showVocab,
+    component: showVocab
+  },
+  {
+    path: '/grammars',
+    name: 'indexGrammar',
+    component: indexGrammar
+  },
+  {
+    path: '/grammars/grammar-article',
+    name: 'grammarArticle',
+    component: grammarArticle
   }
 ];
 

@@ -16,14 +16,14 @@
           <label class="avatar-change text-center mb-0" for="file">Thay đổi avatar</label>
           <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
         </div>
-        <h3 class="name color">{{user.name}}</h3>
+        <h3 class="name color">{{user.fullname}}</h3>
+        <p class="">{{user.name}}</p>
       </div>
     </div>
     <div class="profile-detail">
      <div class="profile-info">
       <h4 class="heading"> Thông tin cơ bản</h4>
       <ul class="list-unstyled list-justify">
-       <li v-if="user.fullname != null"><i>Họ và tên </i> : <span>{{user.fullname}}</span></li>
        <li v-if="user.gender != null"><i>Giới tính </i> : <span>{{user.gender}}</span></li>
        <li v-if="user.birthday != null"><i>Năm sinh</i> : <span>{{user.birthday}}</span></li>
        <li v-if="user.phone != null"><i>Số điện thoại</i> : <span>{{user.phone}}</span></li>
@@ -582,7 +582,6 @@ $lightseagreen: lightseagreen;
 .profile-header {
   position: relative;
   text-align: center;
-  color: #fff;
 }
 
 .profile-header .profile-main {
@@ -610,7 +609,7 @@ $lightseagreen: lightseagreen;
   }
 }
 .profile-header .name {
-  margin: 25px 0;
+  margin: 25px 0 15px;
   font-size: 22px;
 }
 .profile-header .online-status {

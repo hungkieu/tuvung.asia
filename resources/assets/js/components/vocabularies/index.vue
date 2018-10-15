@@ -57,6 +57,7 @@ export default {
 
 <style lang="scss" scoped>
 nav {
+  text-transform: uppercase;
   span.uk-icon {
     display: inherit;
     padding: 0 10px;
