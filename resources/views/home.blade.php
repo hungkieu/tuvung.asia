@@ -1,5 +1,9 @@
 @extends('layouts.app')
 @section('title', 'tuvung.asia')
+@section('css')
+  <link href="{{ asset('css/uikit.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@endsection
 @section('content')
   <div id="app">
 
@@ -41,7 +45,7 @@
     </nav>
 
     <!-- Off canvas -->
-    @if($user->role !== 'guest')    
+    @if($user->role !== 'guest')
       <div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true">
         <div class="uk-offcanvas-bar sosd-background-white">
 
@@ -51,7 +55,7 @@
 
               <img src= "{{ Auth::user()->avatar }}" class="rounded-circle w-25"  />
               <b class="color-primary d-block my-3">{{ Auth::user()->name }}</b>
-              
+
             </li>
             <li>
               <router-link to="/user-profile/{{ Auth::user()->id }}">
@@ -74,4 +78,10 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('js')
+  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/uikit.js') }}"></script>
+  <script src="{{ asset('js/uikit-icon.js') }}"></script>
 @endsection
