@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuggestStructureSentencesTable extends Migration
+class CreateStreakDaysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSuggestStructureSentencesTable extends Migration
      */
     public function up()
     {
-        Schema::create('suggest_structure_sentences', function (Blueprint $table) {
+        Schema::create('streak_days', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('structure')->nullable();
-            $table->text('description')->nullable();
-            $table->text('examples')->nullable();
-            $table->integer('category_id')->nullable();
+            $table->date('start_day');
+            $table->date('end_day');
+            $table->integer('count');
             $table->integer('user_id');
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ class CreateSuggestStructureSentencesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suggest_structure_sentences');
+        Schema::dropIfExists('streak_days');
     }
 }

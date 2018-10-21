@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Vocabulary extends Model
+class SentenceImage extends Model
 {
     //
 }
