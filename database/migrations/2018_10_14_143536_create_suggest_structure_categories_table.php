@@ -15,13 +15,13 @@ class CreateSuggestStructureCategoriesTable extends Migration
     {
         Schema::create('suggest_structure_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description')->nullable();;
-            $table->string('name', 191)->nullable();;
-            $table->string('image', 191)->nullable();;
-            $table->text('content')->nullable();;
-            $table->integer('parent_id')->nullable();;
-            $table->integer('user_id')->nullable();;
-            $table->text('pedigree')->nullable();;
+            $table->string('title', 191)->nullable();
+            $table->string('image', 191)->nullable();
+            $table->text('description')->nullable();
+            $table->text('content')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->text('pedigree')->nullable();
 
             $table->timestamps();
         });

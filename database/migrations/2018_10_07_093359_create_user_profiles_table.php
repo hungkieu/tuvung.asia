@@ -16,11 +16,15 @@ class CreateUserProfilesTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('fullname')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('gender')->default('nam');
+            $table->integer('gender')->default(0);
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-            $table->string('description')->nullable();
-            $table->string('role')->default('guest');
+            $table->text('description')->nullable();
+            $table->integer('role')->default(0);
+            $table->integer('target_score')->default(0);
+            $table->integer('score')->default(0);
+            $table->datetime('last_login');
+            $table->boolean('is_newbie')->default(true);
         });
     }
 
