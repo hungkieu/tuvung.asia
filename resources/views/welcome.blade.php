@@ -19,12 +19,20 @@
                     <h5 class="header-title">Mèo Ú</h5>
                 </div>
                 <div class=" col-3 float-right">
-                  <a href="/login">
+                @guest
+                <a href="/login">
                      <button class="btn-login mr-2">Đăng nhập</button>
                   </a>
-                  <a href="/resgiter">
+                
+                  <a href="/register">
                     <button class="btn-login">Đăng ký</button>
                  </a>
+                 @else 
+                 <button onclick="document.getElementById('logout').submit()" class="btn-login">Đăng xuất</button>
+                 <form id="logout" action="{{ route('logout') }}" method="post">
+                    {{ csrf_field()}}
+                 </form>
+                 @endguest
                 </div>
             </div>
         </div>
