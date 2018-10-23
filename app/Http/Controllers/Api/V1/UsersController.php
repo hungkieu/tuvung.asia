@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Vocabulary;
 use App\User;
 
-class UserProfileController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +17,7 @@ class UserProfileController extends Controller
      */
     public function index()
     {
+        return User::all();
     }
 
     /**
@@ -45,7 +49,7 @@ class UserProfileController extends Controller
      */
     public function show($id)
     {
-        return User::findOrFail($id);
+        //
     }
 
     /**
@@ -54,19 +58,9 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $user = User::findOrFail($id);
-
-
-        if ($request->hasFile('avatar')) {
-            $user->avatar = '/storage/'.str_replace('public/', '', $request->file('avatar')->store('public/images'));
-        }
-
-        $user->fill($request->all());
-
-        $user->save();
-        return $user->avatar;
+        //
     }
 
     /**

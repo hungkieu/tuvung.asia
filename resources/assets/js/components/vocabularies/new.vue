@@ -1,26 +1,27 @@
 <template>
 <div>
-  <nav class="uk-navbar-container pb-3" uk-navbar>
-        <div class="uk-navbar-left">
-            <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
-            <router-link to="/vocabularies">Từ vựng</router-link>  <span uk-icon="icon: chevron-right; "></span>
-            <router-link to="">Tạo mới </router-link>
-        </div>
-        <div class="uk-navbar-right">
-        </div>
-      </nav>
+  <div class="uk-flex">
+    <div class="uk-text-left uk-margin-right">
+      <router-link to="/vocabularies">
+        <button class="uk-button uk-button-primary sosd-color-white">
+          <span uk-icon="icon: arrow-left;"></span> Quay lại
+        </button>
+      </router-link>
+    </div>
+  </div>
   <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
-    <div class="uk-width-1-1" >
+    <div class="uk-width-1-3" >
+      <h3>
+        Thêm từ vựng
+      </h3>
+      <hr>
       <form id="form_create_vocab" class="uk-form-stacked">
-        <div uk-grid>
-        <div class="uk-width-1-3">
-
         <input type="hidden" name="_token" :value="csrf_token">
         <input type="hidden" v-model="parent_id" name="parent_id">
         <div>
           <label class="uk-form-label">Tiếng Anh</label>
           <div class="uk-form-controls">
-            <input class="uk-input" type="text" name="en" required id="en">
+            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en">
           </div>
         </div>
 
@@ -60,35 +61,40 @@
             </label>
           </div>
         </div>
+        <div>
+          <label class="uk-form-label">Hình ảnh</label>
+          <div>
+            <input type="file" id="file" name="image" style="display: none" @change="preview_image">
+            <label for="file" class="preview_image" v-if="preview">
+              <img :src="preview_image_vl" />
+              <span class="txt-change-image">Thay đổi ảnh</span>
+            </label>
+            <label for="file" class="preview" v-else="preview">
+              Upload hình ảnh
+            </label>
+          </div>
+        </div>
         <div class="uk-margin">
          <button @click="send" class="uk-button uk-button-primary sosd-color-white">Thêm từ mới</button>
         </div>
-        </div>
-        <div class="uk-width-2-3">
-        <div class="uk-text-center">
-          <label class="uk-form-label">Hình ảnh</label>
-          <div>
-              <input type="file" id="file" name="image" style="display: none" @change="preview_image">
-              <label for="file" class="preview_image" v-if="preview">
-                <img :src="preview_image_vl" />
-                <span class="txt-change-image">Thay đổi ảnh</span>
-              </label>
-              <label for="file" class="preview" v-else="preview">
-                Upload hình ảnh
-              </label>
-          </div>
-        </div>
-        <div v-if="true" class="px-5">
-          <label class="uk-form-label pt-3"> Hình ảnh gợi ý </label>
-          
-        </div>
-        
-        </div>
-        </div>
       </form>
     </div>
+    <div class="uk-width-2-3" >
+      <h3>
+        Hình ảnh gợi ý
+      </h3>
+      <hr>
+      <div uk-grid="mansonry: true" v-if="searches.length > 0">
+        <div v-for="v in searches">
+          <img :src="v.image" width="200px">
+        </div>
+      </div>
+      <div v-else>
+        <b>Không có hỉnh ảnh phù hợp</b>
+      </div>
+    </div>
+ </div>
 </div>
-  </div>
 </template>
 
 <script>
@@ -98,10 +104,23 @@ export default {
       csrf_token: '',
       preview: false,
       preview_image_vl: '',
-      parent_id: 0
+      parent_id: 0,
+      vocabulary: {
+        en: ''
+      },
+      searches: []
     };
   },
   mounted() {
+    var app = this;
+    axios.get('/api/v1/vocabularies/search/all')
+    .then(res => {
+      app.searches = res.data;
+    })
+    .catch(res => {
+      alert('khong load duoc');
+    })
+
     if (this.$route.params.id) {
       this.parent_id = this.$route.params.id;
     }
@@ -124,6 +143,18 @@ export default {
     });
   },
   methods: {
+    search() {
+      var app = this;
+      var en = app.vocabulary.en
+      axios.get('/api/v1/vocabularies/search/' + en)
+      .then(res => {
+        app.searches = res.data;
+      })
+      .catch(res => {
+        alert('khong load duoc');
+      })
+    },
+
     send(e) {
       var app = this;
       e.preventDefault();
