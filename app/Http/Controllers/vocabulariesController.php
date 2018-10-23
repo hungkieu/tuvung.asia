@@ -25,6 +25,9 @@ class vocabulariesController extends Controller
 
     if($vocab->save())
     {
+      $user = User::find(Auth::user()->id);
+      $user->score = $user->score + 10;
+      $user->save();
       return response('create success', 200);
     } else {
       return response('create failed', 400);
@@ -52,10 +55,15 @@ class vocabulariesController extends Controller
       return response('create failed', 400);
     }
   }
-  public function destroy(Request $request,$id)
-    { 
-      $vocab = Vocabulary::find($id);
+
+  public function destroy(Request $request,$id){
+    $vocab = Vocabulary::find($id);
+    if(Vocabulary::where('parent_id', '=', $id)->count() == 0) {
       $vocab->delete();
       return response('delete success', 200);
+    } else {
+      return response('Bạn không thể xóa từ đã có từ liên kết', 302);
     }
+  }
+
 }

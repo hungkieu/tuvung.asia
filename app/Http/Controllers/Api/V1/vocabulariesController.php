@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Vocabulary;
@@ -18,6 +19,19 @@ class vocabulariesController extends Controller
     public function index($id)
     {
         return Vocabulary::where('user_id', '=', $id)->get();
+    }
+
+    public function all() {
+        return DB::table('users')
+            ->join('vocabularies', 'users.id', '=', 'vocabularies.user_id')
+            ->select('vocabularies.*', 'users.name')
+            ->get();
+    }
+
+    public function search($en) {
+        if($en == 'all')
+            return Vocabulary::all();
+        return Vocabulary::where('en', 'like', '%'.$en.'%')->limit(10)->get();
     }
 
     /**
@@ -84,5 +98,9 @@ class vocabulariesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function count($id) {
+        return Vocabulary::where('user_id', '=', $id)->count();
     }
 }

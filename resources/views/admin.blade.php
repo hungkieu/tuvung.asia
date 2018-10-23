@@ -6,14 +6,14 @@
 @endsection
 @section('content')
   <div id="admin">
-    <nav class="uk-navbar-container sosd-background-primary uk-padding-small" uk-navbar>
+    <nav class="uk-navbar-container sosd-background-primary" uk-navbar>
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
             <li class="uk-margin-left">
               <router-link to="/admin">
-                <span class="uk-text-lead sosd-color-white">
+                <h3 class="sosd-color-white">
                   Dashboard
-                </span>
+                </h3>
               </router-link>
             </li>
         </ul>
@@ -23,6 +23,18 @@
     <div uk-grid>
       <div class="uk-width-1-5 sosd-background-white" uk-height-viewport="expand: true">
         <ul class="uk-padding-small uk-nav-default uk-nav-parent-icon" uk-nav>
+          <li>
+            <router-link to="/admin/users">
+              Quản lý người dùng
+            </router-link>
+          </li>
+          <hr>
+          <li>
+            <router-link to="/admin/vocabularies">
+              Quản lý từ vựng
+            </router-link>
+          </li>
+          <hr>
           <li class="uk-parent">
             <a href="#">Quản lý cấu trúc câu</a>
             <ul class="uk-nav-sub">

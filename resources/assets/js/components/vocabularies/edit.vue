@@ -1,98 +1,82 @@
 <template>
   <div>
-      <nav class="pb-3" uk-navbar>
-        <div class="uk-navbar-left">
-            <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
-            <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
-            <router-link :to="{name: 'showVocab', params: {id: form.id}}">{{form.en}}</router-link> 
-        </div>
-        <div class="uk-navbar-right">
-        </div>
-      </nav>
-  <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
-    <div class="uk-width-1-1">
-      <form id="form_create_vocab" class="uk-form-stacked">
-        <div uk-grid>
-        <div class="uk-width-1-3">
-        <input type="hidden" name="_token" :value="csrf_token">
-        <input type="hidden" v-model="form.parent_id" name="parent_id">
-        <div>
-          <label class="uk-form-label">Tiếng Anh</label>
-          <div class="uk-form-controls">
-            <input class="uk-input" v-model="form.en" type="text" name="en">
-          </div>
-        </div>
-
-        <div>
-          <label class="uk-form-label">Tiếng Việt</label>
-          <div class="uk-form-controls">
-            <input class="uk-input" v-model="form.vi" type="text" name="vi">
-          </div>
-        </div>
-
-        <div>
-          <label class="uk-form-label">Loại từ</label>
-          <div class="uk-form-controls uk-column-1-3">
-            <label>
-              <input v-model="form.type" value="Danh từ" class="uk-checkbox" type="checkbox" name="type[]">
-              Danh từ
-            </label>
-            <label>
-              <input v-model="form.type" value="Động từ" class="uk-checkbox" type="checkbox" name="type[]">
-              Động từ
-            </label>
-            <label>
-              <input v-model="form.type" value="Tính từ" class="uk-checkbox" type="checkbox" name="type[]">
-              Tính từ
-            </label>
-            <label>
-              <input v-model="form.type" value="Trạng từ" class="uk-checkbox" type="checkbox" name="type[]">
-              Trạng từ
-            </label>
-            <label>
-              <input v-model="form.type" value="Giới từ" class="uk-checkbox" type="checkbox" name="type[]">
-              Giới từ
-            </label>
-            <label>
-              <input v-model="form.type" value="Từ nối" class="uk-checkbox" type="checkbox" name="type[]">
-              Từ nối
-            </label>
-          </div>
-        </div>
-                <div class="uk-margin">
-         <button @click="send" class="uk-button uk-button-primary sosd-color-white">Sửa</button>
-        </div>
-</div>
-        <div class="uk-width-2-3">
-        <div class="uk-text-center">
-          <label class="uk-form-label">Hình ảnh</label>
+    <div class="uk-flex">
+      <div class="uk-text-left uk-margin-right">
+        <button @click="back" class="uk-button uk-button-primary sosd-color-white">
+          <span uk-icon="icon: arrow-left;"></span> Quay lại
+        </button>
+      </div>
+    </div>
+    <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
+      <div class="uk-width-1-3">
+        <form id="form_create_vocab" class="uk-form-stacked">
+          <input type="hidden" name="_token" :value="csrf_token">
+          <input type="hidden" v-model="form.parent_id" name="parent_id">
           <div>
+            <label class="uk-form-label">Tiếng Anh</label>
+            <div class="uk-form-controls">
+              <input class="uk-input" v-model="form.en" type="text" name="en">
+            </div>
+          </div>
+
+          <div>
+            <label class="uk-form-label">Tiếng Việt</label>
+            <div class="uk-form-controls">
+              <input class="uk-input" v-model="form.vi" type="text" name="vi">
+            </div>
+          </div>
+
+          <div>
+            <label class="uk-form-label">Loại từ</label>
+            <div class="uk-form-controls uk-column-1-3">
+              <label>
+                <input v-model="form.type" value="Danh từ" class="uk-checkbox" type="checkbox" name="type[]">
+                Danh từ
+              </label>
+              <label>
+                <input v-model="form.type" value="Động từ" class="uk-checkbox" type="checkbox" name="type[]">
+                Động từ
+              </label>
+              <label>
+                <input v-model="form.type" value="Tính từ" class="uk-checkbox" type="checkbox" name="type[]">
+                Tính từ
+              </label>
+              <label>
+                <input v-model="form.type" value="Trạng từ" class="uk-checkbox" type="checkbox" name="type[]">
+                Trạng từ
+              </label>
+              <label>
+                <input v-model="form.type" value="Giới từ" class="uk-checkbox" type="checkbox" name="type[]">
+                Giới từ
+              </label>
+              <label>
+                <input v-model="form.type" value="Từ nối" class="uk-checkbox" type="checkbox" name="type[]">
+                Từ nối
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="uk-form-label">Hình ảnh</label>
+            <div>
               <input type="file" id="file" name="image" style="display: none" @change="preview_image">
               <label for="file" class="preview_image" v-if="preview">
                 <img :src="preview_image_vl" />
-                 <span class="txt-change-image">Thay đổi ảnh</span>
+                <span class="txt-change-image">Thay đổi ảnh</span>
               </label>
               <label for="file" class="preview" v-else="preview">
                 Upload hình ảnh
               </label>
+            </div>
           </div>
-        </div>
-        <div v-if="false" class="px-5">
-          <label class="uk-form-label pt-3"> Hình ảnh gợi ý </label>
-          
-        </div>
 
+          <div class="uk-margin">
+            <button @click="send" class="uk-button uk-button-primary sosd-color-white">Sửa</button>
+         </div>
+        </form>
       </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="uk-width-1-2">
-
     </div>
   </div>
-  </div>
-
 </template>
 
 <script>
@@ -138,6 +122,10 @@ export default {
     });
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
+
     send(e) {
       var app = this;
       e.preventDefault();

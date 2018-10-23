@@ -1,33 +1,31 @@
 <template>
   <div>
-    <nav class=" pb-3" uk-navbar>
-        <div class="uk-navbar-left">
-            <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
-            <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
-            <router-link to="">{{ vocabulary.en }}</router-link> 
-        </div>
-        <div class="uk-navbar-right">
-        </div>
-      </nav>
-    <div class=" sosd-box-shadow uk-padding sosd-no-margin" uk-grid  style="position: relative;">
+    <div class="uk-flex">
+      <div class="uk-text-left uk-margin-right">
+        <button @click="back" class="uk-button uk-button-primary sosd-color-white">
+          <span uk-icon="icon: arrow-left;"></span> Quay lại
+        </button>
+      </div>
+    </div>
+    <div class="sosd-background-white uk-padding sosd-no-margin" uk-grid>
       <div class="uk-width-1-4" v-if="vocabulary.image">
         <img :src="vocabulary.image" :alt="vocabulary.en">
       </div>
       <div class="uk-width-1-2">
-        <router-link :to="{name: 'editVocab', params: {id: vocabulary.id}}"><h3>{{ vocabulary.en }}</h3></router-link>
+        <h3>{{ vocabulary.en }}</h3>
         <p>{{ vocabulary.vi }}</p>
         <p v-if="vocabulary.type !== 'null'" >
           <i>{{ vocabulary.type }}</i>
         </p>
       </div>
-      <div class="uk-width-1-4">
+      <div class="uk-width-1-4 uk-text-right" v-if="vocabulary.id">
         <router-link :to="{name: 'newChildVocab', params: {id: vocabulary.id}}" class="uk-button uk-margin-small uk-button-default">Thêm từ liên kết</router-link>
         <router-link :to="{name: 'editVocab', params: {id: vocabulary.id}}" class="uk-button uk-margin-small uk-button-default">Sửa từ này</router-link>
         <button class="uk-button uk-margin-small uk-button-danger" style="color: #fff !important" href="#modal-del" uk-toggle>Xóa từ này</button>
       </div>
     </div>
 
-    <div class="uk-child-width-1-4 uk-margin-top" uk-grid="masonry: true">
+    <div class="uk-child-width-1-4 uk-margin-top" uk-grid="masonry: true" v-if="childrens">
       <div class="" v-for="v in childrens">
         <router-link :to="{name: 'showVocab', params: {id: v.id}}">
           <div class="uk-card sosd-background-white uk-card-hover">
@@ -43,21 +41,21 @@
       </div>
     </div>
 
-  <div id="modal-del" class="uk-flex-top" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical  p-0  ">
+    <div id="modal-del" class="uk-flex-top" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical  p-0  ">
 
         <button class="uk-modal-close-default" type="button" uk-close></button>
-         <div class="uk-modal-body text-center">
-           <span uk-icon="icon: warning; ratio: 2" style="color: red"></span>
-          <p class="pt-3">Bạn có chắc chắn muốn xóa từ này ?</p>
-        </div>
-         <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-primary  uk-modal-close" type="button" @click="deleteVocabulary">Xóa</button>
-            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-        </div>
-    </div>  
-</div>
+        <div class="uk-modal-body text-center">
+         <span uk-icon="icon: warning; ratio: 2" style="color: red"></span>
+         <p class="pt-3">Bạn có chắc chắn muốn xóa từ này ?</p>
+       </div>
+       <div class="uk-modal-footer uk-text-right">
+        <button class="uk-button uk-button-primary  uk-modal-close" type="button" @click="deleteVocabulary">Xóa</button>
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+      </div>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -95,17 +93,21 @@ export default {
       });
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
+
     deleteVocabulary() {
       this.user = Laravel.user;
       var app = this;
 
       axios
-        .delete('/vocabularies/' + app.$route.params.id + '/delete')
+        .post('/vocabularies/' + app.$route.params.id + '/delete')
         .then(function(res) {
           app.$router.push('/vocabularies');
         })
         .catch(function(res) {
-          console.log(res.data);
+          alert('Bạn không thể xóa từ đã có từ liên kết');
         });
     }
   }
