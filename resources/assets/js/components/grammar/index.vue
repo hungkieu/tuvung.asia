@@ -23,14 +23,14 @@
                 <li class="uk-active px-5"><img src="https://cdn.mgift.vn/news/2018/03/22/314f81ec92557a9470a106a970f45a065ab32eb6173bc_500x543.jpeg" width="200" alt=""></li>
                 <li class="uk-active px-5"><img src="https://media1.tenor.com/images/1800a8296d46374a3a0c6d1e1f375325/tenor.gif?itemid=11410221" width="200" alt=""></li>
             </ul>  
-             <div class=" pt-4" uk-grid v-if="grammars_articles.description_suggest">
+             <!-- <div class=" pt-4" uk-grid v-if="grammars_articles.description_suggest">
                     <div class="uk-width-auto">
                         <button href="#toggle-animation"  uk-toggle="target: #toggle-animation; animation: uk-animation-fade" class="uk-button-primary">Ví dụ</button>
                     </div>
                     <div class="uk-width-expand">
                         <div id="toggle-animation" aria-hidden="true" hidden  v-html="grammars_articles.description_suggest" > </div>
                     </div>
-              </div>   
+              </div>    -->
         </div>
         <div class="grammar-old  px-0">
           <h5>Lịch sử</h5>
@@ -85,9 +85,10 @@ export default {
         app.get_grammars_articles = res.data;
         app.grammarArticleRandom();
         axios
-          .get('/grammars/' + app.user.id)
+          .get('/grammars/' + app.user.id + '/history')
           .then(function(res) {
             app.grammars = res.data;
+            console.log('res' + JSON.stringify(app.grammars));
           })
           .catch(function(res) {
             console.log('err');
@@ -114,7 +115,7 @@ export default {
           })
           .then(function(res) {
             axios
-              .get('/grammars/' + app.user.id)
+              .get('/grammars/' + app.user.id + '/history')
               .then(function(res) {
                 app.grammars = res.data;
               })
