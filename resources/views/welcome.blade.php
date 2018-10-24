@@ -38,23 +38,28 @@
         </div>
       </header>
       <div class="banner">
-            <div class="home_background" style="background-image: url('{{asset('images/banner.jpg')}}')"></div>
+            <div class="home_background"></div>
           <div class="home_content">
             <div class="container">
               <div class="row">
                 <div class="col text-center">
                   <h1 class="home_title">Học tiếng anh thật dễ dàng với Meò Ú</h1>
                   <div class="home_button">
-                      <form class="uk-margin" method="POST" action="{{ route('register') }}">
+                      {{-- <form class="uk-margin" method="POST" action="{{ route('register') }}">
                           {{ csrf_field() }}
                           <input id="name" type="hidden" name="name" value="guest-{{ $guest = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 10)), 0, 10) }}">
                           <input id="email" type="hidden" name="email" value="{{ $guest.'@g.com' }}">
                           <input id="password" value="123123" type="hidden" name="password">
                           <input id="password-confirm" value="123123" type="hidden" name="password_confirmation">
-                          <button type="submit">
+                          <button type="submit"  href="#list-item-1">
                             Bắt đầu ngay nào !!!
                           </button>
-                        </form>
+                        </form> --}}
+                        <a  href="#register" >
+                          <button>
+                              Bắt đầu ngay nào !!!
+                          </button>
+                        </a>
                   </div>
                 </div>
               </div>
@@ -154,30 +159,45 @@
 
           </div>
         </div>
-        <div class="container">
-            <hr style="padding-bottom: 50px" />
-        </div>
-          <div class="contact"  style="background-image: url('{{asset('images/bg2.jpg')}}')">
+          <div class="contact"  id="register" style="background-image: url('{{asset('images/bg2.jpg')}}')">
     
           <div class="container">
             <div class="row justify-content-center">
     
             <div class="col-lg-6">
               <div class="contact_form_container">
-                <div class="form_title">Phản hồi</div>
+                <div class="form_title text-center pb-3">Đăng ký</div>
                 <form action="" id="contact_form" class="contact_form">
+                  <p class="text-center">Đăng ký với</p>
+                  <div class="w-100 text-center">
+                      <button class="btn-fb">
+                              <i class="fa fa-facebook fa-lg " ></i>
+                              <span>Facebook</span>
+                      </button>
+                      <button class="btn-gg" >
+                          <i class="fa fa-google fa-lg" ></i>
+                          <span>Google</span>
+                      </button>
+                  </div>
+                  <p class="text-center">hoặc</p>
                   <div class="row contact_row">
-                    <div class="col-lg-6 contact_col">
-                      <input type="text" class="form_input" placeholder="Name" required="required">
+                    <div class="col-lg-12 contact_col">
+                      <input type="text" class="form_input" placeholder="Tên đăng nhập : Email hoặc Số điện thoại" required="required">
                     </div>
                     <div class="col-lg-6 contact_col">
-                      <input type="email" class="form_input" placeholder="Email" required="required">
+                      <input type="text" class="form_input" placeholder="Họ và tên " >
                     </div>
-                    <div class="col-lg-12">
-                      <textarea class="form_input form_text" placeholder="Message" required="required"></textarea>
+                    <div class="col-lg-6 contact_col">
+                      <input type="date" class="form_input" placeholder="Ngày sinh" >
                     </div>
-                    <div class="col">
-                      <button type="submit" class="form_button trans_200">send message</button>
+                    <div class="col-lg-6 contact_col">
+                      <input type="password" class="form_input" placeholder="Mật khẩu" required="required">
+                    </div>
+                    <div class="col-lg-6 contact_col">
+                      <input type="password" class="form_input" placeholder="Nhập lại mật khẩu " required="required">
+                    </div>
+                    <div class="col text-center">
+                      <button type="submit" class="form_button trans_200">Đăng ký</button>
                     </div>
                   </div>
                 </form>
@@ -191,7 +211,7 @@
           <div class="fooer-title">
               <h5 class="pb-3 text-center">Còn chần chừ gì nữa mà không đến với chúng tôi ^^  </h5>
           </div>
-            <div class="home_button">
+            {{-- <div class="home_button">
                 <form class="uk-margin" method="POST" action="{{ route('register') }}">
                     {{ csrf_field() }}
                     <input id="name" type="hidden" name="name" value="guest-{{ $guest = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 10)), 0, 10) }}">
@@ -202,11 +222,11 @@
                       Bắt đầu ngay nào !!!
                     </button>
                   </form>
-            </div>
+            </div> --}}
         </div>
       </footer>
     </div>
-    
+
   </div>
   <script src="{{ asset('js/app.js') }}"></script>
   <script type="text/javascript">

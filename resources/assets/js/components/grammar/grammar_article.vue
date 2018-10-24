@@ -41,7 +41,23 @@ Thì hiện tại đơn (tiếng Anh: Simple present hoặc Present simple) là 
 </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      grammarsArticles: []
+    };
+  },
+  created() {
+    axios
+      .get('/grammars-articles')
+      .then(function(res) {
+        console.log(res);
+      })
+      .catch(function(res) {
+        console.log('err');
+      });
+  }
+};
 </script>
 <style lang="scss" scoped>
 nav {

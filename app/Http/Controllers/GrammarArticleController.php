@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\GrammarArticle;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class GrammarArticleController extends Controller
 {
@@ -14,7 +15,12 @@ class GrammarArticleController extends Controller
      */
     public function index()
     {
-        return GrammarArticle::all();
+        $url = 'https://efc.edu.vn/ngu-phap-tieng-anh';
+        // $dom = HtmlDomParser::file_get_html($url);
+        // $instance = new \simple_html_dom();
+        $html = file_get_html('http://www.google.com/');
+        // return GrammarArticle::all();
+        return '12';
     }
 
     /**
