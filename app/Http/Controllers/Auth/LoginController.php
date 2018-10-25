@@ -52,27 +52,27 @@ class LoginController extends Controller
             'email.required' => 'Email là trường bắt buộc',
             'email.email' => 'Email không đúng định dạng',
             'password.required' => 'Mật khẩu là trường bắt buộc',
-            'password.min' => 'Mật khẩu phải chứa ít nhất 8 ký tự',
+            'password.min' => 'Mật khẩu phải chứa ít nhất 6 ký tự',
         ];
+
         $validator = Validator::make($request->all(), $rules, $messages);
-        
-        
+
+
         if ($validator->fails()) {
             // Điều kiện dữ liệu không hợp lệ sẽ chuyển về trang đăng nhập và thông báo lỗi
-            return redirect('login')->withErrors($validator)->withInput();
+            return redirect('login')->withErrors($validator)->withInput($request->all);
         } else {
             // Nếu dữ liệu hợp lệ sẽ kiểm tra trong csdl
             $email = $request->input('email');
             $password = $request->input('password');
             //$role = $request->input('role');
-     
+
             if( Auth::attempt(['email' => $email, 'password' =>$password])) {
                 // Kiểm tra đúng email và mật khẩu sẽ chuyển trang
-                return redirect('welcome');
+                return redirect('/');
             } else {
                 // Kiểm tra không đúng sẽ hiển thị thông báo lỗi
-                Session::flash('error', 'Email hoặc mật khẩu không đúng!');
-                return redirect('login');
+                return redirect('login')->with('error', 'Email hoặc mật khẩu không đúng!')->withInput($request->all);
             }
         }
     }

@@ -2,9 +2,6 @@
 
 Auth::routes();
 
-Route::get('welcome', function () {
-    return view('welcome');
-})->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('/vocabularies', 'VocabulariesController@create');
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
@@ -16,6 +13,8 @@ Route::get('/grammars/{id}/history', 'GrammarsController@show');
 Route::post('/grammars/create', 'GrammarsController@create');
 Route::get('/grammars-articles', 'GrammarArticleController@index');
 
+Route::get('/redirect/{social}', 'SocialAuthController@redirect');
+Route::get('/callback/{social}', 'SocialAuthController@callback');
 
 
 

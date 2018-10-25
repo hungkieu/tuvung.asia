@@ -1,111 +1,112 @@
-@extends('templates.master')
-@section('title','Trang quản lý')
-@section('content')
-<?php //Hiển thị thông báo thành công?>
-@if ( Session::has('success') )
-	<div class="alert alert-success alert-dismissible" role="alert">
-		<strong>{{ Session::get('success') }}</strong>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-	</div>
-@endif
-<?php //Hiển thị thông báo lỗi?>
-@if ( Session::has('error') )
-	<div class="alert alert-danger alert-dismissible" role="alert">
-		<strong>{{ Session::get('error') }}</strong>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-	</div>
-@endif
-@if ($errors->any())
-	<div class="alert alert-danger alert-dismissible" role="alert">
-		<ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			<span class="sr-only">Close</span>
-		</button>
-	</div>
-@endif
-<div class="container" style="margin-top: 10%">
-	<div class="row">
-		<div class="col-sm-6 col-md-4 col-md-offset-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">ĐĂNG KÝ THÀNH VIÊN</h4>
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>Laravel</title>
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/welcome.css') }}">
+</head>
+<body>
+	<header class="header header-add">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class=" col-3 float-left">
+					<a href="/"><h5 class="header-title">Mèo Ú</h5></a>
 				</div>
-				<div class="panel-body">
-					<form role="form" method="POST" action="{{ url('/register') }}">
-						{!! csrf_field() !!}
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								<input class="form-control" placeholder="Họ và tên" name="name" type="text" value="{{ old('name') }}" autofocus>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-								<input class="form-control" placeholder="Email" name="email" type="text" value="{{ old('email') }}">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								<input class="form-control" placeholder="Mật khẩu" name="password" type="password">
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								<input class="form-control" placeholder="Xác nhận mật khẩu" name="password_confirmation" type="password">
-							</div>
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-lg btn-primary btn-block">Đăng ký</button>
-						</div>
-						<center><a href="{{ route('login') }}">Quay về đăng nhập</a></center>
+				<div class=" col-3 float-right">
+					@guest
+					<a href="/login">
+						<button class="btn-login mr-2">Đăng nhập</button>
+					</a>
+
+					<a href="/register">
+						<button class="btn-login">Đăng ký</button>
+					</a>
+					@else
+					<button onclick="document.getElementById('logout').submit()" class="btn-login">Đăng xuất</button>
+					<form id="logout" action="{{ route('logout') }}" method="post">
+						{{ csrf_field()}}
 					</form>
+					@endguest
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="contact"  id="register" style="background-image: url('{{asset('images/bg2.jpg')}}')">
+
+		<div class="container">
+			<div class="row justify-content-center">
+
+				<div class="col-lg-6">
+					<div class="contact_form_container">
+						<div class="form_title text-center pb-3">Tạo tài khoản mới</div>
+						<form action="{{ route('register') }}" method="POST" id="contact_form" class="contact_form">
+							{{ csrf_field() }}
+							<p class="text-center">Đăng ký với</p>
+							<div class="w-100 text-center">
+								<a href="/redirect/facebook" class="btn-fb">
+									<i class="fa fa-facebook fa-lg " ></i>
+									<span>Facebook</span>
+								</a>
+								<a href="/redirect/google" class="btn-gg" >
+									<i class="fa fa-google fa-lg" ></i>
+									<span>Google</span>
+								</a>
+							</div>
+							<p class="text-center">hoặc</p>
+							<div class="row contact_row">
+								@if($errors->has('name') == 1)
+								<div class="col-lg-12">
+									<span class="font-italic text-danger">
+										{{ $errors->first('name') }}
+									</span>
+								</div>
+								@endif
+
+								<div class="col-lg-12 contact_col">
+									<input type="text" name="name" class="form_input" placeholder="Tên người dùng" required="required" value="{{ old('name') }}">
+								</div>
+
+								@if($errors->has('email') == 1)
+								<div class="col-lg-12">
+									<span class="font-italic text-danger">
+										{{ $errors->first('email') }}
+									</span>
+								</div>
+								@endif
+
+								<div class="col-lg-12 contact_col">
+									<input type="email" name="email" class="form_input" placeholder="Email" value="{{ old('email') }}" >
+								</div>
+
+								@if($errors->has('password') == 1)
+								<div class="col-lg-12">
+									<span class="font-italic text-danger">
+										{{ $errors->first('password') }}
+									</span>
+								</div>
+								@endif
+
+								<div class="col-lg-12 contact_col">
+									<input type="password" name="password" class="form_input" placeholder="Mật khẩu " required="required">
+								</div>
+
+								<div class="col-lg-12 contact_col">
+									<input type="password" class="form_input" placeholder="Nhập lại mật khẩu " required="required" name="password_confirmation">
+								</div>
+								<div class="col text-center">
+									<button type="submit" class="form_button trans_200">Đăng ký</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<style>
-body{
-	background: #17568C;
-}
-.panel{
-	border-radius: 5px;
-}
-.panel-heading {
-    padding: 10px 15px;
-}
-.panel-title{
-	text-align: center;
-	font-size: 15px;
-	font-weight: bold;
-	color: #17568C;
-}
-.panel-footer {
-	padding: 1px 15px;
-	color: #A0A0A0;
-}
-.profile-img {
-	width: 120px;
-	height: 120px;
-	margin: 0 auto 10px;
-	display: block;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	border-radius: 50%;
-}
-</style>
-@endsection
+</body>
+</html>
