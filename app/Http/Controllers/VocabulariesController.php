@@ -7,7 +7,7 @@ use App\Vocabulary;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class vocabulariesController extends Controller
+class VocabulariesController extends Controller
 {
   public function create(Request $request) {
     $vocab = new Vocabulary;

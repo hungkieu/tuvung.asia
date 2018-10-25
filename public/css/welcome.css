@@ -283,10 +283,6 @@ header .btn-login:hover {
   padding-right: 20px;
 }
 
-.contact_col:nth-child(even) {
-  padding-left: 20px;
-}
-
 .form_input {
   width: 100%;
   height: 36px;
