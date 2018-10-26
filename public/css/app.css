@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-html,
-body {
-  background: #fafaf5 !important;
-}
-
 .sosd-background-primary {
   background: #1F8BF0 !important;
 }
@@ -13,12 +8,8 @@ body {
   background: white !important;
 }
 
-.sosd-background-white * {
-  color: #333333 !important;
-}
-
 .sosd-background-white .uk-nav-divider {
-  border-top-color: #e9e9e9 !important;
+  border-top: 1px solid rgba(33, 33, 33, 0.5) !important;
 }
 
 .sosd-color-white {
@@ -36,6 +27,50 @@ body {
 
 .color-primary {
   color: #1F8BF0 !important;
+}
+
+.sosd-a {
+  text-decoration: none;
+}
+
+.sosd-a:hover {
+  text-decoration: none;
+}
+
+.sosd-none {
+  display: none;
+}
+
+.sosd-hover-primary {
+  color: #333333 !important;
+}
+
+.sosd-hover-primary:hover {
+  color: #1F8BF0 !important;
+  cursor: pointer;
+}
+
+.sosd-hover-primary * {
+  color: #333333 !important;
+}
+
+body {
+  height: 100vh;
+}
+
+#app {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+#app footer {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  height: 60px;
+  width: 100%;
+  background: #eeeeee;
 }
 
 /*!

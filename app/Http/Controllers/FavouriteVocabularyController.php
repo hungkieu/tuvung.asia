@@ -1,44 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
-use App\Vocabulary;
-use App\User;
-
-class vocabulariesController extends Controller
+class FavouriteVocabularyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        return Vocabulary::where('user_id', '=', $id)->get();
-    }
-
-    public function all() {
-        return DB::table('users')
-            ->join('vocabularies', 'users.id', '=', 'vocabularies.user_id')
-            ->select('vocabularies.*', 'users.name')
-            ->get();
-    }
-
-    public function search($en) {
-        if($en == 'all')
-            return Vocabulary::where('image', '!=', null)->get();
-        return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
-    }
-
-    public function pedigree($id) {
-        $vocabularies = Vocabulary::where('pedigree', 'like', '%'.$id.'%' )->get();
-        $vocabulary = Vocabulary::find($id);
-        return ["vocabulary" => $vocabulary, "vocabularies" => $vocabularies];
+        //
     }
 
     /**
@@ -70,7 +45,7 @@ class vocabulariesController extends Controller
      */
     public function show($id)
     {
-        return Vocabulary::find($id);
+        //
     }
 
     /**
@@ -105,9 +80,5 @@ class vocabulariesController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function count($id) {
-        return Vocabulary::where('user_id', '=', $id)->count();
     }
 }

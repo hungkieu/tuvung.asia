@@ -43,16 +43,16 @@
 
 				<div class="col-lg-6">
 					<div class="contact_form_container">
-						<div class="form_title text-center pb-3">Tạo tài khoản mới</div>
+						<div class="form_title text-center pb-3">Đăng nhập</div>
 						<form action="{{ route('login') }}" method="POST" id="contact_form" class="contact_form">
 							{{ csrf_field() }}
-							<p class="text-center">Đăng ký với</p>
+							<p class="text-center">Đăng nhập với</p>
 							<div class="w-100 text-center">
-								<a href="/redirect/facebook" class="btn-fb">
+								<a href="/redirect/facebook" class="sosd-a btn-fb">
 									<i class="fa fa-facebook fa-lg " ></i>
 									<span>Facebook</span>
 								</a>
-								<a href="/redirect/google" class="btn-gg" >
+								<a href="/redirect/google" class="sosd-a btn-gg" >
 									<i class="fa fa-google fa-lg" ></i>
 									<span>Google</span>
 								</a>
@@ -93,7 +93,7 @@
 								</div>
 
 								<div class="col text-center">
-									<button type="submit" class="form_button trans_200">Đăng ký</button>
+									<button type="submit" class="form_button trans_200">Đăng nhập</button>
 								</div>
 							</div>
 						</form>
