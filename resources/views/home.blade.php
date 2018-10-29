@@ -23,53 +23,34 @@
       </div>
       <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
-          @if($user->role == 'guest')
-            <li class="uk-active uk-margin-right">
-                <router-link to="/login">
-                  <span class="sosd-color-white">Đăng nhập</span>
-                 </router-link>
-            </li>
-            <li class="uk-active uk-margin-right">
-                <router-link to="/register">
-                  <span class="sosd-color-white">Đăng ký</span>
-                 </router-link>
-              </li>
-          @endif
-          @if($user->role == 'guest')
             <li class="uk-active uk-margin-right">
               <a class="uk-navbar-toggle sosd-color-white" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-menu"></a>
             </li>
-          @endif
         </ul>
       </div>
     </nav>
 
     <!-- Off canvas -->
-    @if($user->role !== 'guest')
 
       <div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true">
         <div class="uk-offcanvas-bar sosd-background-white">
-
-          <ul class="uk-nav uk-nav-default">
-
-            <li class="uk-nav-header text-center">
-
-              <img src= "{{ Auth::user()->avatar }}" class="rounded-circle w-25"  />
-              <b class="color-primary d-block my-3">{{ Auth::user()->name }}</b>
-
-            </li>
-            <li>
+          <div class="pb-3">
+            <img src= "{{ Auth::user()->avatar }}" class="rounded-circle" style="width: 100px; height: 100px; object-fit: cover"  />
+            <b class="color-primary m-3">{{ Auth::user()->name }}</b>
+          </div>
+          <ul class="uk-nav">
+            <li uk-toggle="target: #offcanvas-menu">
               <router-link to="/user-profile/{{ Auth::user()->id }}">
                 <span class="uk-margin-small-right" uk-icon="icon: user"></span> Hồ sơ cá nhân
               </router-link>
             </li>
-            <li class="uk-nav-divider"></li>
-            <li><router-link to="/setting"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt </router-link></li>
+            <li uk-toggle="target: #offcanvas-menu"><router-link to="/setting/account"><span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt </router-link></li>
+            <li class="uk-nav-default"><span class="uk-nav-divider d-block"></span></li>
+            <li uk-toggle="target: #offcanvas-menu"><router-link to="/login"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Đăng xuất </router-link></li>
           </ul>
 
         </div>
       </div>
-    @endif
 
     <!-- Main -->
 

@@ -12,8 +12,10 @@ import showVocab from './components/vocabularies/show';
 import indexGrammar from './components/grammar/index';
 import grammarArticle from './components/grammar/grammar_article';
 import indexSetting from './components/setting/index';
-
-
+import account from './components/setting/account';
+import photos from './components/setting/photos';
+import profile from './components/setting/profile';
+import notifications from './components/setting/notifications';
 const routes = [
   {
     path: '/',
@@ -63,6 +65,28 @@ const routes = [
     path: '/setting',
     name: 'indexSetting',
     component: indexSetting,
+    children: [
+      {
+        path: '/setting/account',
+        name: 'account',
+        component: account
+      },
+      {
+        path: '/setting/photos',
+        name: 'photos',
+        component: photos
+      },
+      {
+        path: '/setting/profile',
+        name: 'profile',
+        component: profile
+      },
+      {
+        path: '/setting/notifications',
+        name: 'notifications',
+        component: notifications
+      }
+    ]
   }
 ];
 

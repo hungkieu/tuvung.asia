@@ -85,7 +85,7 @@ export default {
         app.get_grammars_articles = res.data;
         app.grammarArticleRandom();
         axios
-          .get('/grammars/' + app.user.id + '/history')
+          .get('/grammars/' + app.user.id)
           .then(function(res) {
             app.grammars = res.data;
             console.log('res' + JSON.stringify(app.grammars));

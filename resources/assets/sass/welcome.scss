@@ -21,7 +21,8 @@ header {
   }
   a {
     text-decoration: none;
-    &:hover {
+    &:hover,
+    &:focus {
       text-decoration: none;
     }
   }
@@ -153,14 +154,26 @@ header {
 }
 
 .contact {
-  padding: 80px 0;
+  padding: 90px 0;
   background-size: cover;
+  min-height: 100vh;
+  height: 100%;
   .btn-fb,
   .btn-gg {
     background: transparent;
     padding: 5px 15px;
     border-radius: 20px;
     margin: 0 10px 10px;
+    text-decoration: none;
+    span {
+      padding: 0 10px;
+    }
+  }
+  a.btn-fb,
+  a.btn-gg {
+    padding: 5px 15px 8px;
+    text-decoration: none;
+    display: inline-block;
     span {
       padding: 0 10px;
     }

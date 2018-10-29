@@ -54,7 +54,7 @@ export default {
         console.log(res);
       })
       .catch(function(res) {
-        console.log('err');
+        console.log('err' + res);
       });
   }
 };

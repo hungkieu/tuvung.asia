@@ -1,54 +1,7 @@
 <template>
 
- <div class="user">
-   <div class="panel panel-profile">
+ <div class="user sosd-background-white sosd-box-shadow">
     <div class="clearfix">
-     <!-- LEFT COLUMN -->
-     <div class="profile-left">
-      <div class="profile-header">
-       <div class="profile-main">
-         <div class="avatar w-50 mx-auto">
-          <div uk-lightbox>
-            <a  :href="user.avatar">
-              <img :src="user.avatar" class="w-75" id="avatar-show" />
-            </a>
-          </div>
-          <label class="avatar-change text-center mb-0" for="file">Thay đổi avatar</label>
-          <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
-        </div>
-        <h3 class="name color">{{user.fullname}}</h3>
-        <p class="">{{user.name}}</p>
-      </div>
-    </div>
-    <div class="profile-detail">
-     <div class="profile-info">
-      <h4 class="heading"> Thông tin cơ bản</h4>
-      <ul class="list-unstyled list-justify">
-       <li v-if="user.gender != null"><i>Giới tính </i> : <span>{{user.gender}}</span></li>
-       <li v-if="user.birthday != null"><i>Năm sinh</i> : <span>{{user.birthday}}</span></li>
-       <li v-if="user.phone != null"><i>Số điện thoại</i> : <span>{{user.phone}}</span></li>
-       <li v-if="user.email != null"><i>Email</i> : <span>{{user.email}}</span></li>
-       <li v-if="user.address != null"><i>Địa chỉ</i> : <span >{{user.address}}</span></li>
-       <li v-if="user.role !== 'guest'" ><i>Mật khẩu </i> : <span ><a href="#modal-password" uk-toggle style="color: lightseagreen">Thay đổi mật khẩu</a></span></li>
-     </ul>
-   </div>
-
-   <div class="profile-info">
-    <h4 class="heading">Giới thiệu bản thân</h4>
-    <p>{{user.description}}</p> 
-  </div>
-
- 
-    <div class="text-center">
-      <router-link to="/login" v-if="user.role == 'guest'"> 
-      <a href="" class="btn btn-primary">Đăng nhập</a>
-      </router-link>
-      <a v-else href="#modal-info" uk-toggle class="btn btn-primary">Chỉnh sửa hồ sơ</a>
-    </div>
-  
-</div>
-</div>
-<!-- END LEFT COLUMN -->
 <!-- RIGHT COLUMN -->
 <div class="profile-right">
   <h4 class="heading">Mức độ thành thạo</h4>
@@ -58,7 +11,7 @@
     <div class="col-md-3 col-sm-6">
      <div class="award-item w-100">
       <div class="uk-animation-toggle">
-        <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success w-50 mx-auto">
+        <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
           <p class="uk-text-center">12</p>
         </div>
       </div>
@@ -68,7 +21,7 @@
   <div class="col-md-3 col-sm-6">
    <div class="award-item w-100">
     <div class="uk-animation-toggle">
-      <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success w-50 mx-auto">
+      <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
         <p class="uk-text-center">12</p>
       </div>
     </div>
@@ -78,7 +31,7 @@
 <div class="col-md-3 col-sm-6">
  <div class="award-item w-100">
    <div class="uk-animation-toggle">
-    <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success w-50 mx-auto">
+    <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
       <p class="uk-text-center">12</p>
     </div>
   </div>
@@ -147,84 +100,7 @@
 </div>
 <!-- END RIGHT COLUMN -->
 </div>
-</div>
 
-<!-- Modal chỉnh sửa thông tin  -->
-<div id="modal-info" class="uk-flex-top" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-    <div class="uk-modal-header pt-0">
-      <h4 class="">Thông tin cá nhân</h4>
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-    </div>
-    <div class="uk-modal-body">
-
-     <form class="uk-grid-small" uk-grid  id="form_edit_user">
-      <div class="uk-width-3-4">
-        <input class="uk-input" type="text" name="fullname" v-model="user.fullname" placeholder="Họ và tên">
-      </div>
-      <div class="uk-width-1-4">
-        <select class="uk-select" name="gender" v-model="user.gender">
-          <option value="nam">Nam</option>
-          <option value="nu">Nữ</option>
-        </select>
-      </div>
-      <div class="uk-width-1-2@s">
-        <input class="uk-input" type="date" name="birthday" v-model="user.birthday" placeholder="Ngày sinh">
-      </div>
-
-      <div class="uk-width-1-2@s">
-        <input class="uk-input" type="text" name="phone" v-model="user.phone" placeholder="Số điện thoại">
-      </div>
-      <div class="uk-width-1-1">
-        <input class="uk-input" type="text" name="address" v-model="user.address" placeholder="Địa chỉ">
-      </div>
-      <div class="uk-width-1-1">
-        <textarea class="uk-textarea" name="description" v-model="user.description" placeholder="Châm ngôn sống của tôi ..."></textarea>
-      </div>
-    </form>
-  </div>
-  <div class="uk-modal-footer pb-0">
-   <button class="uk-modal-close-default uk-button uk-button-default uk-text-uppercase" type="button">Hủy</button>
-   <button class="uk-buttonuk-text-uppercase uk-button-primary" @click="save">Lưu</button>
- </div>
-
-</div>
-</div>
-
-<!-- Modal change password -->
-<div id="modal-password" class="uk-flex-top" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-
-    <div class="uk-modal-body">
-
-     <form class="uk-grid-small" uk-grid>
-      <div class="uk-width-1-1">
-         <div class="uk-inline w-100">
-            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-            <input class="uk-input" type="text" placeholder="Mật khẩu cũ ">
-        </div>
-      </div>
-      <div class="uk-width-1-1">
-        <div class="uk-inline w-100">
-            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-            <input class="uk-input" type="text" placeholder="Mật khẩu mới ">
-        </div>
-      </div>
-      <div class="uk-width-1-1">
-        <div class="uk-inline w-100 ">
-            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-            <input class="uk-input" type="text" placeholder="Nhập lại mật khẩu mới">
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="uk-modal-footer pb-0">
-   <button class="uk-modal-close-default uk-button uk-button-default uk-text-uppercase" type="button">Hủy</button>
-    <button class="uk-buttonuk-text-uppercase uk-button-primary">Lưu</button>
-</div>
-
-</div>
-</div>
 </div>
 
 </template>
@@ -363,7 +239,7 @@ $lightseagreen: lightseagreen;
 }
 
 .user {
-  padding: 28px 10px;
+  padding: 30px 50px 50px;
 }
 
 .navbar + .user {
@@ -559,12 +435,9 @@ $lightseagreen: lightseagreen;
 }
 
 .profile-right {
-  float: right;
-  width: 65%;
-  padding: 20px 25px;
-}
-.profile-right .heading {
-  margin-top: 0;
+  .heading {
+    margin-top: 0;
+  }
 }
 
 @media screen and (max-width: 992px) {
