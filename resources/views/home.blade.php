@@ -62,7 +62,7 @@
 
   <!-- Main -->
 
-  <div class="pb-5">
+  <div>
     <router-view :key="$route.path"></router-view>
   </div>
 

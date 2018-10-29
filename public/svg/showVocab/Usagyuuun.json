@@ -1,0 +1,291 @@
+{
+  "data_name": "Usagyuuun",
+  "data_version": "1.0.0",
+  "emoticons": [
+    {
+      "key": "(axxx)",
+      "regex": "\\(axxx\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/c31e4c2c.gif"
+    },
+    {
+      "key": "(camun)",
+      "regex": "\\(camun\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/92cf5d54.gif"
+    },
+    {
+      "key": "(chanvler)",
+      "regex": "\\(chanvler\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/f0e9d212.gif"
+    },
+    {
+      "key": "(chayyy)",
+      "regex": "\\(chayyy\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/3e93d336.gif"
+    },
+    {
+      "key": "(cheer)",
+      "regex": "\\(cheer\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/0918c8f2.gif"
+    },
+    {
+      "key": "(cheer2)",
+      "regex": "\\(cheer2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/4befdfd5.gif"
+    },
+    {
+      "key": "(cheer3)",
+      "regex": "\\(cheer3\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/636e5916.gif"
+    },
+    {
+      "key": "(chongday)",
+      "regex": "\\(chongday\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/42131d9d.gif"
+    },
+    {
+      "key": "(clappp)",
+      "regex": "\\(clappp\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/93865e5f.gif"
+    },
+    {
+      "key": "(congiun)",
+      "regex": "\\(congiun\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/71362dd0.gif"
+    },
+    {
+      "key": "(dafuq)",
+      "regex": "\\(dafuq\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/578529ff.gif"
+    },
+    {
+      "key": "(damchan)",
+      "regex": "\\(damchan\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/26157c4b.gif"
+    },
+    {
+      "key": "(doivler)",
+      "regex": "\\(doivler\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/b9b39607.gif"
+    },
+    {
+      "key": "(ehehe)",
+      "regex": "\\(ehehe\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/818c391a.gif"
+    },
+    {
+      "key": "(ehehe2)",
+      "regex": "\\(ehehe2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/5f55d8d8.gif"
+    },
+    {
+      "key": "(ewww)",
+      "regex": "\\(ewww\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/b489c6e6.gif"
+    },
+    {
+      "key": "(fairy)",
+      "regex": "\\(fairy\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/342a41ab.gif"
+    },
+    {
+      "key": "(fairy2)",
+      "regex": "\\(fairy2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/7ec050bf.gif"
+    },
+    {
+      "key": "(gatdau)",
+      "regex": "\\(gatdau\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/5090a78e.gif"
+    },
+    {
+      "key": "(hmm?)",
+      "regex": "\\(hmm?\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/084af053.gif"
+    },
+    {
+      "key": "(hu??)",
+      "regex": "\\(hu??\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/df53d0b1.gif"
+    },
+    {
+      "key": "(hurra)",
+      "regex": "\\(hurra\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/fb0e15d1.gif"
+    },
+    {
+      "key": "(hurra2)",
+      "regex": "\\(hurra2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/7eb69cd8.gif"
+    },
+    {
+      "key": "(lalalaaa)",
+      "regex": "\\(lalalaaa\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/c7dd3d04.gif"
+    },
+    {
+      "key": "(lanhvler)",
+      "regex": "\\(lanhvler\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/01f7c4c4.gif"
+    },
+    {
+      "key": "(moian)",
+      "regex": "\\(moian\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/68e599a2.gif"
+    },
+    {
+      "key": "(nanana)",
+      "regex": "\\(nanana\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/0a1e52e1.gif"
+    },
+    {
+      "key": "(nemthinh)",
+      "regex": "\\(nemthinh\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/a09b25d9.gif"
+    },
+    {
+      "key": "(ngoannao)",
+      "regex": "\\(ngoannao\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/c187242d.gif"
+    },
+    {
+      "key": "(nhapnho)",
+      "regex": "\\(nhapnho\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/76ddbd87.gif"
+    },
+    {
+      "key": "(nhunnhay)",
+      "regex": "\\(nhunnhay\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/71c2eb6b.gif"
+    },
+    {
+      "key": "(okie)",
+      "regex": "\\(okie\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/746e9869.gif"
+    },
+    {
+      "key": "(omcarot)",
+      "regex": "\\(omcarot\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/5562299b.gif"
+    },
+    {
+      "key": "(quangthinh)",
+      "regex": "\\(quangthinh\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/8f122fa3.gif"
+    },
+    {
+      "key": "(quylay)",
+      "regex": "\\(quylay\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/812533cc.gif"
+    },
+    {
+      "key": "(quylay2)",
+      "regex": "\\(quylay2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/ecd92987.gif"
+    },
+    {
+      "key": "(sosad)",
+      "regex": "\\(sosad\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/e321ca21.gif"
+    },
+    {
+      "key": "(soti)",
+      "regex": "\\(soti\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/777183ff.gif"
+    },
+    {
+      "key": "(tangdong)",
+      "regex": "\\(tangdong\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/0c756f2c.gif"
+    },
+    {
+      "key": "(thunhun)",
+      "regex": "\\(thunhun\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/6d9eabd2.gif"
+    },
+    {
+      "key": "(toatmohoi)",
+      "regex": "\\(toatmohoi\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/55963430.gif"
+    },
+    {
+      "key": "(tungcarot)",
+      "regex": "\\(tungcarot\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/714db620.gif"
+    },
+    {
+      "key": "(uchiudau)",
+      "regex": "\\(uchiudau\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/4888dbc2.gif"
+    },
+    {
+      "key": "(uchiudau2)",
+      "regex": "\\(uchiudau2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/413ca46d.gif"
+    },
+    {
+      "key": "(uchiudau3)",
+      "regex": "\\(uchiudau3\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/46b270d5.gif"
+    },
+    {
+      "key": "(uhuhu)",
+      "regex": "\\(uhuhu\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/35f82503.gif"
+    },
+    {
+      "key": "(uoa)",
+      "regex": "\\(uoa\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/fc9abd5f.gif"
+    },
+    {
+      "key": "(uuuu)",
+      "regex": "\\(uuuu\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/7d6c2eb7.gif"
+    },
+    {
+      "key": "(waaa)",
+      "regex": "\\(waaa\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/9a2a8bf1.gif"
+    },
+    {
+      "key": "(waisoma)",
+      "regex": "\\(waisoma\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/3a66206e.gif"
+    },
+    {
+      "key": "(wtf!)",
+      "regex": "\\(wtf!\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/f81d7ef0.gif"
+    },
+    {
+      "key": "(yessir)",
+      "regex": "\\(yessir\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/bfb340ad.gif"
+    },
+    {
+      "key": "(yeuna)",
+      "regex": "\\(yeuna\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/b5435b96.gif"
+    },
+    {
+      "key": "(yeuna2)",
+      "regex": "\\(yeuna2\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/0f5da797.gif"
+    },
+    {
+      "key": "(yeuna3)",
+      "regex": "\\(yeuna3\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/8f11ded2.gif"
+    },
+    {
+      "key": "(loveee)",
+      "regex": "\\(loveee\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/ec71f8e9.gif"
+    },
+    {
+      "key": "(zzz)",
+      "regex": "\\(zzz\\)",
+      "src": "http://res.cloudinary.com/chatpp/image/upload/emo/a5abba17.gif"
+    }
+  ]
+}

@@ -33,15 +33,67 @@
               <p><span>{{ vocabulary.vi }}</span></p>
               <p><i>{{ type }}</i></p>
             </div>
+<<<<<<< 7053982553826eca3612918f8abc91e2d74a546b
             <div class="uk-width-expand tool">
               <div class="icon text-right px-3">
                 <span uk-icon="more"></span>
               </div>
+=======
+            <div class="uk-width-expand tool uk-inline">
+
+              <div class="icon" uk-tooltip="Xem thêm" uk-toggle="target: #m_tool">
+                <span uk-icon="more"></span>
+              </div>
+
+              <div id="m_tool" class="sosd_dialog" uk-dropdown="mode: click; pos: bottom-right">
+                <div>
+                  <ul>
+                    <li>
+                      <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >
+                        Thêm từ liên kết
+                      </router-link>
+                    </li>
+                    <li>
+                      <router-link :to="{name: 'editVocab', params: { id: vocabulary.id }}" >
+                        Sửa
+                      </router-link>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        Xóa
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
       <div class="sosd_background_af"></div>
+      <div v-if="pedigree.length == 0">
+        <div class="uk-margin-top text-center">
+          <b>Từ này chưa có từ liên kết đến, <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >Thêm ngay</router-link></b>
+        </div>
+      </div>
+      <div class="uk-container" v-else>
+        <div class="sosd_vocabularies uk-padding-small uk-child-width-1-5" uk-grid="masonry: true;">
+          <div v-for="v in pedigree">
+            <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
+              <div class="uk-card-media-top">
+                <img :src="v.image" alt="">
+              </div>
+              <div class="uk-card-body">
+                <div>
+                  <h3 class="uk-card-title">{{ v.en }}</h3>
+                  <p>{{ v.vi }}</p>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -179,16 +231,86 @@ export default {
       }
       .body {
         .tool {
+<<<<<<< 7053982553826eca3612918f8abc91e2d74a546b
 
+=======
+          display: flex;
+          justify-content: flex-end;
+          .icon {
+            display: flex;
+            width: 32px;
+            height: 32px;
+            margin-top: 5px;
+            margin-right: 10px;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            border: none;
+            outline: none;
+            border-radius: 50%;
+            cursor: pointer;
+            &:hover {
+              background: rgb(233, 233, 233);
+            }
+          }
+>>>>>>> show vocabulary
         }
       }
     }
   }
   .sosd_background_af {
     width: 100%;
+<<<<<<< 7053982553826eca3612918f8abc91e2d74a546b
     height: 100px;
+=======
+    height: 150px;
+>>>>>>> show vocabulary
     background: rgb(250, 250, 250);
     border-top: 1px solid rgb(233, 233, 233);
     border-bottom: 1px solid rgb(233, 233, 233);
   }
+<<<<<<< 7053982553826eca3612918f8abc91e2d74a546b
+=======
+  .sosd_dialog {
+    padding: 0;
+    width: auto;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        a {
+          text-decoration: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 200px;
+          height: 50px;
+          color: #333333;
+          &:hover {
+            background: #03B1E8;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  .sosd_vocabularies {
+    .vocab {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      .uk-card-body {
+        padding: 10px 30px;
+        h3, p {
+          margin: 8px 0;
+          padding: 0;
+        }
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+>>>>>>> show vocabulary
 </style>
