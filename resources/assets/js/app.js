@@ -9,6 +9,7 @@ import newVocab from './components/vocabularies/new';
 import UserProfile from './components/users/show';
 import editVocab from './components/vocabularies/edit';
 import showVocab from './components/vocabularies/show';
+import dictionary from './components/vocabularies/dictionary';
 import indexGrammar from './components/grammar/index';
 import grammarArticle from './components/grammar/grammar_article';
 import indexSetting from './components/setting/index';
@@ -33,6 +34,11 @@ const routes = [
     path: '/user-profile/:id',
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/vocabularies/dictionary',
+    name: 'dictionary',
+    component: dictionary
   },
   {
     path: '/vocabularies/:id/new',

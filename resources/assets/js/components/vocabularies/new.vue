@@ -1,34 +1,35 @@
 <template>
 <div>
-  <div class="uk-flex">
-    <div class="uk-text-left uk-margin-right">
-      <router-link to="/vocabularies">
-        <button class="uk-button uk-button-primary sosd-color-white">
-          <span uk-icon="icon: arrow-left;"></span> Quay lại
-        </button>
-      </router-link>
+
+  <div class="sosd_nav">
+    <div class="uk-container">
+      <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
+      <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
+      <span>Thêm từ mới</span>
     </div>
   </div>
-  <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
-    <div class="uk-width-1-3" >
+
+  <div class="uk-container">
+    <div class="uk-margin-top" uk-grid>
+    <div class="uk-width-1-3">
       <h3>
         Thêm từ vựng
       </h3>
       <hr>
       <form id="form_create_vocab" class="uk-form-stacked">
         <input type="hidden" name="_token" :value="csrf_token">
-        <input type="hidden" v-model="parent_id" name="parent_id">
+        <input type="hidden" v-model="vocabulary.parent_id" name="parent_id">
         <div>
           <label class="uk-form-label">Tiếng Anh</label>
           <div class="uk-form-controls">
-            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en">
+            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
           </div>
         </div>
 
         <div>
           <label class="uk-form-label">Tiếng Việt</label>
           <div class="uk-form-controls">
-            <input class="uk-input" type="text" name="vi">
+            <input class="uk-input" type="text" name="vi" v-model="vocabulary.vi" tabindex="2">
           </div>
         </div>
 
@@ -36,27 +37,27 @@
           <label class="uk-form-label">Loại từ</label>
           <div class="uk-form-controls uk-column-1-3">
             <label>
-              <input value="Danh từ" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="0" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Danh từ
             </label>
             <label>
-              <input value="Động từ" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="1" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Động từ
             </label>
             <label>
-              <input value="Tính từ" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="2" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Tính từ
             </label>
             <label>
-              <input value="Trạng từ" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="3" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Trạng từ
             </label>
             <label>
-              <input value="Giới từ" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="4" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Giới từ
             </label>
             <label>
-              <input value="Từ nối" class="uk-checkbox" type="checkbox" name="type[]">
+              <input value="5" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               Từ nối
             </label>
           </div>
@@ -67,6 +68,8 @@
             <input type="file" id="file" name="image" style="display: none" @change="preview_image">
             <label for="file" class="preview_image" v-if="preview">
               <img :src="preview_image_vl" />
+              <input type="hidden" name="import_image" v-model="import_image">
+              <input type="hidden" name="import_image_url" v-model="preview_image_vl">
               <span class="txt-change-image">Thay đổi ảnh</span>
             </label>
             <label for="file" class="preview" v-else="preview">
@@ -79,50 +82,88 @@
         </div>
       </form>
     </div>
-    <div class="uk-width-2-3" >
+    <div class="uk-width-2-3">
       <h3>
         Hình ảnh gợi ý
       </h3>
       <hr>
-      <div uk-grid="mansonry: true" v-if="searches.length > 0">
-        <div v-for="v in searches">
-          <img :src="v.image" width="200px">
+
+      <div v-if="loading">
+        <Loading></Loading>
+      </div>
+
+      <div v-if="error">
+        <b>Vui lòng thử lại</b>
+      </div>
+
+      <div v-if="success">
+        <div uk-grid="mansonry: true" v-if="searches.length > 0">
+          <div class="sosd_images uk-animation-slide-bottom" v-for="v in searches" @click="select($event, v.image)">
+            <img :src="v.image" width="200px" class="">
+          </div>
+        </div>
+        <div v-else>
+          <b>Không có hỉnh ảnh phù hợp</b>
         </div>
       </div>
-      <div v-else>
-        <b>Không có hỉnh ảnh phù hợp</b>
-      </div>
     </div>
- </div>
+    </div>
+  </div>
 </div>
 </template>
 
 <script>
+import Loading from './../shared/loading';
+
 export default {
+  components: {
+    Loading: Loading,
+  },
   data: function() {
     return {
+      error: false,
+      success: false,
+      loading: true,
       csrf_token: '',
       preview: false,
       preview_image_vl: '',
-      parent_id: 0,
+      import_image: false,
       vocabulary: {
-        en: ''
+        en: '',
+        vi: '',
+        type: [],
+        parent_id: 0,
       },
       searches: []
     };
   },
+  watch: {
+    error() {
+      if(this.error) {
+        this.success = false;
+        this.loading = false;
+      }
+    },
+    success() {
+      if(this.success) {
+        this.error = false;
+        this.loading = false;
+      }
+    },
+    loading() {
+      if(this.loading) {
+        this.error = false;
+        this.success = false;
+      }
+    }
+  },
   mounted() {
     var app = this;
-    axios.get('/api/v1/vocabularies/search/all')
-    .then(res => {
-      app.searches = res.data;
-    })
-    .catch(res => {
-      alert('khong load duoc');
-    })
+
+    this.search();
 
     if (this.$route.params.id) {
-      this.parent_id = this.$route.params.id;
+      this.vocabulary.parent_id = this.$route.params.id;
     }
     this.csrf_token = Laravel.csrf_token;
 
@@ -142,16 +183,26 @@ export default {
       }
     });
   },
+
   methods: {
     search() {
       var app = this;
-      var en = app.vocabulary.en
-      axios.get('/api/v1/vocabularies/search/' + en)
+      app.loading = true;
+      var en = app.vocabulary.en;
+      var url = '/api/v1/vocabularies/search/all';
+      if(en != '')
+        url = '/api/v1/vocabularies/search/' + en;
+      axios.get(url)
       .then(res => {
-        app.searches = res.data;
+        setTimeout(function() {
+          app.searches = res.data;
+          app.success = true;
+        },500);
       })
       .catch(res => {
-        alert('khong load duoc');
+        setTimeout(function() {
+          app.error = true;
+        },500);
       })
     },
 
@@ -192,60 +243,69 @@ export default {
         };
         reader.readAsDataURL(files[0]);
         this.preview = true;
+        this.import_image = false;
       }
+    },
+
+    select(e, url) {
+      this.preview = true;
+      this.preview_image_vl = url;
+      this.import_image = true;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-nav {
-  text-transform: uppercase;
-  span.uk-icon {
-    display: inherit;
-    padding: 0 10px;
+  .sosd_nav {
+    box-sizing: border-box;
+    background: rgb(247, 247, 247);
+    border-bottom: 1px solid rgb(233, 233, 233);
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
   }
-  a {
-    font-weight: bold;
+  .sosd_images {
+    position: relative;
+    transition: all ease 1s;
     &:hover {
-      text-decoration: none;
-      color: tomato;
+      cursor: pointer;
+      transform: scale(1.05, 1.05);
     }
   }
-}
-.preview {
-  width: 150px;
-  height: 150px;
-  border: 1px dashed rgb(33, 33, 33);
-  line-height: 150px;
-  text-align: center;
-}
-.preview_image {
-  height: 200px;
-  width: 100%;
-  max-width: 200px;
-  min-width: 150px;
-  position: relative;
-  img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-  .txt-change-image {
-    position: absolute;
-    display: none;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  .preview {
+    width: 150px;
+    height: 150px;
+    border: 1px dashed rgb(33, 33, 33);
+    line-height: 150px;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff !important;
-    padding: 10px;
   }
-  &:hover {
+  .preview_image {
+    height: 200px;
+    width: 100%;
+    max-width: 200px;
+    min-width: 150px;
+    position: relative;
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
     .txt-change-image {
-      display: block;
+      position: absolute;
+      display: none;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff !important;
+      padding: 10px;
+    }
+    &:hover {
+      .txt-change-image {
+        display: block;
+      }
     }
   }
-}
 </style>

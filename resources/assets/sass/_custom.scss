@@ -1,18 +1,11 @@
-html, body {
-  background: rgb(250, 250, 245) !important;
-}
-
 .sosd-background-primary {
   background: $primary !important;
 }
 
 .sosd-background-white {
   background: white !important;
-  * {
-    color: $black !important;
-  }
   .uk-nav-divider {
-    border-top-color: rgb(233, 233, 233) !important;
+    border-top: 1px solid rgba(33, 33, 33, 0.5) !important;
   }
 }
 
@@ -30,4 +23,44 @@ html, body {
 
 .color-primary {
   color: $primary !important;
+}
+
+.sosd-a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.sosd-none {
+  display: none;
+}
+
+.sosd-hover-primary {
+  color: $black !important;;
+  &:hover {
+    color: $primary !important;
+    cursor: pointer;
+  }
+  * {
+    color: $black !important;
+  }
+}
+
+body {
+  height: 100vh;
+}
+
+#app {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  footer {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    height: 60px;
+    width: 100%;
+    background: #eeeeee;
+  }
 }
