@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+// namespace Ammadeuss\LaravelHtmlDomParser;
+// use Sunra\PhpSimple\HtmlDomParser;
 use Illuminate\Http\Request;
 use App\GrammarArticle;
-use Sunra\PhpSimple\HtmlDomParser;
+
+// use App\Http\HtmlDomParser;
 
 class GrammarArticleController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,12 +19,16 @@ class GrammarArticleController extends Controller
      */
     public function index()
     {
+        include(app_path() . '\Http\HtmlDomParser.php');
         $url = 'https://efc.edu.vn/ngu-phap-tieng-anh';
-        // $dom = HtmlDomParser::file_get_html($url);
-        // $instance = new \simple_html_dom();
-        $html = file_get_html('http://www.google.com/');
-        // return GrammarArticle::all();
-        return '12';
+        if (function_exists('file_get_html')) {
+            $get_html = file_get_html($url);
+            $html = html_entity_decode($get_html);
+        } else {
+            $html = "not get file_get_html";
+        }
+        $links = $html->find('div.td-page-title');
+        return $html;
     }
 
     /**

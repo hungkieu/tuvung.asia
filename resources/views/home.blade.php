@@ -19,6 +19,7 @@
         </router-link>
       </div>
 
+
       <div class="col-6 justify-content-end d-flex align-items-center">
         <a class="sosd-color-white" uk-toggle="target: #offcanvas-menu">
           <span uk-icon="icon: menu; ratio: 1.2"></span>
@@ -26,6 +27,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- Off canvas -->
   <div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true">

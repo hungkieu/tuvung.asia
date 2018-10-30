@@ -29,7 +29,8 @@ header a {
   text-decoration: none;
 }
 
-header a:hover {
+header a:hover,
+header a:focus {
   text-decoration: none;
 }
 
@@ -183,8 +184,10 @@ header .btn-login:hover {
 }
 
 .contact {
-  padding: 80px 0;
+  padding: 90px 0;
   background-size: cover;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .contact .btn-fb,
@@ -193,10 +196,23 @@ header .btn-login:hover {
   padding: 5px 15px;
   border-radius: 20px;
   margin: 0 10px 10px;
+  text-decoration: none;
 }
 
 .contact .btn-fb span,
 .contact .btn-gg span {
+  padding: 0 10px;
+}
+
+.contact a.btn-fb,
+.contact a.btn-gg {
+  padding: 5px 15px 8px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.contact a.btn-fb span,
+.contact a.btn-gg span {
   padding: 0 10px;
 }
 
