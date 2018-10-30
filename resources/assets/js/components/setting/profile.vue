@@ -30,7 +30,7 @@
         <textarea class="uk-textarea rounded" rows="5" name="description" v-model="user.description"></textarea>
       </div>
       <div class="uk-width-1-1">
-          <label>Học từ </label>
+          <label>Học tập từ  {{user.created_at}} </label>
       </div>
       <div class="uk-width-1-1">
       <button class="uk-button uk-text-uppercase uk-button-primary px-4 mt-4 rounded font-weight-bold" @click="save">Lưu</button>
@@ -83,11 +83,7 @@ export default {
       var formData = new FormData(f);
 
       axios
-        .post('/users/edit/' + this.user.id, this.user, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+        .post('/users/edit/' + this.user.id, this.user)
         .then(function(res) {
           console.log(res);
           alert('Update thành công !');

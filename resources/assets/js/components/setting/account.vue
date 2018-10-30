@@ -84,11 +84,7 @@ export default {
       var f = document.getElementById('form_edit_user');
       var formData = new FormData(f);
       axios
-        .post('/users/edit/' + this.user.id, this.user, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+        .post('/users/edit/' + this.user.id, this.user)
         .then(function(res) {
           alert('Update thành công !');
           console.log(res);
