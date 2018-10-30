@@ -10,27 +10,43 @@ use Illuminate\Support\Facades\Auth;
 class VocabulariesController extends Controller
 {
   public function create(Request $request) {
-    $vocab = new Vocabulary;
-    $vocab->en = $request->en;
-    $vocab->vi = $request->vi;
-    $vocab->type = json_encode($request->type);
-    $vocab->parent_id = $request->parent_id;
+    if(Auth::check()) {
+      $vocab = new Vocabulary;
+      $vocab->en = ucfirst($request->en);
+      $vocab->vi = ucfirst($request->vi);
+      $vocab->type = implode(",", $request->type);
+      $vocab->parent_id = $request->parent_id;
 
-    if($request->hasFile('image'))
-    {
-      $vocab->image = '/storage/'.str_replace('public/', '', $request->file('image')->store('public/images'));
-    }
+      if($request->parent_id != 0) {
+        $parent = Vocabulary::find($request->parent_id);
+      } else {
+        $parent = new Vocabulary;
+      }
+      $pedigree = explode(",", $parent->pedigree);
+      array_push($pedigree, $vocab->parent_id);
+      $vocab->pedigree = implode(",", $pedigree);
 
-    $vocab->user_id = Auth::user()->id;
+      if($request->import_image == 'true') {
+        $url = basename($request->import_image_url);
+        copy(public_path($request->import_image_url), public_path('/storage/images/'.$url.'.jpeg'));
+        $vocab->image = '/storage/images/'.$url.'.jpeg';
+      } else {
+        if($request->hasFile('image'))
+        {
+          $vocab->image = '/storage/'.str_replace('public/', '', $request->file('image')->store('public/images'));
+        }
+      }
 
-    if($vocab->save())
-    {
-      $user = User::find(Auth::user()->id);
-      $user->score = $user->score + 10;
-      $user->save();
-      return response('create success', 200);
+      $vocab->user_id = Auth::user()->id;
+
+      if($vocab->save())
+      {
+        return response('create success', 200);
+      } else {
+        return response('create failed', 400);
+      }
     } else {
-      return response('create failed', 400);
+      return response('Login failed', 422);
     }
   }
 

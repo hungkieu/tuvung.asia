@@ -48,11 +48,11 @@
 							{{ csrf_field() }}
 							<p class="text-center">Đăng nhập với</p>
 							<div class="w-100 text-center">
-								<a href="/redirect/facebook" class="btn-fb">
+								<a href="/redirect/facebook" class="sosd-a btn-fb">
 									<i class="fa fa-facebook fa-lg " ></i>
 									<span>Facebook</span>
 								</a>
-								<a href="/redirect/google" class="btn-gg" >
+								<a href="/redirect/google" class="sosd-a btn-gg" >
 									<i class="fa fa-google fa-lg" ></i>
 									<span>Google</span>
 								</a>
