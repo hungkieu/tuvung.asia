@@ -1,4 +1,6 @@
 <template>
+<div class="setting">
+<div class="uk-container">
 <div class="row">
     <div class="col-3">
         <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
@@ -11,9 +13,11 @@
           </ul>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <router-view></router-view>
     </div>
+</div>
+</div>
 </div>
 </template>
 <script>
@@ -26,6 +30,10 @@ $color-main: #1f8bf0;
   &:hover {
     color: #fff !important;
   }
+}
+.setting {
+  background: #f2f5f8;
+  padding: 30px 0;
 }
 .uk-card {
   a {

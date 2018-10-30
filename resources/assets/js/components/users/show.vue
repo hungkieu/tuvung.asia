@@ -1,7 +1,7 @@
 <template>
 
- <div class="user sosd-background-white sosd-box-shadow">
-    <div class="clearfix">
+ <div class="user">
+    <div class="clearfix sosd-background-white sosd-box-shadow">
 <!-- RIGHT COLUMN -->
 <div class="profile-right">
   <h4 class="heading">Mức độ thành thạo</h4>
@@ -239,7 +239,6 @@ $lightseagreen: lightseagreen;
 }
 
 .user {
-  padding: 30px 50px 50px;
 }
 
 .navbar + .user {
@@ -435,6 +434,7 @@ $lightseagreen: lightseagreen;
 }
 
 .profile-right {
+  padding: 30px 50px 50px;
   .heading {
     margin-top: 0;
   }
