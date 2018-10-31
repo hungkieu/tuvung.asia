@@ -1,7 +1,7 @@
 <template>
         <div class="profile-detail uk-card-default">
      <div class="profile-info">
-      <h4 class="heading mb-3">Cài đặt cá nhân</h4>
+      <h4 class="heading mb-3">Hồ sơ</h4>
       <form class="uk-grid-small" uk-grid  id="form_edit_user">
       <div class="uk-width-1-1">
           <div class="uk-width-1-2">
@@ -57,7 +57,7 @@ export default {
     var app = this;
     console.log(this.user);
     axios
-      .get('/users/' + id)
+      .get('/user/' + id)
       .then(function(res) {
         console.log(res.data);
         app.user = res.data;
@@ -83,7 +83,7 @@ export default {
       var formData = new FormData(f);
 
       axios
-        .post('/users/edit/' + this.user.id, this.user)
+        .post('/user/update/' + this.user.id, this.user)
         .then(function(res) {
           console.log(res);
           alert('Update thành công !');

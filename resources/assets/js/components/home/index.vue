@@ -64,7 +64,7 @@ import Loading from './../shared/loading';
 
 export default {
   components: {
-    Loading: Loading,
+    Loading: Loading
   },
   data: function() {
     return {
@@ -75,12 +75,12 @@ export default {
         {
           id: 1,
           text: 'Chức năng',
-          active: true,
+          active: true
         },
         {
           id: 2,
           text: 'Thống kê',
-          active: false,
+          active: false
         }
       ],
       sosd_features: [
@@ -90,36 +90,36 @@ export default {
             {
               icon: '/svg/plus.svg',
               link: '/vocabularies/new',
-              name: 'Thêm từ mới',
+              name: 'Thêm từ mới'
             },
             {
               icon: '/svg/list.svg',
               link: '/vocabularies',
-              name: 'Danh sách từ vựng',
+              name: 'Danh sách từ vựng'
             },
             {
               icon: '/svg/favourite.svg',
               link: '/vocabularies',
-              name: 'Từ ưa thích của bạn',
+              name: 'Từ ưa thích của bạn'
             },
             {
               icon: '/svg/dictionary.svg',
               link: '/vocabularies/dictionary',
-              name: 'Từ điển của bạn',
+              name: 'Từ điển của bạn'
             },
             {
               icon: '/svg/review.svg',
               link: '/vocabularies',
-              name: 'Ôn tập',
-            },
-          ],
+              name: 'Ôn tập'
+            }
+          ]
         }
       ]
     };
   },
   computed: {
     loading() {
-      return !this.success && !this.error
+      return !this.success && !this.error;
     }
   },
   mounted() {
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     get_infomation() {
-      if(Laravel.user) {
+      if (Laravel.user) {
         this.user = Laravel.user;
         this.success = true;
       } else {
@@ -138,8 +138,8 @@ export default {
     },
 
     nav_active(id) {
-      for(let i = 0; i < this.sosd_nav.length; i++) {
-        if(this.sosd_nav[i].id == id) {
+      for (let i = 0; i < this.sosd_nav.length; i++) {
+        if (this.sosd_nav[i].id == id) {
           this.sosd_nav[i].active = true;
         } else {
           this.sosd_nav[i].active = false;
@@ -151,90 +151,91 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .sosd-profile {
+.sosd-profile {
+  box-sizing: border-box;
+  width: 100%;
+  height: 150px;
+  background: white url('/svg/Flat-Mountains.svg') no-repeat bottom right;
+  background-size: 500px 250px;
+  position: relative;
+  .user-profile {
     box-sizing: border-box;
-    width: 100%;
-    height: 150px;
-    background: white url('/svg/Flat-Mountains.svg') no-repeat bottom right;
-    background-size: 500px 250px;
-    position: relative;
-    .user-profile {
-      box-sizing: border-box;
-      width: 60%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      padding: 0 50px;
-      .avatar {
-        float: left;
-        img {
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-        }
-      }
-      .profile {
-        padding: 0 10px;
-        #score {
-          color: #1f8bf0;
-        }
-      }
-    }
-  }
-
-  .sosd-nav {
-    box-sizing: border-box;
-    background: rgb(247, 247, 247);
-    width: 100%;
-    height: 60px;
-    border-bottom: 1px solid rgb(235, 235, 235);
+    width: 60%;
+    height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    .nav {
-      display: inline-block;
-      height: 60px;
-      line-height: 60px;
-      padding: 0 20px;
-      transition: color ease .5s;
-      &:hover {
-        border-bottom: 2px solid #1f8bf0;
+    padding: 0 50px;
+    .avatar {
+      float: left;
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+    .profile {
+      padding: 0 10px;
+      #score {
         color: #1f8bf0;
-        cursor: pointer;
       }
     }
-    .active {
-      font-weight: bold;
-      color: #1f8bf0;
-      border-bottom: 2px solid #1f8bf0;
-    }
   }
+}
 
-  .sosd_feature {
-    .sosd_card {
-      box-sizing: border-box;
-      width: 100%;
-      height: 50px;
-      display: block;
-      line-height: 50px;
-      transition: ease all 1s;
-      .icon {
-        float: left;
-        img {
-          transition: ease all 1s;
-        }
-      }
-      .name {
-        float: left;
-        margin-left: 20px;
-      }
-    }
-    .sosd_card:hover {
-      background: aliceblue;
-      padding: 0 20px;
-    }
-    .sosd_card:hover img {
-      transform: rotate(360deg);
+.sosd-nav {
+  box-sizing: border-box;
+  background: rgb(247, 247, 247);
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid rgb(235, 235, 235);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .nav {
+    display: inline-block;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20px;
+    transition: color ease 0.5s;
+    &:hover {
+      border-bottom: 2px solid #1f8bf0;
+      color: #1f8bf0;
+      cursor: pointer;
     }
   }
+  .active {
+    font-weight: bold;
+    color: #1f8bf0;
+    border-bottom: 2px solid #1f8bf0;
+  }
+}
+
+.sosd_feature {
+  .sosd_card {
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    display: block;
+    line-height: 50px;
+    transition: ease all 1s;
+    .icon {
+      float: left;
+      img {
+        transition: ease all 1s;
+      }
+    }
+    .name {
+      float: left;
+      margin-left: 20px;
+    }
+  }
+  .sosd_card:hover {
+    background: aliceblue;
+    padding: 0 20px;
+  }
+  .sosd_card:hover img {
+    transform: rotate(360deg);
+  }
+}
 </style>

@@ -51,6 +51,17 @@ class UserProfileController extends Controller
     */
     public function edit(Request $request, $id)
     {
+        
+    }
+    /**
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function update(Request $request, $id)
+    {
         $user = User::findOrFail($id);
         if ($request->hasFile('avatar')) {
             $user->avatar = '/storage/'.str_replace('public/', '', $request->file('avatar')->store('public/images'));
@@ -65,17 +76,6 @@ class UserProfileController extends Controller
         } else {
         return response('create failed', 400);
         }
-    }
-    /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function update(Request $request, $id)
-    {
-        //
     }
     /**
     * Remove the specified resource from storage.

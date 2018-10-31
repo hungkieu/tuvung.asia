@@ -8,17 +8,19 @@ Route::post('/vocabularies', 'VocabulariesController@create');
 
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
 Route::delete('/vocabularies/{id}/delete', 'VocabulariesController@destroy');
-Route::get('users/{id}', 'UserProfileController@show');
-Route::post('users/edit/{id}', 'UserProfileController@edit');
+Route::post('user/update/{id}', 'UserProfileController@update');
+Route::get('user/{id}', 'UserProfileController@show');
 
-Route::get('/grammars/{id}', 'GrammarsController@show');
-Route::post('/grammars/create', 'GrammarsController@create');
-Route::get('/grammars-articles', 'GrammarArticleController@index');
+Route::get('/ngu-phap-tieng-anh', 'GrammarArticleController@index');
+Route::post('/grammar/create', 'GrammarsController@create');
+Route::post('/grammar/update/{id}', 'GrammarsController@update');
+Route::delete('/grammar/delete/{id}', 'GrammarsController@destroy');
+Route::get('/grammar/{id}', 'GrammarsController@show');
 
 Route::get('/redirect/{social}', 'SocialAuthController@redirect');
 Route::get('/callback/{social}', 'SocialAuthController@callback');
 
-
+Route::post('/password/reset');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
@@ -26,4 +28,3 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
-
