@@ -43,7 +43,7 @@
             <div class="uk-width-4-5">
               <div class="sosd_vocabularies uk-padding-small uk-child-width-1-4" uk-grid="masonry: true;" v-if="grid">
                 <div v-for="v in vocabularies">
-                  <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default">
+                  <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
                     <div class="uk-card-media-top">
                       <img :src="v.image" alt="">
                     </div>
@@ -52,9 +52,6 @@
                         <h3 class="uk-card-title">{{ v.en }}</h3>
                         <p>{{ v.vi }}</p>
                       </div>
-                    </div>
-                    <div class="ticket" uk-tooltip="title: Ưa thích">
-                      <i class="fa fa-star" aria-hidden="true"></i>
                     </div>
                   </router-link>
                 </div>
@@ -230,20 +227,6 @@ export default {
       }
       img {
         width: 100%;
-      }
-      .ticket {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 2px 5px;
-        color: #eeeeee;
-        border: 1px solid #eeeeee;
-        i {
-          transition: all ease 1s;
-        }
-        &:hover i {
-          transform: rotate(360deg);
-        }
       }
     }
   }
