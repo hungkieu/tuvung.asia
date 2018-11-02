@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-5">
     <div v-if="loading">
       <Loading></Loading>
     </div>
@@ -33,71 +33,77 @@
               <p><span>{{ vocabulary.vi }}</span></p>
               <p><i>{{ type }}</i></p>
             </div>
-            <div class="uk-width-expand tool">
-              <div class="icon text-right px-3">
+            <div class="uk-width-expand tool uk-inline">
+
+              <div class="icon" uk-tooltip="Xem thêm" uk-toggle="target: #m_tool">
                 <span uk-icon="more"></span>
-                <div class="uk-width-expand tool uk-inline">
-
-                  <div class="icon" uk-tooltip="Xem thêm" uk-toggle="target: #m_tool">
-                    <span uk-icon="more"></span>
-                  </div>
-
-                  <div id="m_tool" class="sosd_dialog" uk-dropdown="mode: click; pos: bottom-right">
-                    <div>
-                      <ul>
-                        <li>
-                          <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >
-                            Thêm từ liên kết
-                          </router-link>
-                        </li>
-                        <li>
-                          <router-link :to="{name: 'editVocab', params: { id: vocabulary.id }}" >
-                            Sửa
-                          </router-link>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            Xóa
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div>
               </div>
-            </div>
-          </div>
-          <div class="sosd_background_af"></div>
-          <div v-if="pedigree.length == 0">
-            <div class="uk-margin-top text-center">
-              <b>Từ này chưa có từ liên kết đến, <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >Thêm ngay</router-link></b>
-            </div>
-          </div>
-          <div class="uk-container" v-else>
-            <div class="sosd_vocabularies uk-padding-small uk-child-width-1-5" uk-grid="masonry: true;">
-              <div v-for="v in pedigree">
-                <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
-                  <div class="uk-card-media-top">
-                    <img :src="v.image" alt="">
-                  </div>
-                  <div class="uk-card-body">
-                    <div>
-                      <h3 class="uk-card-title">{{ v.en }}</h3>
-                      <p>{{ v.vi }}</p>
-                    </div>
-                  </div>
-                </router-link>
+
+              <div id="m_tool" class="sosd_dialog" uk-dropdown="mode: click; pos: bottom-right">
+                <div>
+                  <ul>
+                    <li>
+                      <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >
+                        Thêm từ liên kết
+                      </router-link>
+                    </li>
+                    <li>
+                      <router-link :to="{name: 'editVocab', params: { id: vocabulary.id }}" >
+                        Sửa
+                      </router-link>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        Xóa
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="sosd_background_af"></div>
+      <div v-if="pedigree.length == 0">
+        <div class="uk-margin-top text-center">
+          <b>Từ này chưa có từ liên kết đến, <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >Thêm ngay</router-link></b>
+        </div>
+      </div>
+      <div class="uk-container" v-else>
+        <div class="sosd_menu">
+          <ul>
+              <li @click="grid = true"><span uk-icon="grid"></span> Dạng lưới</li>
+              <li @click="map = true"><span uk-icon="git-branch"></span> Dạng bản đồ</li>
+          </ul>
+        </div>
+        <div class="sosd_vocabularies uk-padding-small uk-child-width-1-5" uk-grid="masonry: true;" v-if="grid">
+          <div v-for="v in pedigree">
+            <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
+              <div class="uk-card-media-top">
+                <img :src="v.image" alt="">
+              </div>
+              <div class="uk-card-body">
+                <div>
+                  <h3 class="uk-card-title">{{ v.en }}</h3>
+                  <p>{{ v.vi }}</p>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+        <div v-show="map">
+          <div id="map"></div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <script src="">
+  import go from 'gojs';
   import Loading from './../shared/loading';
 
   export default {
@@ -109,6 +115,8 @@
         error: false,
         success: false,
         loading: true,
+        grid: true,
+        map: false,
         vocabulary: {},
         pedigree: [],
         user: {},
@@ -134,6 +142,15 @@
       }
     },
     watch: {
+      grid() {
+        if(this.grid) this.map = false
+      },
+      map() {
+        if(this.map) {
+          this.grid = false
+          this.init_map();
+        }
+      },
       error() {
         if(this.error) {
           this.success = false;
@@ -157,6 +174,9 @@
       this.user = Laravel.user;
       this.get_vocabularies();
     },
+    updated() {
+
+    },
     methods: {
       get_vocabularies() {
         var app = this;
@@ -176,6 +196,46 @@
             app.error = true;
           },500);
         })
+      },
+
+      init_map() {
+        var app = this;
+        var make = go.GraphObject.make;
+        var diagram = make(
+          go.Diagram,
+          "map",
+          {
+            initialContentAlignment: go.Spot.Center,
+            "undoManager.isEnabled": true,
+            layout: make(go.TreeLayout, {angle: 90, layerSpacing: 35})
+          }
+        )
+
+        diagram.nodeTemplate = make(go.Node, "Horizontal", { background: "#03B1E8" },
+          make(go.Picture, {margin: 10, width: 50, height: 50, background: "#03B1E8"}, new go.Binding("source")),
+          make(go.TextBlock, { margin: 12, stroke: "white", font: "bold 16px Roboto" }, new go.Binding("text", "name")),
+          { doubleClick: function(e, node) {
+            app.$router.push({ name: 'showVocab', params: {id: node.$d.key} });
+          }}
+        )
+
+        diagram.linkTemplate = make(
+          go.Link, { routing: go.Link.Orthogonal, corner: 5 }, make(go.Shape, { strokeWidth: 1, stroke: "#333" })
+        )
+
+        var model = make(go.TreeModel);
+
+        let array = this.pedigree.concat(this.vocabulary);
+        model.nodeDataArray = array.map(v => {
+          return {
+            key: v.id,
+            parent: v.parent_id,
+            name: v.en,
+            source: !!v.image ? v.image : '' ,
+          }
+        })
+
+        diagram.model = model;
       },
     }
   }
@@ -255,7 +315,7 @@
 }
 .sosd_background_af {
   width: 100%;
-  height: 150px;
+  height: 120px;
   background: rgb(250, 250, 250);
   border-top: 1px solid rgb(233, 233, 233);
   border-bottom: 1px solid rgb(233, 233, 233);
@@ -300,5 +360,28 @@
       width: 100%;
     }
   }
+}
+.sosd_menu {
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    li {
+      box-sizing: border-box;
+      display: inline-block;
+      margin-right: 15px;
+      padding: 10px;
+      &:hover {
+        background: #03B1E8;
+        color: white;
+      }
+    }
+  }
+}
+#map {
+  width: 100%;
+  min-height: 500px;
+  background: rgb(247, 247, 247);
 }
 </style>
