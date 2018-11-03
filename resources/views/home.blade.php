@@ -33,10 +33,10 @@
   <div id="offcanvas-menu" uk-offcanvas="overlay: true; flip: true">
     <div class="uk-offcanvas-bar sosd-background-white">
       <ul class="uk-nav uk-nav-default">
-        <li class="uk-nav-header text-center">
-          <img src= "{{ Auth::user()->avatar }}" class="rounded-circle w-25"  />
-          <b class="color-primary d-block my-3">{{ Auth::user()->name }}</b>
-        </li>
+          <li class="text-center pb-3">
+              <img src= "{{ Auth::user()->avatar }}" class="rounded-circle" style="width: 90px; height: 90px; object-fit: cover"  />
+              {{--  <h5 class="color-primary d-block m-3">{{ Auth::user()->name }}</h5>  --}}
+            </li>
         <li uk-toggle="target: #offcanvas-menu">
           <router-link to="/user-profile/{{ Auth::user()->id }}" class="sosd-hover-primary">
             <span class="uk-margin-small-right" uk-icon="icon: user"></span> Hồ sơ cá nhân

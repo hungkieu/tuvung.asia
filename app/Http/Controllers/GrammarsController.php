@@ -29,8 +29,7 @@ class GrammarsController extends Controller
     {
         $grammar = new Grammars;
         $grammar->name = $request->name;
-
-        // $grammar->description = $request->description;
+        $grammar->description = $request->description;
         $grammar->user_id = Auth::user()->id;
         
         if ($grammar->save()) {
@@ -82,7 +81,17 @@ class GrammarsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gram = Grammars::find($id);
+        $gram->name = $request->name;
+        $gram->description = $request->description;
+  
+        $gram->user_id = Auth::user()->id;
+    
+        if ($gram->save()) {
+            return response('create success', 200);
+        } else {
+            return response('create failed', 400);
+        }
     }
 
     /**
@@ -91,8 +100,9 @@ class GrammarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $gram = Grammars::find($id);
+        $gram->delete();
     }
 }

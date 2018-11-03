@@ -21,14 +21,15 @@ class GrammarArticleController extends Controller
     {
         include(app_path() . '\Http\HtmlDomParser.php');
         $url = 'https://efc.edu.vn/ngu-phap-tieng-anh';
+        $html = '';
         if (function_exists('file_get_html')) {
             $get_html = file_get_html($url);
             $html = html_entity_decode($get_html);
         } else {
             $html = "not get file_get_html";
         }
-        $links = $html->find('div.td-page-title');
-        return $html;
+        
+        return dd($html);
     }
 
     /**

@@ -12,6 +12,7 @@ import showVocab from './components/vocabularies/show';
 import dictionary from './components/vocabularies/dictionary';
 import indexGrammar from './components/grammar/index';
 import grammarArticle from './components/grammar/grammar_article';
+import grammarList from './components/grammar/grammar-list';
 import indexSetting from './components/setting/index';
 import account from './components/setting/account';
 import photos from './components/setting/photos';
@@ -58,14 +59,24 @@ const routes = [
     component: showVocab
   },
   {
-    path: '/grammars',
+    path: '/grammar',
     name: 'indexGrammar',
     component: indexGrammar
   },
   {
-    path: '/grammars/grammar-article',
+    path: '/grammar/update/:id',
+    name: 'indexGrammar',
+    component: indexGrammar
+  },
+  {
+    path: '/grammars-article',
     name: 'grammarArticle',
     component: grammarArticle
+  },
+  {
+    path: '/grammars-list',
+    name: 'grammarList',
+    component: grammarList
   },
   {
     path: '/setting',

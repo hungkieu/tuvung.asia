@@ -18,10 +18,14 @@
     <div v-if="success">
       <div class="uk-container uk-margin-top">
         <div uk-grid>
-            <div class="uk-width-4-5">
+            <div class="uk-width-3-4">
              <h3>Từ vựng của bạn</h3>
             </div>
-            <div class="uk-width-1-5 sosd_nav_filter">
+            <div class="uk-width-1-4 sosd_nav_filter">
+               <div class=" mr-3" title="Thêm từ vựng mới">
+                 <!-- <button class="uk-button uk-button-primary"><router-link to="/vocabularies/new">Thêm</router-link></button> -->
+                <router-link to="/vocabularies/new"><a href="" class="uk-icon-button" uk-icon="pencil"></a></router-link>
+              </div>
               <div class="sosd_inline">
                 <span uk-icon="grid"></span>
               </div>
@@ -118,7 +122,7 @@ import Loading from './../shared/loading';
 
 export default {
   components: {
-    Loading: Loading,
+    Loading: Loading
   },
   data: function() {
     return {
@@ -128,7 +132,7 @@ export default {
       grid: true,
       list: false,
       user: {},
-      vocabularies: [],
+      vocabularies: []
     };
   },
   mounted() {
@@ -137,30 +141,30 @@ export default {
   },
   watch: {
     error() {
-      if(this.error) {
+      if (this.error) {
         this.success = false;
         this.loading = false;
       }
     },
     success() {
-      if(this.success) {
+      if (this.success) {
         this.error = false;
         this.loading = false;
       }
     },
     loading() {
-      if(this.loading) {
+      if (this.loading) {
         this.error = false;
         this.success = false;
       }
     },
     grid() {
-      if(this.grid) {
+      if (this.grid) {
         this.list = false;
       }
     },
     list() {
-      if(this.list) {
+      if (this.list) {
         this.grid = false;
       }
     }
@@ -169,71 +173,81 @@ export default {
     get_vocabularies() {
       var app = this;
       $.ajax({
-        url: "/api/v1/users/" + app.user.id + "/vocabularies",
-        method: 'get',
+        url: '/api/v1/users/' + app.user.id + '/vocabularies',
+        method: 'get'
       })
-      .done(res => {
-        app.vocabularies = res;
-        setTimeout(function() {
-          app.success = true;
-        },500);
-      })
-      .fail(res => {
-        setTimeout(function() {
-          app.error = true;
-        },500);
-      })
+        .done(res => {
+          app.vocabularies = res;
+          setTimeout(function() {
+            app.success = true;
+          }, 500);
+        })
+        .fail(res => {
+          setTimeout(function() {
+            app.error = true;
+          }, 500);
+        });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  .sosd_nav {
-    box-sizing: border-box;
-    background: rgb(247, 247, 247);
-    border-bottom: 1px solid rgb(233, 233, 233);
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-  }
+.sosd_nav {
+  box-sizing: border-box;
+  background: rgb(247, 247, 247);
+  border-bottom: 1px solid rgb(233, 233, 233);
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+}
 
-  .sosd_nav_filter {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    .sosd_inline {
-      display: inline-block;
-      padding: 5px;
-      &:hover {
-        background: rgb(247, 247, 247);
-        color: #1f8bf0;
-        cursor: pointer;
-      }
+.sosd_nav_filter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  .sosd_inline {
+    display: inline-block;
+    padding: 5px;
+    &:hover {
+      background: rgb(247, 247, 247);
+      color: #1f8bf0;
+      cursor: pointer;
     }
   }
-
-  .sosd_vocabularies {
-    .vocab {
-      position: relative;
-      display: inline-block;
-      text-decoration: none;
-      .uk-card-body {
-        padding: 10px 30px;
-        h3, p {
-          margin: 8px 0;
-          padding: 0;
-        }
-      }
-      img {
-        width: 100%;
-      }
-    }
-  }
-
-  .sosd_none {
+  button {
     a {
-      text-transform: none;
+      color: #fff;
+      font-weight: 500;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
+}
+
+.sosd_vocabularies {
+  .vocab {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    .uk-card-body {
+      padding: 10px 30px;
+      h3,
+      p {
+        margin: 8px 0;
+        padding: 0;
+      }
+    }
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.sosd_none {
+  a {
+    text-transform: none;
+  }
+}
 </style>

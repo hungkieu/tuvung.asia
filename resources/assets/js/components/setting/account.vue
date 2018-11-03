@@ -65,7 +65,7 @@ export default {
     var app = this;
     console.log(this.user);
     axios
-      .get('/users/' + id)
+      .get('/user/' + id)
       .then(function(res) {
         console.log(res.data);
         app.user = res.data;
@@ -84,7 +84,7 @@ export default {
       var f = document.getElementById('form_edit_user');
       var formData = new FormData(f);
       axios
-        .post('/users/edit/' + this.user.id, this.user)
+        .post('/user/update/' + this.user.id, this.user)
         .then(function(res) {
           alert('Update thành công !');
           console.log(res);
