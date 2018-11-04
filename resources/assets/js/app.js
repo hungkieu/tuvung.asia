@@ -11,7 +11,7 @@ import editVocab from './components/vocabularies/edit';
 import showVocab from './components/vocabularies/show';
 import dictionary from './components/vocabularies/dictionary';
 import indexGrammar from './components/grammar/index';
-import grammarArticle from './components/grammar/grammar_article';
+import grammarArticle from './components/grammar/grammar-article';
 import grammarList from './components/grammar/grammar-list';
 import indexSetting from './components/setting/index';
 import account from './components/setting/account';
@@ -65,7 +65,7 @@ const routes = [
   },
   {
     path: '/grammar/update/:id',
-    name: 'indexGrammar',
+    name: 'updateGrammar',
     component: indexGrammar
   },
   {

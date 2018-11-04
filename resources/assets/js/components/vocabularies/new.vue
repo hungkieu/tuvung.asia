@@ -35,30 +35,10 @@
 
         <div>
           <label class="uk-form-label">Loại từ</label>
-          <div class="uk-form-controls uk-column-1-3">
-            <label>
-              <input value="0" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Danh từ
-            </label>
-            <label>
-              <input value="1" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Động từ
-            </label>
-            <label>
-              <input value="2" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Tính từ
-            </label>
-            <label>
-              <input value="3" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Trạng từ
-            </label>
-            <label>
-              <input value="4" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Giới từ
-            </label>
-            <label>
-              <input value="5" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
-              Từ nối
+          <div class="uk-form-controls uk-column-1-3" >
+            <label v-for="t in type"> 
+              <input :value="t.value" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
+              {{t.name}}
             </label>
           </div>
         </div>
@@ -117,7 +97,7 @@ import Loading from './../shared/loading';
 
 export default {
   components: {
-    Loading: Loading,
+    Loading: Loading
   },
   data: function() {
     return {
@@ -128,30 +108,56 @@ export default {
       preview: false,
       preview_image_vl: '',
       import_image: false,
+      type: [
+        {
+          name: 'Danh từ',
+          value: '0'
+        },
+        {
+          name: 'Động từ',
+          value: '1'
+        },
+        {
+          name: 'Tính từ',
+          value: '2'
+        },
+        {
+          name: 'Trạng từ',
+          value: '3'
+        },
+        {
+          name: 'Giới từ',
+          value: '4'
+        },
+        {
+          name: 'Từ nối',
+          value: '5'
+        }
+      ],
       vocabulary: {
         en: '',
         vi: '',
         type: [],
-        parent_id: 0,
+        parent_id: 0
       },
       searches: []
     };
   },
   watch: {
     error() {
-      if(this.error) {
+      if (this.error) {
         this.success = false;
         this.loading = false;
       }
     },
     success() {
-      if(this.success) {
+      if (this.success) {
         this.error = false;
         this.loading = false;
       }
     },
     loading() {
-      if(this.loading) {
+      if (this.loading) {
         this.error = false;
         this.success = false;
       }
@@ -190,20 +196,20 @@ export default {
       app.loading = true;
       var en = app.vocabulary.en;
       var url = '/api/v1/vocabularies/search/all';
-      if(en != '')
-        url = '/api/v1/vocabularies/search/' + en;
-      axios.get(url)
-      .then(res => {
-        setTimeout(function() {
-          app.searches = res.data;
-          app.success = true;
-        },500);
-      })
-      .catch(res => {
-        setTimeout(function() {
-          app.error = true;
-        },500);
-      })
+      if (en != '') url = '/api/v1/vocabularies/search/' + en;
+      axios
+        .get(url)
+        .then(res => {
+          setTimeout(function() {
+            app.searches = res.data;
+            app.success = true;
+          }, 500);
+        })
+        .catch(res => {
+          setTimeout(function() {
+            app.error = true;
+          }, 500);
+        });
     },
 
     send(e) {
@@ -212,7 +218,6 @@ export default {
       var f = document.getElementById('form_create_vocab');
       var formData = new FormData(f);
       let input_en = document.getElementById('en');
-
       if (input_en.value != '') {
         axios
           .post('/vocabularies', formData, {
@@ -221,11 +226,13 @@ export default {
             }
           })
           .then(function(res) {
-            if (app.$route.params.id) app.$router.push('/vocabularies/' + app.$route.params.id);
+            console.log(res);
+            if (res.data.id) app.$router.push('/vocabularies/' + res.data.id);
             else app.$router.push('/vocabularies');
             f.reset();
           })
           .catch(function(res) {
+            console.log(res);
             alert('Them khong thanh cong, vui long thu lai');
           });
       } else {
@@ -257,55 +264,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .sosd_nav {
-    box-sizing: border-box;
-    background: rgb(247, 247, 247);
-    border-bottom: 1px solid rgb(233, 233, 233);
+.sosd_nav {
+  box-sizing: border-box;
+  background: rgb(247, 247, 247);
+  border-bottom: 1px solid rgb(233, 233, 233);
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+}
+.sosd_images {
+  position: relative;
+  transition: all ease 1s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05, 1.05);
+  }
+}
+.preview {
+  width: 150px;
+  height: 150px;
+  border: 1px dashed rgb(33, 33, 33);
+  line-height: 150px;
+  text-align: center;
+}
+.preview_image {
+  height: 200px;
+  width: 100%;
+  max-width: 200px;
+  min-width: 150px;
+  position: relative;
+  img {
+    object-fit: cover;
+    height: 100%;
     width: 100%;
-    height: 50px;
-    line-height: 50px;
   }
-  .sosd_images {
-    position: relative;
-    transition: all ease 1s;
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.05, 1.05);
-    }
-  }
-  .preview {
-    width: 150px;
-    height: 150px;
-    border: 1px dashed rgb(33, 33, 33);
-    line-height: 150px;
+  .txt-change-image {
+    position: absolute;
+    display: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff !important;
+    padding: 10px;
   }
-  .preview_image {
-    height: 200px;
-    width: 100%;
-    max-width: 200px;
-    min-width: 150px;
-    position: relative;
-    img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-    }
+  &:hover {
     .txt-change-image {
-      position: absolute;
-      display: none;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.3);
-      color: #fff !important;
-      padding: 10px;
-    }
-    &:hover {
-      .txt-change-image {
-        display: block;
-      }
+      display: block;
     }
   }
+}
 </style>

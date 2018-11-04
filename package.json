@@ -21,6 +21,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "font-awesome": "^4.7.0",
+    "gojs": "^1.8.32",
     "vue-moment": "^4.0.0",
     "vue-paginate": "^3.6.0",
     "vue-router": "^3.0.1"

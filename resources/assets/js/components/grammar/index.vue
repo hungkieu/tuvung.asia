@@ -250,8 +250,8 @@ export default {
   }
 }
 .grammars {
-  background: url('/images/bg3.png');
-  background-position: center;
+  background: url('/images/bg9.jpg');
+  background-position: right center;
   background-size: cover;
   input,
   textarea {

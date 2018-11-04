@@ -2,18 +2,19 @@ require('./bootstrap');
 window.Vue = require('vue');
 import VueRouter from 'vue-router';
 window.Vue.use(VueRouter);
-import VuePaginate from 'vue-paginate'
+import VuePaginate from 'vue-paginate';
 Vue.use(VuePaginate);
 
 import index from './components/admin/index';
 import newStructure from './components/structure_sentences/new';
 import indexUsers from './components/admin/users/index';
 import indexVocabularies from './components/admin/vocabularies/index';
-
+import indexGrammar from './components/admin/grammar/index';
+import indexStatistical from './components/admin/statistical/index';
 const routes = [
   {
     path: '/admin',
-    component: index,
+    component: index
   },
   {
     path: '/admin/structure_sentences/new',
@@ -23,12 +24,22 @@ const routes = [
   {
     path: '/admin/users',
     component: indexUsers,
-    name: 'admin_users',
+    name: 'admin_users'
   },
   {
     path: '/admin/vocabularies',
     component: indexVocabularies,
-    name: 'admin_vocabularies',
+    name: 'admin_vocabularies'
+  },
+  {
+    path: '/admin/grammar',
+    component: indexGrammar,
+    name: 'indexGrammar'
+  },
+  {
+    path: 'admin/statistical',
+    component: indexStatistical,
+    name: 'indexStatistical'
   }
 ];
 

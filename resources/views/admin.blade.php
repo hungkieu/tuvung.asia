@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Quan tri')
+@section('title', 'Quản trị')
 @section('css')
   <link href="{{ asset('css/uikit.css') }}" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -24,6 +24,9 @@
       <div class="uk-width-1-5 sosd-background-white" uk-height-viewport="expand: true">
         <ul class="uk-padding-small uk-nav-default uk-nav-parent-icon" uk-nav>
           <li>
+              Dashboard
+          </li>
+          <li>
             <router-link to="/admin/users">
               Quản lý người dùng
             </router-link>
@@ -46,6 +49,11 @@
               <li><a href="#">Tạo nhóm cấu trúc</a></li>
             </ul>
           </li>
+          <li>
+              <router-link to="/admin/statistical">
+                Thống kê
+              </router-link>
+            </li>
         </ul>
       </div>
 
