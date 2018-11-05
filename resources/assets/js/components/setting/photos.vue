@@ -25,7 +25,7 @@ export default {
     var app = this;
     console.log(this.user);
     axios
-      .get('/user/' + id)
+      .get('/users/' + id)
       .then(function(res) {
         console.log(res.data);
         app.user = res.data;
@@ -42,7 +42,7 @@ export default {
         f.append('avatar', files[0]);
         var app = this;
         axios
-          .post('/user/update/' + this.user.id, f, {
+          .post('/users/update/' + this.user.id, f, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

@@ -3,7 +3,7 @@
        <div class="sosd_nav">
         <div class="uk-container">
           <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
-          <span>Luyện ngữ pháp</span>
+          <span>Luyện học ngữ pháp</span>
         </div>
       </div>
       <hr class="m-0"/>
@@ -47,7 +47,7 @@
         <div class="history py-3" v-if="grammars.length > 0">
           <h5>Lịch sử</h5>
           <p  class="pl-5" v-for="(item, i) in grammars" :key="i" v-if="i<10">
-            <router-link :to="'/grammar/update/' + item.id">
+            <router-link :to="'/grammars/edit/' + item.id">
             {{item.name}}
             </router-link>  
             </p>
@@ -124,7 +124,7 @@ export default {
       this.user = Laravel.user;
       var app = this;
       axios
-        .get('/grammar/' + app.user.id)
+        .get('/grammars/' + app.user.id)
         .then(function(res) {
           app.grammars = res.data;
           console.log('res' + JSON.stringify(app.grammars));
@@ -175,7 +175,7 @@ export default {
       if (name_grammar.value != '' || description_grammar.value != '') {
         if (app.$route.params.id != undefined) {
           axios
-            .post('/grammar/update/' + app.$route.params.id, formData, {
+            .post('/grammars/update/' + app.$route.params.id, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
@@ -183,7 +183,7 @@ export default {
             .then(function(res) {
               alert('Sửa bài viết thành công !');
               axios
-                .get('/grammar/' + app.user.id)
+                .get('/grammars/' + app.user.id)
                 .then(function(res) {
                   console.log(res);
                   app.grammars = res.data;
@@ -198,14 +198,14 @@ export default {
             });
         } else {
           axios
-            .post('/grammar/create', formData, {
+            .post('/grammars/create', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             })
             .then(function(res) {
               axios
-                .get('/grammar/' + app.user.id)
+                .get('/grammars/' + app.user.id)
                 .then(function(res) {
                   console.log(res);
                   app.grammars = res.data;
@@ -250,8 +250,8 @@ export default {
   }
 }
 .grammars {
-  background: url('/images/bg3.png');
-  background-position: center;
+  background: url('/images/bg9.jpg');
+  background-position: right center;
   background-size: cover;
   input,
   textarea {

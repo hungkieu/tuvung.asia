@@ -6,7 +6,62 @@
 <script>
 export default {
   data: function() {
-    return {};
+    return {
+      week: [
+        {
+          id: 'monday',
+          name: 'Thứ 2',
+          status: true
+        },
+        {
+          id: 'tuesday',
+          name: 'Thứ 3',
+          status: false
+        },
+        {
+          id: 'wednesday',
+          name: 'Thứ 4',
+          status: false
+        },
+        {
+          id: 'thursday',
+          name: 'Thứ 5',
+          status: false
+        },
+        {
+          id: 'friday	',
+          name: 'Thứ 6',
+          status: false
+        },
+        {
+          id: 'saturday',
+          name: 'Thứ 7',
+          status: false
+        },
+        {
+          id: 'sunday',
+          name: 'Chủ nhật ',
+          status: false
+        }
+      ],
+      message: [
+        {
+          name: 'Nhận mail',
+          key: 'mes-email',
+          status: false
+        },
+        {
+          name: 'Gửi tin nhắn điện thoại',
+          key: 'mes-phone',
+          status: false
+        },
+        {
+          name: 'Thông báo trình duyệt',
+          key: 'mes-browser',
+          status: true
+        }
+      ]
+    };
   }
 };
 </script>

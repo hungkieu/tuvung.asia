@@ -41,7 +41,7 @@ class VocabulariesController extends Controller
 
       if($vocab->save())
       {
-        return response('create success', 200);
+        return response($vocab, 200);
       } else {
         return response('create failed', 400);
       }

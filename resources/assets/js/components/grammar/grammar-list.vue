@@ -17,27 +17,30 @@
 
     <div v-if="success">
       <div class="uk-container pt-3 pb-5">
-        <div uk-grid class="pb-4">
-            <div class="uk-width-3-4">
+        <div  class="pb-4 row justify-content-between ">
+            <div class="col-auto">
              <h4 class="title">Ngữ pháp của bạn</h4>
             </div>
-            <div class="uk-width-1-4 sosd_nav_filter text-right">
-               <div class=" mr-3" title="Luyện ngữ pháp">
-                <router-link to="/grammar">
-                <button class="btn-hover color-1">
-                <span class="uk-icon-button" uk-icon="icon: pencil; ratio: 1.5"></span>
-                </button>
-                </router-link>
-            </div>
-                <!-- <div class="sosd_inline">
-                <span uk-icon="grid"></span>
+            <div class="col-auto">
+              <div class="row">
+                  <div class="col-md-12 d-flex">
+                     <div class="mr-3" title="Luyện ngữ pháp">
+                        <router-link to="/grammar">
+                        <button class="btn-hover color-1">
+                        <span class="uk-icon-button" uk-icon="icon: plus; ratio: 1.2"></span>
+                        </button>
+                        </router-link>
+                    </div>
+                    <div id="formSearch">
+                      <button v-on:click="show = !show" class="btn-hover color-3 mr-3"><span uk-icon="icon: search; ratio: 1.2"></span></button>
+                      <transition name="fade">
+                        <input v-if="show" v-model="search" class="sosd-input" id="search" name="search" type="text" placeholder="What're we looking for ?">
+                      </transition>
+                    </div>
+                  </div>
               </div>
-              <div class="sosd_inline">
-                <span uk-icon="list"></span>
-              </div>
-              <div class="sosd_inline">
-                Lọc từ <span uk-icon="settings"></span>
-              </div> -->
+              
+                
             </div>
         </div>
         <div v-if="grammars.length == 0">
@@ -46,14 +49,14 @@
         </div>
         <div v-else>
           <div class="" uk-grid>
-            <div v-for="g in grammars"  v-bind:class="[g.description.length < 1000 ? 'uk-width-1-2' : 'uk-width-1-1']">
+            <div v-for="g in filteredList"  v-bind:class="[g.description.length < 1000 ? 'uk-width-1-2' : 'uk-width-1-1']">
                 <div class="grammar-item">
                   <p class="w-100 my-3">
                     <b class="mt-2 d-inline-block">
                      {{g.name}}
                      </b>
                     <span title="Xóa bài viết" class="float-right" v-on:click="del(g)" ><span class="uk-icon-button" uk-icon="icon: trash; ratio: 1"></span></span>  
-                    <router-link :to="'/grammar/update/' + g.id" title="Cải thiện bài viết" class="float-right mr-3"><span class="uk-icon-button" uk-icon="icon: pencil; ratio: 1"></span></router-link>  
+                    <router-link :to="'/grammars/edit/' + g.id" title="Cải thiện bài viết" class="float-right mr-3"><span class="uk-icon-button" uk-icon="icon: pencil; ratio: 1"></span></router-link>  
                   </p>
                  {{g.description}}
                   <p class="text-right w-100 my-3">
@@ -79,8 +82,17 @@ export default {
       error: false,
       success: false,
       loading: true,
-      grammars: []
+      grammars: [],
+      search: '',
+      show: false
     };
+  },
+  computed: {
+    filteredList() {
+      return this.grammars.filter(post => {
+        return post.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    }
   },
   watch: {
     error() {
@@ -110,21 +122,19 @@ export default {
       this.user = Laravel.user;
       var app = this;
       axios
-        .get('/grammar/' + app.user.id)
+        .get('/grammars/' + app.user.id)
         .then(function(res) {
           app.grammars = res.data;
           app.success = true;
-          console.log('res' + JSON.stringify(app.grammars));
         })
         .catch(function(res) {
           app.error = true;
-          console.log('err' + res);
         });
     },
     del(gram) {
       var app = this;
       axios
-        .delete('/grammar/delete/' + gram.id)
+        .delete('/grammars/' + gram.id)
         .then(function(res) {
           app.grammars.splice(app.grammars.indexOf(gram), 1);
           console.log('Xóa thành công ');
@@ -168,7 +178,9 @@ export default {
   overflow: hidden;
 }
 .btn-hover {
-  padding: 10px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
   font-size: 15px;
   font-weight: 600;
   color: #fff;
@@ -200,6 +212,28 @@ export default {
 .btn-hover.color-1 {
   background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
   box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+.btn-hover.color-3 {
+  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);
+  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+#formSearch {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 1s ease;
+    width: 200px;
+    visibility: visible;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    width: 0;
+    visibility: hidden;
+    transition: all 1s ease;
+  }
+  .sosd-input {
+    padding: 5px 10px;
+    border: 1px solid #1f8bf0;
+  }
 }
 </style>
 

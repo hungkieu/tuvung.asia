@@ -103,142 +103,146 @@
 </template>
 
 <script src="">
-  import go from 'gojs';
-  import Loading from './../shared/loading';
-
-  export default {
-    components: {
-      Loading: Loading,
-    },
-    data: function() {
-      return {
-        error: false,
-        success: false,
-        loading: true,
-        grid: true,
-        map: false,
-        vocabulary: {},
-        pedigree: [],
-        user: {},
-        bg: [
+import go from 'gojs';
+import Loading from './../shared/loading';
+export default {
+  components: {
+    Loading: Loading
+  },
+  data: function() {
+    return {
+      error: false,
+      success: false,
+      loading: true,
+      grid: true,
+      map: false,
+      vocabulary: {},
+      pedigree: [],
+      user: {},
+      bg: [
         "url('/svg/showVocab/bg1.svg')",
         "url('/svg/showVocab/bg2.svg')",
         "url('/svg/showVocab/bg3.svg')",
         "url('/svg/showVocab/bg4.svg')",
-        "url('/svg/showVocab/bg5.svg')",
-        ],
-      }
+        "url('/svg/showVocab/bg5.svg')"
+      ]
+    };
+  },
+  computed: {
+    bgR() {
+      return this.bg[Math.round(Math.random() * 4)];
     },
-    computed: {
-      bgR() {
-        return this.bg[Math.round(Math.random() * 4)];
-      },
-
-      type() {
-        let types = ["Danh từ", "Động từ", "Tính từ", "Trạng từ", "Giới từ", "Từ nối"];
-        return this.vocabulary.type.split(",").map(v => {
+    type() {
+      let types = ['Danh từ', 'Động từ', 'Tính từ', 'Trạng từ', 'Giới từ', 'Từ nối'];
+      return this.vocabulary.type
+        .split(',')
+        .map(v => {
           return types[v];
-        }).join(",");
+        })
+        .join(',');
+    }
+  },
+  watch: {
+    grid() {
+      if (this.grid) this.map = false;
+    },
+    map() {
+      if (this.map) {
+        this.grid = false;
+        this.init_map();
       }
     },
-    watch: {
-      grid() {
-        if(this.grid) this.map = false
-      },
-      map() {
-        if(this.map) {
-          this.grid = false
-          this.init_map();
-        }
-      },
-      error() {
-        if(this.error) {
-          this.success = false;
-          this.loading = false;
-        }
-      },
-      success() {
-        if(this.success) {
-          this.error = false;
-          this.loading = false;
-        }
-      },
-      loading() {
-        if(this.loading) {
-          this.error = false;
-          this.success = false;
-        }
-      },
+    error() {
+      if (this.error) {
+        this.success = false;
+        this.loading = false;
+      }
     },
-    mounted() {
-      this.user = Laravel.user;
-      this.get_vocabularies();
+    success() {
+      if (this.success) {
+        this.error = false;
+        this.loading = false;
+      }
     },
-    updated() {
-
-    },
-    methods: {
-      get_vocabularies() {
-        var app = this;
-        $.ajax({
-          url: "/api/v1/vocabularies/" + app.$route.params.id + "/pedigree",
-          method: 'get',
-        })
+    loading() {
+      if (this.loading) {
+        this.error = false;
+        this.success = false;
+      }
+    }
+  },
+  mounted() {
+    this.user = Laravel.user;
+    this.get_vocabularies();
+  },
+  updated() {},
+  methods: {
+    get_vocabularies() {
+      var app = this;
+      $.ajax({
+        url: '/api/v1/vocabularies/' + app.$route.params.id + '/pedigree',
+        method: 'get'
+      })
         .done(res => {
           app.vocabulary = res.vocabulary;
           app.pedigree = res.vocabularies;
           setTimeout(function() {
             app.success = true;
-          },500);
+          }, 500);
         })
         .fail(res => {
           setTimeout(function() {
             app.error = true;
-          },500);
-        })
-      },
-
-      init_map() {
-        var app = this;
-        var make = go.GraphObject.make;
-        var diagram = make(
-          go.Diagram,
-          "map",
-          {
-            initialContentAlignment: go.Spot.Center,
-            "undoManager.isEnabled": true,
-            layout: make(go.TreeLayout, {angle: 90, layerSpacing: 35})
+          }, 500);
+        });
+    },
+    init_map() {
+      var app = this;
+      var make = go.GraphObject.make;
+      var diagram = make(go.Diagram, 'map', {
+        initialContentAlignment: go.Spot.Center,
+        'undoManager.isEnabled': true,
+        layout: make(go.TreeLayout, { angle: 90, layerSpacing: 35 })
+      });
+      diagram.nodeTemplate = make(
+        go.Node,
+        'Horizontal',
+        { background: '#03B1E8' },
+        make(
+          go.Picture,
+          { margin: 10, width: 50, height: 50, background: '#03B1E8' },
+          new go.Binding('source')
+        ),
+        make(
+          go.TextBlock,
+          { margin: 12, stroke: 'white', font: 'bold 16px Roboto' },
+          new go.Binding('text', 'name')
+        ),
+        {
+          doubleClick: function(e, node) {
+            app.$router.push({ name: 'showVocab', params: { id: node.$d.key } });
           }
-        )
-
-        diagram.nodeTemplate = make(go.Node, "Horizontal", { background: "#03B1E8" },
-          make(go.Picture, {margin: 10, width: 50, height: 50, background: "#03B1E8"}, new go.Binding("source")),
-          make(go.TextBlock, { margin: 12, stroke: "white", font: "bold 16px Roboto" }, new go.Binding("text", "name")),
-          { doubleClick: function(e, node) {
-            app.$router.push({ name: 'showVocab', params: {id: node.$d.key} });
-          }}
-        )
-
-        diagram.linkTemplate = make(
-          go.Link, { routing: go.Link.Orthogonal, corner: 5 }, make(go.Shape, { strokeWidth: 1, stroke: "#333" })
-        )
-
-        var model = make(go.TreeModel);
-
-        let array = this.pedigree.concat(this.vocabulary);
-        model.nodeDataArray = array.map(v => {
-          return {
-            key: v.id,
-            parent: v.parent_id,
-            name: v.en,
-            source: !!v.image ? v.image : '' ,
-          }
-        })
-
-        diagram.model = model;
-      },
+        }
+      );
+      diagram.linkTemplate = make(
+        go.Link,
+        { routing: go.Link.Orthogonal, corner: 5 },
+        make(go.Shape, { strokeWidth: 1, stroke: '#333' })
+      );
+      var model = make(go.TreeModel);
+      let array = this.pedigree.concat(this.vocabulary);
+      model.nodeDataArray = array.map(v => {
+        return {
+          key: v.id,
+          parent: v.parent_id,
+          name: v.en,
+          source: !!v.image ? v.image : ''
+        };
+      });
+      diagram.model = model;
     }
   }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -250,8 +254,7 @@
   height: 50px;
   line-height: 50px;
 }
-
-.sosd_background{
+.sosd_background {
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-size: cover;
@@ -337,7 +340,7 @@
         height: 50px;
         color: #333333;
         &:hover {
-          background: #03B1E8;
+          background: #03b1e8;
           color: white;
         }
       }
@@ -351,7 +354,8 @@
     text-decoration: none;
     .uk-card-body {
       padding: 10px 30px;
-      h3, p {
+      h3,
+      p {
         margin: 8px 0;
         padding: 0;
       }
@@ -373,7 +377,7 @@
       margin-right: 15px;
       padding: 10px;
       &:hover {
-        background: #03B1E8;
+        background: #03b1e8;
         color: white;
       }
     }

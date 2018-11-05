@@ -20,7 +20,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->text('description')->nullable();
-            $table->integer('role')->default(0);
+            $table->integer('role')->default('0');
             $table->integer('target_score')->default(0);
             $table->integer('score')->default(0);
             $table->datetime('last_login')->nullable();

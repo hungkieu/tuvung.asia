@@ -29,30 +29,10 @@
           <div>
             <label class="uk-form-label">Loại từ</label>
             <div class="uk-form-controls uk-column-1-3">
-              <label>
-                <input v-model="form.type" value="Danh từ" class="uk-checkbox" type="checkbox" name="type[]">
-                Danh từ
-              </label>
-              <label>
-                <input v-model="form.type" value="Động từ" class="uk-checkbox" type="checkbox" name="type[]">
-                Động từ
-              </label>
-              <label>
-                <input v-model="form.type" value="Tính từ" class="uk-checkbox" type="checkbox" name="type[]">
-                Tính từ
-              </label>
-              <label>
-                <input v-model="form.type" value="Trạng từ" class="uk-checkbox" type="checkbox" name="type[]">
-                Trạng từ
-              </label>
-              <label>
-                <input v-model="form.type" value="Giới từ" class="uk-checkbox" type="checkbox" name="type[]">
-                Giới từ
-              </label>
-              <label>
-                <input v-model="form.type" value="Từ nối" class="uk-checkbox" type="checkbox" name="type[]">
-                Từ nối
-              </label>
+               <label v-for="(t, i) in type"> 
+              <input :value="t.value" class="uk-checkbox" v-model="form.type" type="checkbox" name="type[]">
+              {{t.name}}
+            </label>
             </div>
           </div>
 
@@ -87,7 +67,33 @@ export default {
       preview: true,
       preview_image_vl: '',
       parent_id: 0,
-      form: {}
+      form: {},
+      type: [
+        {
+          name: 'Danh từ',
+          value: '0'
+        },
+        {
+          name: 'Động từ',
+          value: '1'
+        },
+        {
+          name: 'Tính từ',
+          value: '2'
+        },
+        {
+          name: 'Trạng từ',
+          value: '3'
+        },
+        {
+          name: 'Giới từ',
+          value: '4'
+        },
+        {
+          name: 'Từ nối',
+          value: '5'
+        }
+      ]
     };
   },
   mounted() {
@@ -96,7 +102,8 @@ export default {
       .get('/api/v1/vocabularies/' + app.$route.params.id)
       .then(res => {
         app.form = res.data;
-        app.form.type = JSON.parse(app.form.type);
+        // app.form.type = app.form.type.split(',');
+        console.log(app.form.type);
         app.preview_image_vl = app.form.image;
       })
       .catch(res => {
@@ -158,9 +165,6 @@ export default {
         reader.readAsDataURL(files[0]);
         this.preview = true;
       }
-    },
-    back() {
-      this.$router.push('/vocabularies/' + this.$router.params.id);
     }
   }
 };
