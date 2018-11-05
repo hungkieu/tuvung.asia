@@ -227,8 +227,13 @@ export default {
           })
           .then(function(res) {
             console.log(res);
-            if (res.data.id) app.$router.push('/vocabularies/' + res.data.id);
-            else app.$router.push('/vocabularies');
+            if(res.data.parent_id != 0){
+              app.$router.push('/vocabularies/' + res.data.parent_id);
+            } else if (res.data.parent_id == 0 ) {
+              app.$router.push('/vocabularies/' + res.data.id);
+            } else {
+              app.$router.push('/vocabularies');
+            } 
             f.reset();
           })
           .catch(function(res) {

@@ -114,7 +114,7 @@ export default {
       this.user = Laravel.user;
       var app = this;
       axios
-        .get('/grammar/' + app.user.id)
+        .get('/grammars/' + app.user.id)
         .then(function(res) {
           app.grammars = res.data;
         })

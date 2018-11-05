@@ -113,6 +113,26 @@ export default {
               name: 'Ôn tập'
             }
           ]
+        },
+        {
+          title: 'Ngữ pháp',
+          features: [
+            {
+              icon: '/svg/plus.svg',
+              link: '/grammars',
+              name: 'Luyện học ngữ pháp'
+            },
+            {
+              icon: '/svg/notebook1.svg',
+              link: '/grammars-list',
+              name: 'Ngữ pháp của bạn'
+            },
+            {
+              icon: '/svg/list.svg',
+              link: '/grammars-article',
+              name: 'Bộ ngữ pháp cơ bản'
+            }
+          ]
         }
       ]
     };

@@ -24,7 +24,11 @@
             <div class="uk-width-1-4 sosd_nav_filter">
                <div class=" mr-3" title="Thêm từ vựng mới">
                  <!-- <button class="uk-button uk-button-primary"><router-link to="/vocabularies/new">Thêm</router-link></button> -->
-                <router-link to="/vocabularies/new"><a href="" class="uk-icon-button" uk-icon="pencil"></a></router-link>
+                <router-link to="/vocabularies/new">
+                <button class="btn-hover color-1">
+                  <span class="uk-icon-button" uk-icon="icon: plus; ratio: 1"></span>
+                  </button>
+                  </router-link>
               </div>
               <div class="sosd_inline">
                 <span uk-icon="grid"></span>
@@ -249,5 +253,39 @@ export default {
   a {
     text-transform: none;
   }
+}
+.btn-hover {
+  padding: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  &:hover {
+    background-position: 100% 0;
+    moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+  }
+  &:focus {
+    outline: none;
+  }
+  span {
+    background: transparent;
+    color: #fff;
+  }
+}
+.btn-hover.color-1 {
+  background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+  box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 </style>

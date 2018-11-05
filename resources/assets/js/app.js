@@ -59,12 +59,12 @@ const routes = [
     component: showVocab
   },
   {
-    path: '/grammar',
+    path: '/grammars',
     name: 'indexGrammar',
     component: indexGrammar
   },
   {
-    path: '/grammar/update/:id',
+    path: '/grammars/edit/:id',
     name: 'updateGrammar',
     component: indexGrammar
   },

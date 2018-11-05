@@ -12,7 +12,7 @@
      <div class="award-item w-100">
       <div class="uk-animation-toggle">
         <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
-          <p class="uk-text-center">12</p>
+          <p class="uk-text-center">{{grammars.length}}</p>
         </div>
       </div>
       <span>Ngữ pháp </span>
@@ -22,7 +22,7 @@
    <div class="award-item w-100">
     <div class="uk-animation-toggle">
       <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
-        <p class="uk-text-center">12</p>
+        <p class="uk-text-center">{{length_voca}}</p>
       </div>
     </div>
     <span>Từ vựng</span>
@@ -42,59 +42,7 @@
 </div>
 <hr/>
 <!-- END AWARDS -->
-<!-- TABBED CONTENT -->
-<div class="custom-tabs-line tabs-line-bottom left-aligned">
 
-  <ul class="uk-subnav uk-subnav-pill mb-0" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
-    <li><a href="#">Luyện tập </a></li>
-    <li><a href="#">Thành tích </a></li>
-
-  </ul>
-
-  <div class="uk-switcher uk-margin">
-    <div class="tab">
-      <div class="uk-width-1-1  mb-2 d-inline-block" >
-        <div class="uk-width-1-4 float-left">
-          <h6 class="py-2">Ngôn ngữ</h6>
-        </div>
-        <div class="uk-width-1-2 float-left">
-          <select class="uk-select  uk-form-small">
-            <option>Tiếng Anh</option>
-          </select>
-        </div>
-      </div>
-      <div class="uk-width-1-1 mb-2 d-inline-block " >
-        <div class="uk-width-1-4 float-left">
-          <h6 class="">Thông báo </h6>
-        </div>
-        <div class="uk-width-1-2 float-left">
-          <div v-for="item in message" :key="item.key">
-            <label class="d-block">
-              <input class="uk-checkbox" type="checkbox" name="item.key" id="item.key"
-              :checked="item.status ? true : false"  @change="item.status = !item.status">
-              <span for="item.key">{{item.name}}</span>
-            </label>
-          </div>
-        </div>
-      </div>
-      <br/>
-      <div class="uk-width-1-1 mb-2 d-inline-block ">
-        <h6 class="py-2">Thời gian học tập</h6>
-        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-          <span v-for="item in week" :key="item.key">
-            <input class="uk-checkbox" type="checkbox"
-            :checked="item.status ? true : false" value="item.key"   @change="item.status = !item.status" > {{item.name}}
-          </span>
-        </div>
-        <p class="w-100">Vào lúc <input type="time" class="uk-input  uk-form-small w-25 mx-2  "  v-model="time"/> hằng ngày</p>
-
-      </div>
-    </div>
-    <div  class="tab">
-      <p>Tuần này: Bạn đã học được 2 ngày ! </p>
-    </div>
-  </div>
-</div>
 
 <!-- END TABBED CONTENT -->
 </div>
@@ -111,123 +59,59 @@ export default {
     return {
       user: {},
       profile: {},
-      week: [
-        {
-          id: 'monday',
-          name: 'Thứ 2',
-          status: true
-        },
-        {
-          id: 'tuesday',
-          name: 'Thứ 3',
-          status: false
-        },
-        {
-          id: 'wednesday',
-          name: 'Thứ 4',
-          status: false
-        },
-        {
-          id: 'thursday',
-          name: 'Thứ 5',
-          status: false
-        },
-        {
-          id: 'friday	',
-          name: 'Thứ 6',
-          status: false
-        },
-        {
-          id: 'saturday',
-          name: 'Thứ 7',
-          status: false
-        },
-        {
-          id: 'sunday',
-          name: 'Chủ nhật ',
-          status: false
-        }
-      ],
-      message: [
-        {
-          name: 'Nhận mail',
-          key: 'mes-email',
-          status: false
-        },
-        {
-          name: 'Gửi tin nhắn điện thoại',
-          key: 'mes-phone',
-          status: false
-        },
-        {
-          name: 'Thông báo trình duyệt',
-          key: 'mes-browser',
-          status: true
-        }
-      ],
-      time: '21:00',
-      preview: false
+      grammars: [],
+      length_voca: 0
     };
   },
-  mounted() {
-    this.user = Laravel.user;
-    var id = this.user.id;
-    var app = this;
-    console.log(this.user);
-    axios
-      .get('/users/' + id)
-      .then(function(res) {
-        console.log(res.data);
-        app.user = res.data;
-      })
-      .catch(res => {
-        alert('khong load duoc');
-      });
+  created() {
+    this.getInfoUser();
+    this.getGrammarUser();
+    this.getCountVocabularies();
   },
+  mounted() {},
   methods: {
-    formatDate(date) {
-      return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
-    },
-    save(e) {
+    getInfoUser() {
+      this.user = Laravel.user;
+      var id = this.user.id;
       var app = this;
-      e.preventDefault();
-      var f = document.getElementById('form_edit_user');
-      var formData = new FormData(f);
+      console.log(this.user);
       axios
-        .post('/users/edit/' + this.user.id, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+        .get('/users/' + id)
         .then(function(res) {
-          alert('Sửa thành công !');
-          UIkit.modal('#modal-info').hide();
-          f.reset();
+          app.user = res.data;
         })
-        .catch(function(res) {
-          alert('Không thành công , vui long thử lại !');
+        .catch(res => {
+          alert('khong load duoc');
         });
     },
-    preview_image(e) {
-      var files = e.target.files;
-      if (files && files[0]) {
-        var f = new FormData();
-        f.append('avatar', files[0]);
-        var app = this;
-        axios
-          .post('/users/edit/' + this.user.id, f, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then(function(res) {
-            app.user.avatar = res.data;
-          })
-          .catch(function(res) {
-            alert('Sửa khong thanh cong, vui long thu lai');
-          });
-      }
+    getGrammarUser() {
+      this.user = Laravel.user;
+      var app = this;
+      axios
+        .get('/grammars/' + app.user.id)
+        .then(function(res) {
+          app.grammars = res.data;
+        })
+        .catch(function(res) {
+          app.error = true;
+        });
+    },
+    getCountVocabularies() {
+      this.user = Laravel.user;
+      var id = this.user.id;
+      var app = this;
+      axios
+        .get('/api/v1/users/' + id + '/vocabularies/count')
+        .then(function(res) {
+          app.length_voca = res.data;
+        })
+        .catch(res => {
+          alert('khong load duoc');
+        });
     }
+    // formatDate(date) {
+    //   return moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
+    // },
   }
 };
 </script>
