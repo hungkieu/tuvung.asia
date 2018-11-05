@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrainingPlansTable extends Migration
+class CreatePlansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTrainingPlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('training_plans', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('weekday')->default('[0,0,0,0,0,0,0]');
-            $table->string('time')->default(0);
-            $table->integer('user_id');
+            $table->string('user_id')->nullable();
+            $table->string('level')->nullable();
+            $table->string('days')->nullable();
+            $table->string('time')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateTrainingPlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('training_plans');
+        Schema::dropIfExists('plans');
     }
 }

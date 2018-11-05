@@ -87,4 +87,14 @@ class UserProfileController extends Controller
     {
         //
     }
+
+    public function edit_target_score(Request $request) {
+        $user = User::findOrFail($request->id);
+        $user->target_score = $request->score;
+        if($user->save()){
+            return response($user, 200);
+            } else {
+            return response('create failed', 400);
+            }
+    }
 }
