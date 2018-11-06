@@ -12,7 +12,7 @@ class TrainingPlanController extends Controller
     public function create(Request $request) {
         $plan = new TrainingPlan;
         $plan->user_id = $request->user_id;
-        $plan->weekday = $request->weekday;
+        $plan->weekday = implode("," , $request->weekday);
         $plan->time = $request->time;
        
     
