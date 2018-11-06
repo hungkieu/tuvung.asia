@@ -18,168 +18,93 @@
     <div v-if="success">
       <div class="uk-container uk-margin-top">
         <div uk-grid>
-            <div class="uk-width-3-4">
-             <h3>Từ vựng của bạn</h3>
-            </div>
-            <div class="uk-width-1-4 sosd_nav_filter">
-               <div class=" mr-3" title="Thêm từ vựng mới">
-                 <!-- <button class="uk-button uk-button-primary"><router-link to="/vocabularies/new">Thêm</router-link></button> -->
-                <router-link to="/vocabularies/new">
+          <div class="uk-width-3-4">
+           <h3>Từ vựng của bạn</h3>
+         </div>
+         <div class="uk-width-1-4 sosd_nav_filter">
+            <div class=" mr-3" title="Thêm từ vựng mới">
+              <router-link to="/vocabularies/new">
                 <button class="btn-hover color-1">
                   <span class="uk-icon-button" uk-icon="icon: plus; ratio: 1"></span>
-                  </button>
-                  </router-link>
-              </div>
-              <div class="sosd_inline">
-                <span uk-icon="grid"></span>
-              </div>
-              <div class="sosd_inline">
-                <span uk-icon="list"></span>
-              </div>
-              <div class="sosd_inline">
-                Lọc từ <span uk-icon="settings"></span>
-              </div>
+                </button>
+              </router-link>
             </div>
+          </div>
         </div>
         <hr>
         <div v-if="vocabularies.length == 0">
-          <b>Bạn chưa có từ vựng nào, </b>
-          <router-link to="/vocabularies/new">Thêm từ vựng mới</router-link>
+        <b>Bạn chưa có từ vựng nào, </b>
+        <router-link to="/vocabularies/new">Thêm từ vựng mới</router-link>
         </div>
         <div v-else>
-          <div class="" uk-grid>
-            <div class="uk-width-4-5">
-              <div class="sosd_vocabularies uk-padding-small uk-child-width-1-4" uk-grid="masonry: true;" v-if="grid">
-                <div v-for="v in vocabularies">
-                  <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
-                    <div class="uk-card-media-top">
-                      <img :src="v.image" alt="">
-                    </div>
-                    <div class="uk-card-body">
-                      <div>
-                        <h3 class="uk-card-title">{{ v.en }}</h3>
-                        <p>{{ v.vi }}</p>
-                      </div>
-                    </div>
-                  </router-link>
+          <div class="sosd_vocabularies uk-padding-small uk-child-width-1-4" uk-grid="masonry: true;">
+            <div v-for="v in vocabularies">
+              <router-link :to="{ name: 'showVocab', params: {id: v.id} }" class="vocab uk-card uk-card-default" uk-tooltip="Xem">
+                <div class="uk-card-media-top">
+                  <img :src="v.image" alt="">
                 </div>
-              </div>
-
-              <div class="sosd_vocabularies uk-padding-small" v-if="list">
-                <div v-for="v in vocabularies">
-                  <router-link :to="{ name: 'showVocab', params: {id: v.id} }">
-
-                  </router-link>
+                <div class="uk-card-body">
+                  <div>
+                    <h3 class="uk-card-title">{{ v.en }}</h3>
+                    <p>{{ v.vi }}</p>
+                  </div>
                 </div>
-              </div>
-
-            </div>
-            <div class="uk-width-1-5">
-              <ul class="uk-nav-default uk-nav-parent-icon sosd_none" uk-nav="multiple: true">
-                <li class="uk-nav-header uk-parent">
-                  <a href="#" style="text-transform: none;">Loại từ</a>
-                  <ul class="uk-nav-sub">
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Danh từ</label>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Động từ</label>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Tính từ</label>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Trạng từ</label>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Giới từ</label>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <label><input type="checkbox" class="uk-checkbox"> Từ nối</label>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import Loading from './../shared/loading';
+  import Loading from './../shared/loading';
 
-export default {
-  components: {
-    Loading: Loading
-  },
-  data: function() {
-    return {
-      error: false,
-      success: false,
-      loading: true,
-      grid: true,
-      list: false,
-      user: {},
-      vocabularies: []
-    };
-  },
-  mounted() {
-    this.user = Laravel.user;
-    this.get_vocabularies();
-  },
-  watch: {
-    error() {
-      if (this.error) {
-        this.success = false;
-        this.loading = false;
-      }
+  export default {
+    components: {
+      Loading: Loading
     },
-    success() {
-      if (this.success) {
-        this.error = false;
-        this.loading = false;
-      }
+    data: function() {
+      return {
+        error: false,
+        success: false,
+        loading: true,
+        user: {},
+        vocabularies: []
+      };
     },
-    loading() {
-      if (this.loading) {
-        this.error = false;
-        this.success = false;
-      }
+    mounted() {
+      this.user = Laravel.user;
+      this.get_vocabularies();
     },
-    grid() {
-      if (this.grid) {
-        this.list = false;
-      }
+    watch: {
+      error() {
+        if (this.error) {
+          this.success = false;
+          this.loading = false;
+        }
+      },
+      success() {
+        if (this.success) {
+          this.error = false;
+          this.loading = false;
+        }
+      },
+      loading() {
+        if (this.loading) {
+          this.error = false;
+          this.success = false;
+        }
+      },
     },
-    list() {
-      if (this.list) {
-        this.grid = false;
-      }
-    }
-  },
-  methods: {
-    get_vocabularies() {
-      var app = this;
-      $.ajax({
-        url: '/api/v1/users/' + app.user.id + '/vocabularies',
-        method: 'get'
-      })
+    methods: {
+      get_vocabularies() {
+        var app = this;
+        $.ajax({
+          url: '/api/v1/users/' + app.user.id + '/vocabularies',
+          method: 'get'
+        })
         .done(res => {
           app.vocabularies = res;
           setTimeout(function() {
@@ -191,9 +116,9 @@ export default {
             app.error = true;
           }, 500);
         });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
