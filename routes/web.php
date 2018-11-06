@@ -2,8 +2,6 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-
 Route::post('/vocabularies', 'VocabulariesController@create');
 
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
@@ -21,6 +19,9 @@ Route::get('/redirect/{social}', 'SocialAuthController@redirect');
 Route::get('/callback/{social}', 'SocialAuthController@callback');
 
 Route::post('/password/reset');
+Route::post('/setting/plan', 'UserProfileController@edit_target_score');
+
+Route::post('/setting/reminder', 'TrainingPlanController@create');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index');

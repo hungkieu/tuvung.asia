@@ -17,7 +17,10 @@ import indexSetting from './components/setting/index';
 import account from './components/setting/account';
 import photos from './components/setting/photos';
 import profile from './components/setting/profile';
+import reminder from './components/setting/reminder';
 import notifications from './components/setting/notifications';
+import plan from './components/setting/plan';
+
 const routes = [
   {
     path: '/',
@@ -102,7 +105,18 @@ const routes = [
         path: '/setting/notifications',
         name: 'notifications',
         component: notifications
+      },
+      {
+        path: '/setting/reminder',
+        name: 'reminder',
+        component: reminder
+      },
+      {
+        path: '/setting/plan',
+        name: 'plan',
+        component: plan
       }
+
     ]
   }
 ];

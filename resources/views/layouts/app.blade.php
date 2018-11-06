@@ -15,6 +15,7 @@
           id: "{{ Auth::user()->id }}",
           name: "{{ Auth::user()->name }}",
           avatar: "{{ Auth::user()->avatar }}",
+          target_score: "{{ Auth::user()->target_score }}"
         }
       @endif
     }
