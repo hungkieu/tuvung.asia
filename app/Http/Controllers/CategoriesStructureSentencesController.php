@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Grammars;
-use App\User;
+use App\CategoriesStructureSentences;
 
-use Illuminate\Support\Facades\Auth;
-
-class GrammarsController extends Controller
+class CategoriesStructureSentencesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,18 +22,9 @@ class GrammarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $grammar = new Grammars;
-        $grammar->name = $request->name;
-        $grammar->description = $request->description;
-        $grammar->user_id = Auth::user()->id;
-        
-        if ($grammar->save()) {
-            return response('create success', 200);
-        } else {
-            return response('create failed', 400);
-        }
+        //
     }
 
     /**
@@ -58,7 +46,7 @@ class GrammarsController extends Controller
      */
     public function show($id)
     {
-        return Grammars::where('user_id', '=', $id)->orderBy('updated_at', 'DESC')->get();
+        //
     }
 
     /**
@@ -81,17 +69,7 @@ class GrammarsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $gram = Grammars::find($id);
-        $gram->name = $request->name;
-        $gram->description = $request->description;
-  
-        $gram->user_id = Auth::user()->id;
-    
-        if ($gram->save()) {
-            return response('create success', 200);
-        } else {
-            return response('create failed', 400);
-        }
+        //
     }
 
     /**
@@ -100,9 +78,8 @@ class GrammarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $gram = Grammars::find($id);
-        $gram->delete();
+        //
     }
 }

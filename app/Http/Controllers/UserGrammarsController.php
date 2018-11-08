@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-// namespace Ammadeuss\LaravelHtmlDomParser;
-// use Sunra\PhpSimple\HtmlDomParser;
 use Illuminate\Http\Request;
-use App\GrammarArticle;
+use Illuminate\Support\Facades\Auth;
+use App\UserGrammars;
+use App\User;
 
-// use App\Http\HtmlDomParser;
-
-class GrammarArticleController extends Controller
+class UserGrammarsController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -19,17 +16,7 @@ class GrammarArticleController extends Controller
      */
     public function index()
     {
-        include(app_path() . '\Http\HtmlDomParser.php');
-        $url = 'https://efc.edu.vn/ngu-phap-tieng-anh';
-        $html = '';
-        if (function_exists('file_get_html')) {
-            $get_html = file_get_html($url);
-            $html = html_entity_decode($get_html);
-        } else {
-            $html = "not get file_get_html";
-        }
-        
-        return dd($html);
+        //
     }
 
     /**
@@ -37,9 +24,18 @@ class GrammarArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $grammar = new UserGrammars;
+        $grammar->name = $request->name;
+        $grammar->description = $request->description;
+        $grammar->user_id = Auth::user()->id;
+        
+        if ($grammar->save()) {
+            return response('create success', 200);
+        } else {
+            return response('create failed', 400);
+        }
     }
 
     /**
@@ -61,7 +57,7 @@ class GrammarArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        return UserGrammars::where('user_id', '=', $id)->orderBy('updated_at', 'DESC')->get();
     }
 
     /**
@@ -84,7 +80,17 @@ class GrammarArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gram = UserGrammars::find($id);
+        $gram->name = $request->name;
+        $gram->description = $request->description;
+  
+        $gram->user_id = Auth::user()->id;
+    
+        if ($gram->save()) {
+            return response('create success', 200);
+        } else {
+            return response('create failed', 400);
+        }
     }
 
     /**
@@ -93,8 +99,9 @@ class GrammarArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $gram = UserGrammars::find($id);
+        $gram->delete();
     }
 }

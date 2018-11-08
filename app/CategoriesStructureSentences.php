@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GrammarArticle extends Model
+class CategoriesStructureSentences extends Model
 {
     //
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSentenceImagesTable extends Migration
+class CreateUserGrammarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSentenceImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sentence_images', function (Blueprint $table) {
+        Schema::create('user_grammars', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
-
+            $table->string('name');
+            $table->text('description');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSentenceImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sentence_images');
+        Schema::dropIfExists('user_grammars');
     }
 }
