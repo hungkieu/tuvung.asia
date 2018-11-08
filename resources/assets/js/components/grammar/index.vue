@@ -7,7 +7,7 @@
         </div>
       </div>
       <hr class="m-0"/>
-      <div class="uk-container">
+      <div class="uk-container pb-5 ">
         <div class="guide uk-width-1-1 d-inline-block py-2">
             <h4 class="float-left">Luyện học ngữ pháp</h4>
             <ul class="uk-subnav uk-subnav-divider float-right" uk-margin>
@@ -16,35 +16,34 @@
                 <li><router-link :to="{name: 'grammarArticle'}">Bộ ngữ pháp cơ bản</router-link></li>
             </ul>
         </div>
-        <form class="uk-width-1-1 px-0 d-inline-block" id="form_create_gram">
-          <label>Chủ đề bài viết hoặc Cấu trúc ngữ pháp</label>
-          <input name="name" v-model="name" class="uk-input mb-3" id="name-grammar" placeholder="VD: Gia đình, Giao tiếp,... / S + to be + adj + er + than + Noun/ Pronoun / in on at ... "/>
-          <label>Bài viết của bạn </label>  
-          <textarea name="description" v-model="description" id="description-grammar" class="uk-textarea" rows="5" placeholder="Hãy nhập các câu/ bài viết bạn nghĩ tới ..."></textarea>
+        <div uk-grid>
+          <div class="uk-width-3-4">
+          <form class="w-75 px-0 d-inline-block" id="form_create_gram">
+          <div class="suggest uk-width-1-1">
+            <i>Gợi ý</i> <button class="btn-hover color-4 m-3" @click="grammarArticleRandom">Đổi gợi ý</button>
+             <p>Cấu trúc ngữ pháp</p>
+            <input name="name" v-model="name" class="uk-input mb-3" id="name-grammar" placeholder="VD: S + to be + adj + er + than + Noun/ Pronoun / in on at ... "/>
+            <div v-if="loading">
+              <Loading></Loading>
+            </div>
+            <div v-if="error">
+              <b>Vui lòng thử lại</b>
+            </div>
+
+            <div v-if="success">
+              <div uk-grid="mansonry: true" v-if="searches.length > 0">
+                <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
+                <img :src="searches[Math.floor(Math.random() * searches.length)].image" width="150px" class="">
+                </div>
+              </div>
+            </div>  
+        </div>
+          <label>Câu của bạn </label>  
+          <textarea name="description" v-model="description" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
           <button class="btn-hover color-9 float-right mt-2" @click="save">Lưu</button>
         </form>
-        <div class="suggest uk-width-1-1">
-            <label>Gợi ý</label> <button class="btn-hover color-4 ml-3" @click="grammarArticleRandom">Đổi gợi ý</button>
-            <div class="pl-5" v-if="grammars_articles">
-                <h5 class="text-center pb-3"><b v-html="grammars_articles.name"></b></h5>
-                <p v-html="grammars_articles.description"></p>
-            </div>
-            <div v-if="loading">
-        <Loading></Loading>
-      </div>
-      <div v-if="error">
-        <b>Vui lòng thử lại</b>
-      </div>
-
-      <div v-if="success">
-        <div uk-grid="mansonry: true" v-if="searches.length > 0">
-          <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
-          <img :src="searches[Math.floor(Math.random() * searches.length)].image" width="150px" class="">
-          </div>
         </div>
-      </div>  
-        </div>
-        <div class="history py-3" v-if="grammars.length > 0">
+        <div class="uk-width-1-4 history py-3" v-if="grammars.length > 0">
           <h5>Lịch sử</h5>
           <p  class="pl-5" v-for="(item, i) in grammars" :key="i" v-if="i<10">
             <router-link :to="'/grammars/edit/' + item.id">
@@ -52,6 +51,10 @@
             </router-link>  
             </p>
         </div>
+        </div>
+        
+        
+        
 
       </div>
 
@@ -256,6 +259,7 @@ export default {
   input,
   textarea {
     color: #000;
+    border-radius: 5px;
   }
   .btn-hover {
     padding: 10px 25px;
@@ -288,6 +292,7 @@ export default {
     box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
   }
   .btn-hover.color-4 {
+    padding: 5px 25px;
     background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
     box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
   }

@@ -112,11 +112,10 @@ const routes = [
         component: reminder
       },
       {
-        path: '/setting/plan',
+        path: '/setting/study-goal',
         name: 'plan',
         component: plan
       }
-
     ]
   }
 ];
