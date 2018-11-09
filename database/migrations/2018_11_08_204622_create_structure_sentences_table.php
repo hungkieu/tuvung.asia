@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuggestStructureCategoriesTable extends Migration
+class CreateStructureSentencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateSuggestStructureCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('suggest_structure_categories', function (Blueprint $table) {
+        Schema::create('structure_sentences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 191)->nullable();
-            $table->string('image', 191)->nullable();
+            $table->text('structure')->nullable();
             $table->text('description')->nullable();
-            $table->text('content')->nullable();
+            $table->text('examples')->nullable();
+            $table->text('image')->nullable();
+            $table->integer('category_id')->nullable();
             $table->integer('parent_id')->nullable();
-            $table->integer('user_id')->nullable();
             $table->text('pedigree')->nullable();
-
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateSuggestStructureCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('suggest_structure_categories');
+        Schema::dropIfExists('structure_sentences');
     }
 }
