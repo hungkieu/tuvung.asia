@@ -8,8 +8,8 @@
                 <li><router-link to='/setting/account'><img src="/svg/user.svg"/>Tài khoản</router-link></li>
                 <li><router-link to='/setting/photos'><img src="/svg/image.svg"/>Ảnh</router-link></li>
                 <li><router-link to='/setting/profile'><img src="/svg/pass.svg"/>Hồ sơ</router-link></li>
-                <li><router-link to='/setting/notifications'><img src="/svg/bell.svg"/>Thông báo</router-link></li>
-                <li><router-link to='/setting/study-plan'><img src="/svg/notebook1.svg"/>Kế hoạch học tập</router-link></li>
+                <!-- <li><router-link to='/setting/notifications'><img src="/svg/bell.svg"/>Thông báo</router-link></li> -->
+                <li><router-link to='/setting/reminder'><img src="/svg/notebook1.svg"/>Kế hoạch học tập</router-link></li>
                 <li><router-link to='/setting/study-goal'><img src="/svg/radar.svg"/>Mục tiêu học tập</router-link></li>
             </ul>
         </div>
