@@ -10,6 +10,7 @@ import UserProfile from './components/users/show';
 import editVocab from './components/vocabularies/edit';
 import showVocab from './components/vocabularies/show';
 import dictionary from './components/vocabularies/dictionary';
+import practice from './components/vocabularies/practice';
 import indexGrammar from './components/grammar/index';
 import grammarArticle from './components/grammar/grammar-article';
 import grammarList from './components/grammar/grammar-list';
@@ -57,6 +58,11 @@ const routes = [
     component: editVocab
   },
   {
+    path: '/vocabularies/practice',
+    name: 'practiceVocab',
+    component: practice,
+  },
+  {
     path: '/vocabularies/:id',
     name: 'showVocab',
     component: showVocab
@@ -83,9 +89,12 @@ const routes = [
   },
   {
     path: '/setting',
-    name: 'indexSetting',
     component: indexSetting,
     children: [
+      {
+        path: '',
+        component: account
+      },
       {
         path: '/setting/account',
         name: 'account',

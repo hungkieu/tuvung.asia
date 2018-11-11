@@ -109,7 +109,7 @@ export default {
             },
             {
               icon: '/svg/review.svg',
-              link: '/vocabularies',
+              link: '/vocabularies/practice',
               name: 'Ôn tập'
             }
           ]
