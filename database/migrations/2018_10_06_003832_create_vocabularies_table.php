@@ -22,6 +22,7 @@ class CreateVocabulariesTable extends Migration
             $table->text('description')->nullable();
             $table->integer('parent_id')->default(0);
             $table->text('pedigree')->nullable();
+            $table->datetime('last_practice')->nullable();
             $table->integer('user_id');
             $table->timestamps();
         });
