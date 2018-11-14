@@ -72,7 +72,7 @@ class VocabulariesController extends Controller
     }
   }
 
-  public function destroy(Request $request,$id){
+  public function destroy(Request $request, $id){
     $vocab = Vocabulary::find($id);
     if(Vocabulary::where('parent_id', '=', $id)->count() == 0) {
       $vocab->delete();
@@ -82,4 +82,13 @@ class VocabulariesController extends Controller
     }
   }
 
+  public function practice(Request $request) {
+    $vocab = Vocabulary::find($request->id);
+    $vocab->last_practice = date("Y-m-d H:i:s");
+    if($vocab->save()) {
+      return response('success', 200);
+    } else {
+      return response('error', 302);
+    }
+  }
 }

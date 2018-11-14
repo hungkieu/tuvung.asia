@@ -10,9 +10,13 @@
 
     <div v-if="success">
       <div class="uk-container">
-        <div v-if="vocabularies.length >= 5">
+        <div v-if="p_vocabularies.length >= 5">
+
+          <div>
           Bạn có {{ p_vocabularies.length }} từ cần ôn tập
           <button class="uk-button" @click="start">Ôn tập</button>
+          </div>
+
           <div class="exam" v-if="inprogress">
             <div class="head">
               <div class="start">huong dan</div>
@@ -27,26 +31,50 @@
               <div class="quest">
                 <div v-for="(quest, index) in exam.questions">
                   <div class="body" v-if="index == exam.step">
-                    <div v-if="quest.correct_answer.image != null">
+                    <div class="image" v-if="quest.correct_answer.image != null">
                       <img :src="quest.correct_answer.image" alt="" height="250px">
                     </div>
                     <div class="question">
                       Từ <b>{{ quest.correct_answer.vi }}</b> trong tiếng anh là?
                     </div>
                     <div class="choices uk-child-width-1-2" uk-grid>
-                      <div v-for="choice in quest.choices" @click="answer(quest.correct_answer.id, choice.id)">
-                        {{ choice.en }}
+                      <div v-for="choice in quest.choices">
+                        <button :class="choice.class" @click="answer(index, choice.id)">{{ choice.en }}</button>
+                      </div>
+                    </div>
+                    <div class="foot" v-if="quest.answer">
+                      <div class="wrap"></div>
+                      <div class="foot_cont" uk-grid>
+                        <div class="message uk-width-2-3">
+                          <div class="success" v-if="quest.correct">
+                            <h3><i class="fa fa-check-circle-o" aria-hidden="true"></i> Chính xác</h3>
+                          </div>
+                          <div class="error" v-else>
+                            <h3><i class="fa fa-times-circle-o" aria-hidden="true"></i> Không chính xác</h3>
+                          </div>
+                        </div>
+                        <div class="next uk-width-1-3">
+                          <button @click="next_step" :class="{ success: quest.correct, error: !quest.correct }">Tiếp theo</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div v-if="exam.step == 999 ">
+                  <div class="congratulation">
+                    <h1>Tuyệt vời</h1>
+                    Bạn đã hoành thành ôn luyện {{ exam.questions.length }} từ
+                    <button class="btn-co" @click="stop">
+                      Kết thúc
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="foot"></div>
           </div>
         </div>
         <div v-else>
-          Bạn cần học tối thiểu 5 từ để sử dụng chức năng này
+          Không có từ nào cần ôn tập
         </div>
       </div>
     </div>
@@ -131,27 +159,36 @@
       start() {
         this.inprogress = true;
         var vocabs = this.p_vocabularies.slice(0, 10);
+        if(vocabs.length < 5) { return; }
         var questions = vocabs.map(val => {
           var correct_answer = val;
+          correct_answer = Object.assign({class: { choice: true, success: false, error: false }}, correct_answer)
           var choices = [];
           var arr = [];
           while(arr.length < 3) {
             var randomNumber = Math.floor(Math.random() * vocabs.length);
             if(vocabs[randomNumber].id == correct_answer.id) continue;
             if(arr.indexOf(randomNumber) > -1) continue;
-            choices.push(vocabs[randomNumber]);
+            var vocab = Object.assign({class: { choice: true, success: false, error: false }}, vocabs[randomNumber])
+            choices.push(vocab);
             arr[arr.length] = randomNumber;
           }
           choices = this.shuffle(choices.concat(correct_answer));
           return {
             correct_answer: correct_answer,
             choices: choices,
+            answer: false,
+            correct: false,
           }
         });
+
         this.exam.questions = questions;
       },
 
       stop() {
+        this.loading = true;
+        this.get_vocabularies();
+        this.exam.step = 0;
         this.inprogress = false;
       },
 
@@ -166,11 +203,35 @@
         return a;
       },
 
-      answer(c_id, id) {
-        if(c_id == id) {
-          this.exam.step += 1;
+      answer(quest_index, choice_id) {
+        var quest = this.exam.questions[quest_index];
+        quest.choices.forEach(choice => {
+          if (quest.correct_answer.id == choice.id) {
+            choice.class.success = true;
+          } else if (choice_id == choice.id)  {
+            choice.class.error = true;
+          }
+        })
+        if(quest.correct_answer.id == choice_id) {
+          quest.correct = true;
+          axios.post('/vocabularies/practice', {
+            id: choice_id
+          })
+          .then(res => {
+            console.log(res.data);
+          })
+          .catch(res => {
+            console.log(res.data);
+          })
         }
-        if(this.exam.step >= this.exam.questions.length) this.stop();
+        quest.answer = true;
+      },
+
+      next_step() {
+        this.exam.step += 1;
+        if(this.exam.step >= this.exam.questions.length) {
+          this.exam.step = 999;
+        }
       }
     }
   };
@@ -180,13 +241,16 @@
 .exam {
   width: 100vw;
   height: 100vh;
+  display: grid;
+  grid-template-rows: 50px auto;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   background: rgb(241, 244, 248);
+  overflow: hidden;
   .head {
-    height: 50px;
+    box-sizing: border-box;
     margin: 0 50px;
     display: grid;
     align-items: center;
@@ -204,10 +268,155 @@
     }
   }
   .content {
+    box-sizing: content-box;
+    padding-right: 17px;
+    width: 100%;
     display: flex;
     justify-content: center;
+    max-height: 100%;
+    min-height: 0;
+    min-width: 0;
+    overflow-y: scroll;
     .quest {
       width: 50%;
+      .body {
+        .image {
+          margin: 40px 0px;
+          text-align: center;
+        }
+        .question {
+          b {
+            color: rgb(0, 121, 243);
+          }
+          margin-bottom: 40px;
+        }
+        .choices {
+          .choice {
+            outline: none;
+            border: none;
+            cursor: pointer;
+            width: 75%;
+            padding: 15px 0px;
+            border-radius: 15px;
+            background: white;
+            &:hover {
+              background: rgb(0, 121, 243);
+              color: white;
+            }
+          }
+
+          .success {
+            animation: scale 0.3s linear both;
+            background: rgb(128, 223, 133);
+            color: white;
+          }
+
+          .error {
+            animation: shake 0.5s linear both;
+            background: rgb(255, 38, 104);
+            color: white;
+          }
+        }
+        padding-bottom: 40px;
+      }
+    }
+  }
+
+  .foot {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    top: 50px;
+    left: 0;
+    display: grid;
+    grid-template-rows: auto 75px 50px;
+    wrap: {
+      width: 100%;
+      background: white;
+      opacity: 0.1;
+    }
+    .foot_cont {
+      background: white;
+      display: flex;
+      align-items: center;
+      opacity: 0.9;
+      padding: 0 50px;
+      .next {
+        text-align: right;
+        button {
+          cursor: pointer;
+          border: none;
+          outline: none;
+          border-radius: 15px;
+          padding: 5px 15px;
+        }
+        button.success {
+          background: rgb(128, 223, 133);
+          color: white;
+        }
+        button.error {
+          background: rgb(255, 38, 104);
+          color: white;
+        }
+      }
+
+      .success {
+        animation: scale 0.3s linear both;
+        color: rgb(128, 223, 133);
+      }
+
+      .error {
+        animation: shake 0.3s linear both;
+        color: rgb(255, 38, 104);
+      }
+    }
+  }
+
+  .congratulation {
+    animation: scale 0.8s ease both;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+    line-height: 50px;
+    h1 {
+      color: rgb(128, 223, 133);
+    }
+    .btn-co {
+      cursor: pointer;
+      outline: none;
+      border: none;
+      background: rgb(128, 223, 133);
+      color: white;
+      padding: 5px 40px;
+      border-radius: 50px;
+    }
+  }
+
+  @keyframes scale {
+    0% { transform: scale(0.9, 0.9) };
+
+    40% { transform: scale(1.1, 1.1) };
+
+    100% { transform: scale(1.0, 1.0) }
+  }
+
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
     }
   }
 }
