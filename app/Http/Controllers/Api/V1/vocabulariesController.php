@@ -22,21 +22,28 @@ class vocabulariesController extends Controller
         return Vocabulary::where('user_id', '=', $id)->get();
     }
 
-    public function all() {
+    public function all()
+    {
         return DB::table('users')
             ->join('vocabularies', 'users.id', '=', 'vocabularies.user_id')
             ->select('vocabularies.*', 'users.name')
             ->get();
     }
 
-    public function search($en) {
-        if($en == 'all')
-            return Vocabulary::where('image', '!=', null)->get();
-        return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
+    public function search($en)
+    {
+        include(app_path() . '\Http\HtmlDomParser.php');
+        // if($en == 'all')
+        //     return Vocabulary::where('image', '!=', null)->get();
+        // return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
+        $url = 'https://www.bing.com/images/search?q='.$en;
+        $html = file_get_contents($url);
+        print_r($html);
     }
 
-    public function pedigree($id) {
-        $vocabularies = Vocabulary::where('pedigree', 'like', '%'.$id.'%' )->get();
+    public function pedigree($id)
+    {
+        $vocabularies = Vocabulary::where('pedigree', 'like', '%'.$id.'%')->get();
         $vocabulary = Vocabulary::find($id);
         return ["vocabulary" => $vocabulary, "vocabularies" => $vocabularies];
     }
@@ -107,7 +114,8 @@ class vocabulariesController extends Controller
         //
     }
 
-    public function count($id) {
+    public function count($id)
+    {
         return Vocabulary::where('user_id', '=', $id)->count();
     }
 }

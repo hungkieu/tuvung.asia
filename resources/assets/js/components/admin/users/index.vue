@@ -30,7 +30,7 @@
                   <img class="uk-preserve-width uk-border-circle" :src="u.avatar" style="width: 50px; height: 50px; object-fit: cover;" alt="">
                 </td>
                 <td class="uk-table-link text-center">
-                  <router-link to={ name: action, params: { u.id }}  >{{ u.name }}</router-link>
+                  <!-- <router-link :to="{ name: action, params: {id: u.id }}" >{{ u.name }}</router-link> -->
                   <a class="uk-link-reset" href="">{{ u.name }}</a>
                 </td>
                 <td class="uk-text-truncate">{{ u.email }}</td>

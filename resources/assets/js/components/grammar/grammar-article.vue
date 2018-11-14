@@ -1,7 +1,6 @@
 <template>
-<div>
-  12132
-
+<div  >
+  <div v-html="grammarsArticles"></div>
 </div>
 </template>
 <script>

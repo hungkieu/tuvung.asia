@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\StructureSentences;
 use App\User;
 
@@ -17,25 +18,49 @@ class StructureSentencesController extends Controller
     {
         include(app_path() . '\Http\HtmlDomParser.php');
         $url = 'https://efc.edu.vn/ngu-phap-tieng-anh';
-        $html = '';
-        if (function_exists('file_get_html')) {
-            $get_html = file_get_html($url);
-            $html = html_entity_decode($get_html);
-        } else {
-            $html = "not get file_get_html";
-        }
+        $html = file_get_html($url);
+        // $get_html = file_get_html($url);
+        //     $html = html_entity_decode($get_html);
+        // if (function_exists('file_get_html')) {
+        //     $get_html = file_get_html($url);
+        //     $html = html_entity_decode($get_html);
+        // } else {
+        //     $html = "not get file_get_html";
+        // }
         
-        return dd($html);
+        $e = '';
+        foreach ($html->find('.td-block-span6') as $element) {
+            $e = $e.$element;
+        }
+        return $e;
     }
-
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function indexAdmin()
+    {
+        return StructureSentences::all();
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, $id)
     {
-        //
+        $arr = $request->list;
+        for ($i = 0; $i < count($arr); $i++) {
+            $struc = new StructureSentences;
+            $struc->structure = $arr[$i]["structure"];
+            $struc->description = $arr[$i]["description"];
+            $struc->examples = $arr[$i]["examples"];
+            $struc->image = $arr[$i]["image"];
+            $struc->category_id = $arr[$i]["category_id"];
+            $struc->user_id = Auth::user()->id;
+            $struc->save();
+        };
     }
 
     /**
@@ -66,9 +91,14 @@ class StructureSentencesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $struc = StructureSentences::find($id);
+        $struc->structure = $request->structure;
+        $struc->description = $request->description;
+        $struc->category_id = $request->category_id;
+        $struc->user_id = Auth::user()->id;
+        $struc->save();
     }
 
     /**
@@ -91,6 +121,7 @@ class StructureSentencesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gram = StructureSentences::find($id);
+        $gram->delete();
     }
 }
