@@ -17,7 +17,7 @@ class SocialAccountService
     if ($account) {
       return $account->user;
     } else {
-      $email = $providerUser->getEmail() ?? $providerUser->getNickname();
+      $email = $providerUser->getEmail() ? $providerUser->getNickname();
       $account = new SocialAccount([
         'provider_user_id' => $providerUser->getId(),
         'provider' => $social
