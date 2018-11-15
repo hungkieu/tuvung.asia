@@ -38,7 +38,7 @@
             </router-link>
           </li>
           <hr>
-          <li class="uk-parent">
+          {{-- <li class="uk-parent">
             <a href="#">Quản lý cấu trúc câu</a>
             <ul class="uk-nav-sub">
               <li>
@@ -47,6 +47,26 @@
                 </router-link>
               </li>
               <li><a href="#">Tạo nhóm cấu trúc</a></li>
+            </ul>
+          </li> --}}
+          <li class="uk-parent">
+            <a href="#">Quản lý ngữ pháp</a>
+            <ul class="uk-nav-sub">
+              <li>
+                <router-link :to="{ name: 'indexStructure' }" >
+                  Danh sách cấu trúc câu
+                </router-link>
+              </li>
+              <li>
+                <router-link :to="{ name: 'indexStructure' }" >
+                  Danh sách danh mục ngữ pháp
+                </router-link>
+              </li>
+              <li>
+                <router-link :to="{ name: 'newStructure' }" >
+                  Tạo ngữ pháp mới
+                </router-link>
+              </li>
             </ul>
           </li>
           <li>
