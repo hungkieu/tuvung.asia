@@ -55,13 +55,20 @@ body {
 #app {
   position: relative;
   min-height: 100vh;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   footer {
+    font-size: 12px;
     position: absolute;
     bottom: 0;
-    display: block;
-    height: 60px;
+    box-sizing: border-box;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    height: 40px;
     width: 100%;
     background: #eeeeee;
+    a {
+      text-indent: 5px;
+    }
   }
 }

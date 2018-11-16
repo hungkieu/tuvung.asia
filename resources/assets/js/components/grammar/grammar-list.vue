@@ -45,7 +45,7 @@
         </div>
         <div v-if="grammars.length == 0">
           <b>Bạn chưa có câu hay bài viết tiếng anh nào. </b>
-          <router-link to="/grammar"> Cùng luyện ngữ pháp nào ^^ </router-link>
+          <router-link to="/grammars"> Cùng luyện ngữ pháp nào ^^ </router-link>
         </div>
         <div v-else>
           <div class="" uk-grid>

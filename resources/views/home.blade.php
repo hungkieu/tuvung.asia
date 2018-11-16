@@ -67,7 +67,7 @@
   </div>
 
   <footer>
-    footer
+    Liên hệ Facebook:  <a href="https://www.facebook.com/tathimyhanh03">Tạ Hạnh</a><a href="https://www.facebook.com/hungkieu.h12">Kiều Hùng</a><a href="https://www.facebook.com/thaothu.04">Thảo Thu</a>
   </footer>
 </div>
 @endsection
