@@ -34,6 +34,9 @@
               <p><i>{{ type }}</i></p>
             </div>
             <div class="uk-width-expand tool uk-inline">
+              <div class="icon" uk-tooltip="Nghe" @click="speach(vocabulary.en)">
+                <i class="fa fa-volume-up" aria-hidden="true"></i>
+              </div>
 
               <div class="icon" uk-tooltip="Xem thêm" uk-toggle="target: #m_tool">
                 <span uk-icon="more"></span>
@@ -240,6 +243,10 @@ export default {
         };
       });
       diagram.model = model;
+    },
+
+    speach(en) {
+      responsiveVoice.speak(en);
     }
   }
 };
