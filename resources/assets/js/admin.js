@@ -13,7 +13,7 @@ import indexVocabularies from './components/admin/vocabularies/index';
 import indexGrammar from './components/admin/grammar/index';
 import indexStructure from './components/admin/structure-grammar/index';
 import newStructure from './components/admin/structure-grammar/new-structure';
-import newCategoryStructure from './components/admin/structure-grammar/new-category-structure';
+import indexCategoryStructure from './components/admin/structure-grammar/index-category-structure';
 import indexStatistical from './components/admin/statistical/index';
 const routes = [
   {
@@ -57,8 +57,8 @@ const routes = [
   },
   {
     path: '/admin/category-structure-grammars/new',
-    component: newCategoryStructure,
-    name: 'newCategoryStructure'
+    component: indexCategoryStructure,
+    name: 'indexCategoryStructure'
   },
   {
     path: 'admin/statistical',

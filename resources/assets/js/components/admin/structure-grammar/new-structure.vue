@@ -4,15 +4,7 @@
         <div class="col-auto">
            <h4>Thêm ngữ pháp</h4>
         </div>
-        <div class="col-auto pr-5">
-          <!-- :to="{ name: newCategoryStructure}" -->
-          <div class="alert alert-info p-2">
-            <router-link  to='/admin/category-structure-grammars/new'>
-            Thêm danh mục ngữ pháp mới
-            </router-link>
-          </div>
-          
-        </div>
+        
       </div>
         <ItemStructure  
         v-for="(post, index) in sentence"

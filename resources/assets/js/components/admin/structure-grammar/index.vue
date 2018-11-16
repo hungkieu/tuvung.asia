@@ -1,6 +1,17 @@
 <template>
   <div class="uk-margin-right">
-    <h4>Danh sách ngữ pháp</h4>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="text-left d-inline-block">Danh sách ngữ pháp</h4>
+      <span class="float-right">
+        <router-link :to="{ name: 'newStructure' }" >
+                  <img src="/svg/plus.svg" title="Tạo cấu trúc mới" style="    width: 35px;"/>
+                </router-link>
+      </span>
+      </div>
+      
+    </div>
+    
     <div class="sosd-background-white">
       <div class="uk-overflow-auto">
         <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">

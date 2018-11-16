@@ -18,44 +18,35 @@
         </div>
         <div uk-grid>
           <div class="uk-width-3-4">
-          <form class="w-75 px-0 d-inline-block" id="form_create_gram">
+          <div class="w-75 px-0 d-inline-block">
           <div class="suggest uk-width-1-1">
-            <i>Gợi ý</i> <button class="btn-hover color-4 m-3" @click="grammarArticleRandom">Đổi gợi ý</button>
+            <i>Gợi ý</i> <button class="btn-hover color-4 m-3" @click="grammarRandom">Đổi gợi ý</button>
              <p>Cấu trúc ngữ pháp</p>
-            <input name="name" v-model="name" class="uk-input mb-3" id="name-grammar" placeholder="VD: S + to be + adj + er + than + Noun/ Pronoun / in on at ... "/>
-            <div v-if="loading">
-              <Loading></Loading>
-            </div>
-            <div v-if="error">
-              <b>Vui lòng thử lại</b>
-            </div>
-
-            <div v-if="success">
+             <h5>{{showGrammar.structure}}</h5>
+              <!-- <select v-model="showGrammar.structure" class="uk-select mb-3">
+                  <option v-for="g in grammars">{{g.structure}}</option>
+              </select> -->
+            <p>{{showGrammar.description}}</p>
               <div uk-grid="mansonry: true" v-if="searches.length > 0">
                 <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
                 <img :src="searches[Math.floor(Math.random() * searches.length)].image" width="150px" class="">
                 </div>
               </div>
-            </div>  
         </div>
           <label>Câu của bạn </label>  
-          <textarea name="description" v-model="description" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
+          <textarea name="description" v-model="obj.name" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
           <button class="btn-hover color-9 float-right mt-2" @click="save">Lưu</button>
-        </form>
         </div>
-        <div class="uk-width-1-4 history py-3" v-if="grammars.length > 0">
+        </div>
+        <div class="uk-width-1-4 history py-3" v-if="grammarsUser.length > 0">
           <h5>Lịch sử</h5>
-          <p  class="pl-5" v-for="(item, i) in grammars" :key="i" v-if="i<10">
+          <p  class="" v-for="(item, i) in grammarsUser " :key="i" v-if="i<10">
             <router-link :to="'/grammars/edit/' + item.id">
             {{item.name}}
             </router-link>  
             </p>
         </div>
         </div>
-        
-        
-        
-
       </div>
 
       <!-- modal hướng dẫn sử dụng -->
@@ -82,76 +73,83 @@ export default {
   },
   data: function() {
     return {
-      name: '',
-      description: '',
+      obj: {
+        name: '',
+        description: ''
+      },
+      grammarsUser: [],
       grammars: [],
       user: [],
-      error: false,
-      success: false,
-      loading: true,
       searches: [],
-      grammars_articles: [],
-      get_grammars_articles: []
+      showGrammar: [],
+      listCategory: []
     };
   },
   computed: function() {
-    this.grammarArticleRandom();
-  },
-  watch: {
-    error() {
-      if (this.error) {
-        this.success = false;
-        this.loading = false;
-      }
-    },
-    success() {
-      if (this.success) {
-        this.error = false;
-        this.loading = false;
-      }
-    },
-    loading() {
-      if (this.loading) {
-        this.error = false;
-        this.success = false;
-      }
-    }
+    this.grammarRandom();
   },
   created() {
-    this.search();
+    this.getUser();
+    this.getStructureSentences();
+    this.getCategory();
     this.getGrammarUser();
-    this.getGrammarArticle();
+    this.search();
   },
   methods: {
-    getGrammarUser() {
+    getUser() {
+      var app = this;
       this.user = Laravel.user;
+      // axios
+      //   .get('/api/v1/users')
+      //   .then(res => {
+      //     app.user = res.data;
+      //   })
+      //   .catch(res => {
+      //     console.log(res);
+      //   });
+    },
+    getStructureSentences() {
       var app = this;
       axios
-        .get('/grammars/' + app.user.id)
+        .get('/admin/structure-sentences')
         .then(function(res) {
+          console.log(res);
           app.grammars = res.data;
-          console.log('res' + JSON.stringify(app.grammars));
-          if (app.$route.params.id != undefined) {
-            let g = app.grammars.find(e => e.id == app.$route.params.id);
-            app.name = g.name;
-            app.description = g.description;
-          }
+          app.grammarRandom();
         })
         .catch(function(res) {
-          console.log('err');
+          console.log(res);
         });
     },
-    getGrammarArticle() {
+    getCategory() {
       var app = this;
       axios
-        .get('/grammars-articles')
+        .get('/admin/category-structure-grammars')
         .then(function(res) {
-          app.get_grammars_articles = res.data;
-          app.grammarArticleRandom();
+          app.listCategory = res.data;
         })
         .catch(function(res) {
-          console.log('err');
+          console.log(res);
         });
+    },
+    getGrammarUser() {
+      var app = this;
+      if (app.user) {
+        axios
+          .get('/grammars/' + app.user.id)
+          .then(function(res) {
+            app.grammarsUser = res.data;
+            console.log(app.grammarsUser);
+            if (app.$route.params.id != undefined) {
+              let g = app.grammarsUser.find(e => e.id == app.$route.params.id);
+              app.obj.name = g.name;
+              app.obj.description = g.description;
+            }
+          })
+          .catch(function(res) {
+            console.log(err);
+          });
+      }
     },
     search() {
       var app = this;
@@ -170,68 +168,58 @@ export default {
     save(e) {
       var app = this;
       e.preventDefault();
-      var f = document.getElementById('form_create_gram');
-      var formData = new FormData(f);
-      let description_grammar = document.getElementById('description-grammar');
-      let name_grammar = document.getElementById('name-grammar');
 
-      if (name_grammar.value != '' || description_grammar.value != '') {
-        if (app.$route.params.id != undefined) {
-          axios
-            .post('/grammars/update/' + app.$route.params.id, formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(function(res) {
-              alert('Sửa bài viết thành công !');
-              axios
-                .get('/grammars/' + app.user.id)
-                .then(function(res) {
-                  console.log(res);
-                  app.grammars = res.data;
-                })
-                .catch(function(res) {
-                  console.log(res);
-                });
-            })
-            .catch(function(res) {
-              console.log(res);
-              alert('Sửa khong thanh cong, vui long thu lai');
-            });
-        } else {
-          axios
-            .post('/grammars/create', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(function(res) {
-              axios
-                .get('/grammars/' + app.user.id)
-                .then(function(res) {
-                  console.log(res);
-                  app.grammars = res.data;
-                })
-                .catch(function(res) {
-                  console.log(res);
-                });
-              f.reset();
-              app.name = '';
-              app.description = '';
-            })
-            .catch(function(res) {
-              console.log(res);
-              alert('Them khong thanh cong, vui long thu lai');
-            });
-        }
+      // if (this.name != '') {
+
+      if (app.$route.params.id != undefined) {
+        axios
+          .post('/grammars/update/' + app.$route.params.id, app.obj)
+          .then(function(res) {
+            alert('Sửa bài viết thành công !');
+            axios
+              .get('/grammars/' + app.user.id)
+              .then(function(res) {
+                console.log(res);
+                app.grammarsUser = res.data;
+              })
+              .catch(function(res) {
+                console.log(res);
+              });
+          })
+          .catch(function(res) {
+            console.log(res);
+            alert('Sửa khong thanh cong, vui long thu lai');
+          });
       } else {
-        alert('Bạn phải nhập đủ thông tin !');
+        app.obj.description = app.showGrammar.structure;
+        axios
+          .post('/grammars/create', app.obj)
+          .then(function(res) {
+            axios
+              .get('/grammars/' + app.user.id)
+              .then(function(res) {
+                console.log(res);
+                app.grammarsUser = res.data;
+              })
+              .catch(function(res) {
+                console.log(res);
+              });
+            app.obj.name = '';
+            app.obj.description = '';
+          })
+          .catch(function(res) {
+            console.log(res);
+            alert('Them khong thanh cong, vui long thu lai');
+          });
       }
+      // } else {
+      //   alert('Bạn phải nhập đủ thông tin !');
+      // }
     },
-    grammarArticleRandom() {
-      var len = this.get_grammars_articles.length;
-      this.grammars_articles = this.get_grammars_articles[Math.floor(Math.random() * len)];
+    grammarRandom() {
+      var len = this.grammars.length;
+      console.log(this.grammars);
+      this.showGrammar = this.grammars[Math.floor(Math.random() * len)];
     }
   }
 };
