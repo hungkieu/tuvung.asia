@@ -76,4 +76,5 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/uikit.js') }}"></script>
 <script src="{{ asset('js/uikit-icon.js') }}"></script>
+<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
 @endsection
