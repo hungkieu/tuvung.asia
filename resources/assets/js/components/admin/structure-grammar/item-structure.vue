@@ -5,7 +5,7 @@
             <input v-model="post.structure"  class="uk-input mb-3" type="text" name="structure" placeholder="Cấu trúc ngữ pháp" />
              <select class="uk-select" v-model="post.category_id">
                 <option disabled >Chọn Danh mục</option>
-                <option v-for="v in listCategory" :value="v.name">{{v.name}}</option>
+                <option v-for="v in listCategory" :value="v.id">{{v.name}}</option>
             </select>
         </div>
         <div class="col-6">
