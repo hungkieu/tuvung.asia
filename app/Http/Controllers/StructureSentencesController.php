@@ -55,12 +55,13 @@ class StructureSentencesController extends Controller
             $struc = new StructureSentences;
             $struc->structure = $arr[$i]["structure"];
             $struc->description = $arr[$i]["description"];
-            $struc->examples = $arr[$i]["examples"];
-            $struc->image = $arr[$i]["image"];
+            // $struc->examples = $arr[$i]["examples"];
+            // $struc->image = $arr[$i]["image"];
             $struc->category_id = $arr[$i]["category_id"];
             $struc->user_id = Auth::user()->id;
             $struc->save();
         };
+        return $arr;
     }
 
     /**
@@ -93,12 +94,6 @@ class StructureSentencesController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $struc = StructureSentences::find($id);
-        $struc->structure = $request->structure;
-        $struc->description = $request->description;
-        $struc->category_id = $request->category_id;
-        $struc->user_id = Auth::user()->id;
-        $struc->save();
     }
 
     /**
@@ -110,7 +105,13 @@ class StructureSentencesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $struc = StructureSentences::find($id);
+        $struc->structure = $request->structure;
+        $struc->description = $request->description;
+        $struc->category_id = $request->category_id;
+        $struc->user_id = Auth::user()->id;
+        $struc->save();
+        return $struc;
     }
 
     /**

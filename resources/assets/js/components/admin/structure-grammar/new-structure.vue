@@ -61,8 +61,14 @@ export default {
         });
     },
     save() {
-      console.log(this.sentence);
       var app = this;
+      if (
+        app.sentence.find(e => e.structure == '') ||
+        app.sentence.find(e => e.category_id == '')
+      ) {
+        alert('Bạn phải nhập đầy đủ thông tin !');
+        return;
+      }
       axios
         .post('/admin/structure-grammars/' + app.user.id + '/new', { list: app.sentence })
         .then(function(res) {

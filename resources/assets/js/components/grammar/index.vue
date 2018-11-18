@@ -8,7 +8,7 @@
       </div>
       <hr class="m-0"/>
       <div class="uk-container pb-5 ">
-        <div class="guide uk-width-1-1 d-inline-block py-2">
+        <div class="guide uk-width-1-1 d-inline-block pt-2">
             <h4 class="float-left">Luyện học ngữ pháp</h4>
             <ul class="uk-subnav uk-subnav-divider float-right" uk-margin>
                 <li><a href="#modal-guide" uk-toggle>Hướng dẫn</a></li>
@@ -20,12 +20,15 @@
           <div class="uk-width-3-4">
           <div class="w-75 px-0 d-inline-block">
           <div class="suggest uk-width-1-1">
-            <i>Gợi ý</i> <button class="btn-hover color-4 m-3" @click="grammarRandom">Đổi gợi ý</button>
+            
+            <p v-if="this.$route.params.id != undefined"><router-link :to="{name: 'indexGrammar'}">Quay lại luyện tập</router-link></p>
+            <p v-else><i>Gợi ý</i> <button class="btn-hover color-4 mx-3 mb-3" @click="grammarRandom">Đổi gợi ý</button></p>
              <p>Cấu trúc ngữ pháp</p>
-             <h5>{{showGrammar.structure}}</h5>
+             <h5 class="text-center"><b>{{showGrammar.structure}}</b></h5>
               <!-- <select v-model="showGrammar.structure" class="uk-select mb-3">
                   <option v-for="g in grammars">{{g.structure}}</option>
               </select> -->
+                <p class="mb-1">Mô tả</p>
             <p>{{showGrammar.description}}</p>
               <div uk-grid="mansonry: true" v-if="searches.length > 0">
                 <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
@@ -42,7 +45,7 @@
           <h5>Lịch sử</h5>
           <p  class="" v-for="(item, i) in grammarsUser " :key="i" v-if="i<10">
             <router-link :to="'/grammars/edit/' + item.id">
-            {{item.name}}
+            <span class="des-1" :title="item.name">{{item.name}}</span>
             </router-link>  
             </p>
         </div>
@@ -191,7 +194,7 @@ export default {
             alert('Sửa khong thanh cong, vui long thu lai');
           });
       } else {
-        app.obj.description = app.showGrammar.structure;
+        app.obj.description = app.showGrammar.id;
         axios
           .post('/grammars/create', app.obj)
           .then(function(res) {
@@ -217,9 +220,17 @@ export default {
       // }
     },
     grammarRandom() {
-      var len = this.grammars.length;
-      console.log(this.grammars);
-      this.showGrammar = this.grammars[Math.floor(Math.random() * len)];
+      if (this.$route.params.id != undefined) {
+        console.log(this.obj);
+        console.log(this.grammars.find(e => e.id == 'S + V'));
+
+        // this.showGrammar = this.grammars.find(e => e.structure == this.obj.description);
+        // console.log(this.showGrammar);
+      } else {
+        var len = this.grammars.length;
+        console.log(this.grammars);
+        this.showGrammar = this.grammars[Math.floor(Math.random() * len)];
+      }
     }
   }
 };
@@ -297,6 +308,13 @@ export default {
       color: #1f8bf0;
       text-decoration: none;
     }
+  }
+  .des-1 {
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
   }
 }
 </style>

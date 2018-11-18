@@ -25,14 +25,14 @@
               <div class="row">
                   <div class="col-md-12 d-flex">
                      <div class="mr-3" title="Luyện ngữ pháp">
-                        <router-link to="/grammar">
+                        <router-link to="/grammars">
                         <button class="btn-hover color-1">
-                        <span class="uk-icon-button" uk-icon="icon: plus; ratio: 1.2"></span>
+                        <span class="uk-icon-button" uk-icon="icon: plus; ratio: 1.2" title="Luyện ngữ pháp"></span>
                         </button>
                         </router-link>
                     </div>
                     <div id="formSearch">
-                      <button v-on:click="show = !show" class="btn-hover color-3 mr-3"><span uk-icon="icon: search; ratio: 1.2"></span></button>
+                      <button v-on:click="show = !show" class="btn-hover color-3 mr-3"><span uk-icon="icon: search; ratio: 1.2" title="Tìm kiếm câu của bạn"></span></button>
                       <transition name="fade">
                         <input v-if="show" v-model="search" class="sosd-input" id="search" name="search" type="text" placeholder="What're we looking for ?">
                       </transition>

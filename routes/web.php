@@ -24,11 +24,14 @@ Route::post('/setting/plan', 'UserProfileController@edit_target_score');
 Route::post('/setting/reminder', 'TrainingPlanController@create');
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::post('/structure-grammars/{id}/new', 'StructureSentencesController@create');
     Route::post('/structure-sentences/update/{id}', 'StructureSentencesController@update');
     Route::get('/structure-sentences', 'StructureSentencesController@indexAdmin');
-    Route::delete('/structure-sentences', 'StructureSentencesController@destroy');
-    Route::post('/structure-grammars/{id}/new', 'StructureSentencesController@create');
+    Route::delete('/structure-sentences/{id}', 'StructureSentencesController@destroy');
+
     Route::post('/category-structure-grammars/{id}/new', 'CategoriesStructureSentencesController@create');
+    Route::post('/category-structure-grammars/{id}/edit', 'CategoriesStructureSentencesController@edit');
+    Route::delete('/category-structure-grammars/{id}', 'CategoriesStructureSentencesController@destroy');
     Route::get('/category-structure-grammars', 'CategoriesStructureSentencesController@index');
     Route::get('/', 'AdminController@index');
 });
