@@ -365,32 +365,20 @@ header {
 .form_button:focus {
   outline: none;
 }
-footer {
-  width: 100%;
-  height: 200px;
-  padding: 50px 0;
-  background: #0b3e71;
-  background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg),
-    linear-gradient(180deg, #0b3e71, #0d64b0);
-  color: #fff;
-  .home_button {
-    button {
-      display: block;
-      font-size: 12px;
-      text-transform: uppercase;
-      color: $color-main;
-      font-weight: 600;
-      background: #ffffff;
-      letter-spacing: 0.1em;
-      border: 1px solid #ffffff;
-      padding: 10px 20px;
-      border-radius: 3px;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-      &:hover {
-        box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.3);
-      }
-    }
+
+.f-g {
+  margin-top: 20px;
+  color: white;
+  a {
+    background: white;
+    border-radius: 50px;
+    color: white;
+    padding: 10px 20px;
+  }
+  .btn-fb {
+    color: #108BFF;
+  }
+  .btn-gg {
+    color: #CC5C21;
   }
 }
