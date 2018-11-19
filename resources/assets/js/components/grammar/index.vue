@@ -19,8 +19,7 @@
         <div uk-grid>
           <div class="uk-width-3-4">
           <div class="w-75 px-0 d-inline-block">
-          <div class="suggest uk-width-1-1">
-            
+          <div class="suggest uk-width-1-1">     
             <p v-if="this.$route.params.id != undefined"><router-link :to="{name: 'indexGrammar'}">Quay lại luyện tập</router-link></p>
             <p v-else><i>Gợi ý</i> <button class="btn-hover color-4 mx-3 mb-3" @click="grammarRandom">Đổi gợi ý</button></p>
              <p>Cấu trúc ngữ pháp</p>

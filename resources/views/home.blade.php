@@ -67,7 +67,7 @@
   </div>
 
   <footer>
-    footer
+    Liên hệ Facebook:  <a href="https://www.facebook.com/tathimyhanh03">Tạ Hạnh</a><a href="https://www.facebook.com/hungkieu.h12">Kiều Hùng</a><a href="https://www.facebook.com/thaothu.04">Thảo Thu</a>
   </footer>
 </div>
 @endsection
@@ -76,4 +76,5 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/uikit.js') }}"></script>
 <script src="{{ asset('js/uikit-icon.js') }}"></script>
+<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
 @endsection

@@ -32,13 +32,13 @@ class vocabulariesController extends Controller
 
     public function search($en)
     {
-        include(app_path() . '\Http\HtmlDomParser.php');
-        // if($en == 'all')
-        //     return Vocabulary::where('image', '!=', null)->get();
-        // return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
-        $url = 'https://www.bing.com/images/search?q='.$en;
-        $html = file_get_contents($url);
-        print_r($html);
+        // include(app_path() . '\Http\HtmlDomParser.php');
+        if($en == 'all')
+            return Vocabulary::where('image', '!=', null)->get();
+        return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
+        // $url = 'https://www.bing.com/images/search?q='.$en;
+        // $html = file_get_contents($url);
+        // print_r($html);
     }
 
     public function pedigree($id)

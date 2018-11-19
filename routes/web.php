@@ -3,7 +3,7 @@
 Auth::routes();
 
 Route::post('/vocabularies', 'VocabulariesController@create');
-
+Route::post('/vocabularies/practice', 'VocabulariesController@practice');
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
 Route::delete('/vocabularies/{id}/delete', 'VocabulariesController@destroy');
 Route::post('users/update/{id}', 'UserProfileController@update');
