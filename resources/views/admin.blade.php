@@ -6,6 +6,7 @@
 @endsection
 @section('content')
   <div id="admin">
+    <Flash></Flash>
     <nav class="uk-navbar-container sosd-background-primary" uk-navbar>
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">

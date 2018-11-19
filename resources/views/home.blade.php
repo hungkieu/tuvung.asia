@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 <div id="app" style="overflow: hidden;">
-
+  <Flash></Flash>
   <!-- Navbar -->
 
   <div class="sosd-background-primary">
@@ -14,7 +14,7 @@
       <div class="col-6 d-flex align-items-center">
         <router-link to="/"class="sosd-a">
           <b class="sosd-color-white" style="font-size: 16px;">
-            TuVung.Asia
+            MeoHamHoc.com
           </b>
         </router-link>
       </div>
@@ -77,4 +77,9 @@
 <script src="{{ asset('js/uikit.js') }}"></script>
 <script src="{{ asset('js/uikit-icon.js') }}"></script>
 <script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+<script>
+  @if(session('success'))
+    flash("{{session('success')}}", "success");
+  @endif
+</script>
 @endsection
