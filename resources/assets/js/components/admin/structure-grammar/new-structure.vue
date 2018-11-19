@@ -4,15 +4,7 @@
         <div class="col-auto">
            <h4>Thêm ngữ pháp</h4>
         </div>
-        <div class="col-auto pr-5">
-          <!-- :to="{ name: newCategoryStructure}" -->
-          <div class="alert alert-info p-2">
-            <router-link  to='/admin/category-structure-grammars/new'>
-            Thêm danh mục ngữ pháp mới
-            </router-link>
-          </div>
-          
-        </div>
+        
       </div>
         <ItemStructure  
         v-for="(post, index) in sentence"
@@ -69,8 +61,14 @@ export default {
         });
     },
     save() {
-      console.log(this.sentence);
       var app = this;
+      if (
+        app.sentence.find(e => e.structure == '') ||
+        app.sentence.find(e => e.category_id == '')
+      ) {
+        alert('Bạn phải nhập đầy đủ thông tin !');
+        return;
+      }
       axios
         .post('/admin/structure-grammars/' + app.user.id + '/new', { list: app.sentence })
         .then(function(res) {

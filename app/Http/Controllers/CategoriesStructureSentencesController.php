@@ -33,7 +33,7 @@ class CategoriesStructureSentencesController extends Controller
         $cate->user_id = Auth::user()->id;
         
         if ($cate->save()) {
-            return response('create success', 200);
+            return $cate;
         } else {
             return response('create failed', 400);
         }
@@ -75,6 +75,7 @@ class CategoriesStructureSentencesController extends Controller
         $cate->pedigree = $request->pedigree;
         $cate->user_id = Auth::user()->id;
         $cate->save();
+        return $cate;
     }
 
     /**

@@ -24,7 +24,9 @@
       <div class="uk-width-1-5 sosd-background-white" uk-height-viewport="expand: true">
         <ul class="uk-padding-small uk-nav-default uk-nav-parent-icon" uk-nav>
           <li>
+              <router-link to="/admin/users">
               Dashboard
+            </router-link>
           </li>
           <li>
             <router-link to="/admin/users">
@@ -58,17 +60,13 @@
                 </router-link>
               </li>
               <li>
-                <router-link :to="{ name: 'indexStructure' }" >
-                  Danh sách danh mục ngữ pháp
-                </router-link>
-              </li>
-              <li>
-                <router-link :to="{ name: 'newStructure' }" >
-                  Tạo ngữ pháp mới
+                <router-link :to="{ name: 'indexCategoryStructure' }" >
+                  Danh sách danh mục
                 </router-link>
               </li>
             </ul>
           </li>
+          <hr>
           <li>
               <router-link to="/admin/statistical">
                 Thống kê
