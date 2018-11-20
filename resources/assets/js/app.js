@@ -69,7 +69,7 @@ const routes = [
   {
     path: '/vocabularies/practice',
     name: 'practiceVocab',
-    component: practice,
+    component: practice
   },
   {
     path: '/vocabularies/:id',
