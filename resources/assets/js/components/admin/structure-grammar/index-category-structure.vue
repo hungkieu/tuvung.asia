@@ -1,8 +1,8 @@
 <template>
      <div class="uk-margin-right">
-      <div class="row justify-content-between title">
+      <div class="row justify-content-between title mx-0">
         <div class="col-auto">
-           <h4>Danh sách danh mục ngữ pháp</h4>
+           <h4>Danh mục ngữ pháp</h4>
         </div>
        <div class="col-auto pr-5 py-2">
         <a class="" href="#modal-category" uk-toggle><img src="/svg/plus.svg" title="Tạo danh mục mới" style="width: 35px;"/></a>
@@ -13,12 +13,12 @@
         <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
           <thead>
             <tr class="">
-              <th class="uk-table-shrink text-center">Id</th>
-              <th class="uk-table-expand text-center">Danh mục</th>
-              <th class="uk-table-expand text-center">Thuộc danh mục</th>
-              <th class="uk-table-expand text-center">Mô tả</th>
-              <th class="uk-table-shrink uk-text-nowrap text-center">Người tạo</th>
-              <th class="uk-table-expand text-center">Hành động</th>
+              <th class="uk-table-shrink text-center color-black">Id</th>
+              <th class="uk-table-expand text-center color-black">Danh mục</th>
+              <th class="uk-table-expand text-center color-black">Thuộc danh mục</th>
+              <th class="uk-table-expand text-center color-black">Mô tả</th>
+              <th class="uk-table-shrink uk-text-nowrap text-center color-black">Người tạo</th>
+              <th class="uk-table-expand text-center color-black">Hành động</th>
             </tr>
           </thead>
             <paginate
@@ -257,6 +257,10 @@ export default {
   .uk-accordion-title {
     font-size: 16px;
   }
+}
+.color-black {
+  color: black !important;
+  font-weight: 500;
 }
 .des-3 {
   -webkit-line-clamp: 3;

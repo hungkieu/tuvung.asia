@@ -26,7 +26,7 @@ import indexGrammar from './components/admin/grammar/index';
 import indexStructure from './components/admin/structure-grammar/index';
 import newStructure from './components/admin/structure-grammar/new-structure';
 import indexCategoryStructure from './components/admin/structure-grammar/index-category-structure';
-import indexStatistical from './components/admin/statistical/index';
+import indexDashboard from './components/admin/dashboard/index';
 const routes = [
   {
     path: '/admin',
@@ -73,9 +73,9 @@ const routes = [
     name: 'indexCategoryStructure'
   },
   {
-    path: 'admin/statistical',
-    component: indexStatistical,
-    name: 'indexStatistical'
+    path: '/admin/dashboard',
+    component: indexDashboard,
+    name: 'indexDashboard'
   }
 ];
 

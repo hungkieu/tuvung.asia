@@ -1,6 +1,6 @@
 <template>
     <div class="uk-margin-right">
-      <div class="row justify-content-between title">
+      <div class="row justify-content-between title mx-0">
         <div class="col-auto">
            <h4>Thêm ngữ pháp</h4>
         </div>
