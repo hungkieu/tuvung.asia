@@ -19,7 +19,11 @@ class vocabulariesController extends Controller
      */
     public function index($id)
     {
-        return Vocabulary::where('user_id', '=', $id)->get();
+        return Vocabulary::where('user_id', '=', $id)->orderBy('created_at', 'desc')->get();
+    }
+
+    public function dictionary($id) {
+        return Vocabulary::where('user_id', '=', $id)->orderBy('en', 'asc')->get();
     }
 
     public function all()

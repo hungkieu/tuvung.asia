@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/v1/users', 'Api\V1\UsersController@index');
 Route::get('/v1/users/profile/{id}', 'Api\V1\UsersController@show');
 Route::get('/v1/users/{id}/vocabularies', 'Api\V1\vocabulariesController@index');
+Route::get('/v1/users/{id}/vocabularies/dictionary', 'Api\V1\vocabulariesController@dictionary');
 Route::get('/v1/users/{id}/vocabularies/count', 'Api\V1\vocabulariesController@count');
 Route::get('/v1/vocabularies/{id}', 'Api\V1\vocabulariesController@show');
 Route::get('/v1/vocabularies/{id}/pedigree', 'Api\V1\vocabulariesController@pedigree');

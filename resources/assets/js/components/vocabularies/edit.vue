@@ -1,109 +1,86 @@
 <template>
   <div>
     <div class="sosd_nav">
-    <div class="uk-container">
-      <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
-      <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
-      <span>Sửa từ vựng</span>
-    </div>
-  </div>
-    <div class="uk-container">
-    <div class="uk-flex">
-      <div class="uk-text-left uk-margin-right">
-        <button @click="back" class="uk-button uk-button-primary sosd-color-white">
-          <span uk-icon="icon: arrow-left;"></span> Quay lại
-        </button>
+      <div class="uk-container">
+        <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
+        <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
+        <span v-if="vocabulary"><router-link v-if="vocabulary.id" :to="{name: 'showVocab', params: {id: vocabulary.id}}">{{ vocabulary.en }}</router-link> <span uk-icon="icon: chevron-right; "></span></span>
+        <span>Sửa từ vựng</span>
       </div>
     </div>
-    <div class="sosd-background-white sosd-box-shadow uk-padding sosd-no-margin" uk-grid>
+    <div class="uk-container">
+    <div class="uk-margin-top" uk-grid>
       <div class="uk-width-1-3">
       <h3>
         Sửa từ vựng
       </h3>
       <hr>
-        <form id="form_create_vocab" class="uk-form-stacked">
-          <input type="hidden" name="_token" :value="csrf_token">
-          <input type="hidden" v-model="form.parent_id" name="parent_id">
-          <div>
-            <label class="uk-form-label">Tiếng Anh</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" v-model="form.en" type="text" name="en">
-            </div>
+      <form id="form_create_vocab" class="uk-form-stacked">
+        <input type="hidden" name="_token" :value="csrf_token">
+        <input type="hidden" v-model="vocabulary.parent_id" name="parent_id">
+        <div>
+          <label class="uk-form-label bold">Tiếng Anh <span v-if="!validate.en">( <i class="uk-text-meta uk-text-warning">* Không được để trống </i> )</span></label>
+          <div class="uk-form-controls">
+            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
           </div>
+        </div>
 
-          <div>
-            <label class="uk-form-label">Tiếng Việt</label>
-            <div class="uk-form-controls">
-              <input class="uk-input" v-model="form.vi" type="text" name="vi">
-            </div>
+        <div>
+          <label class="uk-form-label bold">Tiếng Việt <span v-if="!validate.vi">( <i class="uk-text-meta uk-text-warning">* Không được để trống </i> )</span></label>
+          <div class="uk-form-controls">
+            <input class="uk-input" type="text" name="vi" v-model="vocabulary.vi" tabindex="2">
           </div>
+        </div>
 
-          <div>
-            <label class="uk-form-label">Loại từ</label>
-            <div class="uk-form-controls uk-column-1-3">
-               <label v-for="(t, i) in type"> 
-               
-              <input :value="t.value" class="uk-checkbox" v-model="form.type" type="checkbox">
+        <div>
+          <label class="uk-form-label bold">Loại từ <span v-if="!validate.type">( <i class="uk-text-meta uk-text-warning">* Bạn chưa chọn loại từ</i> )</span></label>
+          <div class="uk-form-controls uk-column-1-3" >
+            <label class="uk-form-label" v-for="t in type">
+              <input :value="t.value" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               {{t.name}}
             </label>
-            </div>
           </div>
-
+        </div>
+        <div>
+          <label class="uk-form-label bold">Hình ảnh</label>
           <div>
-            <label class="uk-form-label">Hình ảnh</label>
-            <div>
-              <input type="file" id="file" name="image" style="display: none" @change="preview_image">
-              <label for="file" class="preview_image" v-if="preview">
-                <img :src="preview_image_vl" />
-                <span class="txt-change-image">Thay đổi ảnh</span>
-              </label>
-              <label for="file" class="preview" v-else="preview">
-                Upload hình ảnh
-              </label>
-            </div>
+            <input type="file" id="file" name="image" style="display: none" @change="preview_image">
+            <label for="file" class="preview_image" v-if="preview">
+              <img :src="preview_image_vl" />
+              <input type="hidden" name="import_image" v-model="import_image">
+              <input type="hidden" name="import_image_url" v-model="preview_image_vl">
+              <span class="txt-change-image">Thay đổi ảnh</span>
+            </label>
+            <label for="file" class="preview" v-else="preview">
+              Upload hình ảnh
+            </label>
           </div>
-
-          <div class="uk-margin">
-            <button @click="send" class="uk-button uk-button-primary sosd-color-white">Sửa</button>
-         </div>
-        </form>
+        </div>
+        <div class="uk-margin">
+         <button @click="send" class="uk-button uk-button-primary sosd-color-white">Sửa</button>
+        </div>
+      </form>
       </div>
       <div class="uk-width-2-3">
-      <h3>
-        Hình ảnh gợi ý
-      </h3>
-      <hr>
+        <h3>
+          Hình ảnh gợi ý
+        </h3>
+        <hr>
 
-      <div v-if="loading">
-        <Loading></Loading>
-      </div>
-
-      <div v-if="error">
-        <b>Vui lòng thử lại</b>
-      </div>
-
-      <div v-if="success">
-        <div uk-grid="mansonry: true" v-if="searches.length > 0">
-          <div class="sosd_images uk-animation-slide-bottom" v-for="v in searches" @click="select($event, v.image)">
-            <img :src="v.image" width="200px" class="">
-          </div>
-        </div>
-        <div v-else>
-          <b>Không có hỉnh ảnh phù hợp</b>
+        <div>
+          <SuggestImage :q='vocabulary.en' @selectImage='select($event)'></SuggestImage>
         </div>
       </div>
-    </div>
     </div>
   </div>
   </div>
 </template>
 
 <script>
-
-import Loading from './../shared/loading';
+import SuggestImage from './SuggestImage';
 export default {
   components: {
-    Loading: Loading
+    SuggestImage,
   },
   data: function() {
     return {
@@ -115,7 +92,11 @@ export default {
       preview: true,
       preview_image_vl: '',
       parent_id: 0,
-      form: {},
+      validate: {
+        en: true,
+        vi: true,
+        type: true,
+      },
       type: [
         {
           name: 'Danh từ',
@@ -178,10 +159,9 @@ export default {
     axios
       .get('/api/v1/vocabularies/' + app.$route.params.id)
       .then(res => {
-        app.form = res.data;
-         app.form.type = app.form.type.split(',');
-        console.log(app.form.type);
-        app.preview_image_vl = app.form.image;
+        app.vocabulary = res.data;
+        app.vocabulary.type = app.vocabulary.type.split(',');
+        app.preview_image_vl = app.vocabulary.image;
       })
       .catch(res => {
         alert('Khong load duoc tu vung');
@@ -206,9 +186,22 @@ export default {
     });
   },
   methods: {
-    back() {
-      this.$router.go(-1);
+    validated() {
+      if(this.vocabulary.en.trim().length == 0)
+        this.validate.en = false;
+      else
+        this.validate.en = true;
+      if(this.vocabulary.vi.trim().length == 0)
+        this.validate.vi = false;
+      else
+        this.validate.vi = true;
+      if(this.vocabulary.type.length == 0)
+        this.validate.type = false;
+      else
+        this.validate.type = true;
+      return Object.values(this.validate).every(val => val == true);
     },
+
     search() {
       var app = this;
       app.loading = true;
@@ -230,22 +223,20 @@ export default {
         });
     },
 
-
-               
-
-
     send(e) {
       var app = this;
       e.preventDefault();
       var f = document.getElementById('form_create_vocab');
       var formData = new FormData(f);
-      axios
+      if (app.validated()) {
+        axios
         .post('/vocabularies/' + app.$route.params.id + '/edit', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(function(res) {
+          flash('Sửa thành công', 'success');
           if (app.$route.params.id) app.$router.push('/vocabularies/' + app.$route.params.id);
           else app.$router.push('/vocabularies');
           f.reset();
@@ -253,6 +244,9 @@ export default {
         .catch(function(res) {
           alert('Sua khong thanh cong, vui long thu lai');
         });
+      } else {
+        flash('Bạn chưa nhập đúng trường dữ liệu', 'error');
+      }
     },
 
     preview_image(e) {
@@ -266,25 +260,28 @@ export default {
         reader.readAsDataURL(files[0]);
         this.preview = true;
       }
+    },
+
+    select(url) {
+      this.preview = true;
+      this.preview_image_vl = url;
+      this.import_image = true;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-nav {
-  text-transform: uppercase;
-  span.uk-icon {
-    display: inherit;
-    padding: 0 10px;
-  }
-  a {
-    font-weight: bold;
-    &:hover {
-      text-decoration: none;
-      color: tomato;
-    }
-  }
+.bold {
+  font-weight: bold
+}
+.sosd_nav {
+  box-sizing: border-box;
+  background: rgb(247, 247, 247);
+  border-bottom: 1px solid rgb(233, 233, 233);
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
 }
 .preview {
   width: 150px;

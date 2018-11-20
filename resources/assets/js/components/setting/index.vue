@@ -14,7 +14,7 @@
             </ul>
         </div>
       </div>
-      <div class="col-8">
+      <div class="col-8 uk-animation-slide-bottom">
           <router-view></router-view>
       </div>
   </div>
@@ -35,6 +35,7 @@ $color-main: #1f8bf0;
   }
 }
 .setting {
+  min-height: 85vh;
   background: #eeeeee;
   padding: 30px 0 50px;
   font-size: 16px;

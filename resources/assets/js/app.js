@@ -39,6 +39,7 @@ const routes = [
   {
     path: '/vocabularies',
     component: vocabularies,
+    name: 'indexVocab',
     children: []
   },
   {

@@ -5,7 +5,7 @@ Auth::routes();
 Route::post('/vocabularies', 'VocabulariesController@create');
 Route::post('/vocabularies/practice', 'VocabulariesController@practice');
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
-Route::delete('/vocabularies/{id}/delete', 'VocabulariesController@destroy');
+Route::delete('/vocabularies', 'VocabulariesController@destroy');
 Route::post('users/update/{id}', 'UserProfileController@update');
 Route::get('users/{id}', 'UserProfileController@show');
 
@@ -25,6 +25,7 @@ Route::post('/setting/reminder', 'TrainingPlanController@create');
 
 Route::get('/c/suggest-images/', 'SuggestImageController@index');
 Route::get('/c/suggest-images/{q}', 'SuggestImageController@search');
+Route::get('/c/history-scores', 'HistoryScoreController@show');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::post('/structure-grammars/{id}/new', 'StructureSentencesController@create');
