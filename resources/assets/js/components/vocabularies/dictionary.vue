@@ -21,14 +21,14 @@
             <div class="col-auto">
              <h3>Từ điển của bạn</h3>
             </div>
-            <div class="col-auto">
+            <!-- <div class="col-auto">
                  <div id="formSearch">
                       <button v-on:click="show = !show" class="btn-hover color-3 mr-3"><span uk-icon="icon: search; ratio: 1.2"></span></button>
                       <transition name="fade">
                         <input v-if="show" v-model="search" class="sosd-input" id="search" name="search" type="text" placeholder="Bạn muốn tìm từ nào ?">
                       </transition>
                   </div>
-            </div>
+            </div> -->
         </div>
         <hr>
         <div v-if="dictionary.length == 0">
@@ -37,7 +37,7 @@
         </div>
         <div v-else>
           <div class="uk-child-width-1-3" uk-grid="masonry: true">
-            <div v-for="d in filteredList">
+            <div v-for="d in dictionary">
               <h3>{{ d.title }}</h3>
               <hr>
               <ul>
@@ -84,11 +84,7 @@ export default {
     this.get_vocabularies();
   },
   computed: {
-    filteredList() {
-      return this.dictionary.filter(post => {
-        return post.title.toLowerCase().includes(this.search.toLowerCase());
-      });
-    }
+
   },
   watch: {
     error() {
@@ -124,7 +120,7 @@ export default {
     get_vocabularies() {
       var app = this;
       $.ajax({
-        url: '/api/v1/users/' + app.user.id + '/vocabularies',
+        url: '/api/v1/users/' + app.user.id + '/vocabularies/dictionary',
         method: 'get'
       })
         .done(res => {

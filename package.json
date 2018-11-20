@@ -20,10 +20,14 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
+    "chartist": "^0.11.0",
     "font-awesome": "^4.7.0",
     "gojs": "^1.8.32",
+    "toastr": "^2.1.4",
     "vue-moment": "^4.0.0",
     "vue-paginate": "^3.6.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-toastr": "^2.0.16",
+    "vue-toastr-2": "0.0.10"
   }
 }

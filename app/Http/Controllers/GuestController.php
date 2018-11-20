@@ -11,13 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class GuestController extends Controller
 {
-  public function register(Request $request) {
-    $user = User::findOrFail(Auth::user()->id);
-    $user->fill($request->all());
-    $user->role = 1;
-    $user->password = bcrypt($request->password);
-    $user->save();
-    Auth::logout();
-    return redirect()->route('login');
+  public function test() {
+    echo date('Y-m-d');
   }
 }

@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <div v-if="loading">
-      <Loading></Loading>
-    </div>
-
-    <div v-if="error">
-      <h3>Không tải được dữ liệu</h3>
-    </div>
-
-
-    <div v-if="success">
+  <div class="mb-5">
       <div class="sosd-profile">
         <div class="user-profile" uk-gird>
           <div class="avatar">
@@ -17,7 +7,7 @@
           </div>
           <div class="profile">
             <h3>{{ user.name }}</h3>
-            <p><span id="score">1000</span> Điểm</p>
+            <p><span id="score">{{ !!user.score ? user.score : 0 }}</span> Điểm</p>
           </div>
         </div>
       </div>
@@ -30,7 +20,7 @@
 
       <div v-if="sosd_nav[0].active" class="uk-container uk-margin-top">
         <div uk-grid>
-          <div class="sosd_feature uk-width-1-3" v-for="s in sosd_features">
+          <div class="sosd_feature uk-width-1-2" v-for="s in sosd_features">
             <div class="title">
               <h3>{{ s.title }}</h3>
             </div>
@@ -52,24 +42,54 @@
 
 
       <div v-if="sosd_nav[1].active">
-        Thong ke
+        <div class="container mt-2 uk-animation-slide-bottom">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="streak">
+                <h4>Mục tiêu mỗi ngày</h4>
+              </div>
+              <div>
+                <div v-if="user.target_score > 0">
+                  <div class="progress" v-if="score_today">
+                    <div class="progress-bar bg-success" role="progressbar" :style="{width: progress + '%'}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                      {{ score_today.score >= user.target_score ? "Hoàn thành" : "" }}
+                    </div>
+                  </div>
+                  <div class="text-center" v-if="score_today">
+                    {{ score_today.score }} / {{ user.target_score }}
+                  </div>
+                </div>
+                <div class="sosd_feature" v-else>
+                  <router-link to="/setting/study-goal" class="sosd_card uk-animation-slide-bottom">
+                    <div class="icon">
+                      <img src="/svg/radar.svg" alt="" width="32" height="32">
+                    </div>
+                    <div class="name">
+                      Đặt mục tiêu học tập của bạn
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="streak_count">
+                <h4>Số ngày học liên tục</h4>
+              </div>
+              <div class="count">
+                <span>{{ streak_count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-    </div>
   </div>
 </template>
 
 <script>
-import Loading from './../shared/loading';
-
 export default {
-  components: {
-    Loading: Loading
-  },
   data: function() {
     return {
-      error: false,
-      success: false,
       user: {},
       sosd_nav: [
         {
@@ -79,7 +99,12 @@ export default {
         },
         {
           id: 2,
-          text: 'Thống kê',
+          text: 'Thành tích của bạn',
+          active: false
+        },
+        {
+          id: 3,
+          text: 'Bài viết',
           active: false
         }
       ],
@@ -96,11 +121,6 @@ export default {
               icon: '/svg/list.svg',
               link: '/vocabularies',
               name: 'Danh sách từ vựng'
-            },
-            {
-              icon: '/svg/favourite.svg',
-              link: '/vocabularies',
-              name: 'Từ ưa thích của bạn'
             },
             {
               icon: '/svg/dictionary.svg',
@@ -127,34 +147,72 @@ export default {
               link: '/grammars-list',
               name: 'Ngữ pháp của bạn'
             },
-            {
-              icon: '/svg/list.svg',
-              link: '/grammars-article',
-              name: 'Bộ ngữ pháp cơ bản'
-            }
+            // {
+            //   icon: '/svg/list.svg',
+            //   link: '/grammars-article',
+            //   name: 'Bộ ngữ pháp cơ bản'
+            // }
           ]
         }
-      ]
+      ],
+      history_scores: [
+      ],
     };
   },
   computed: {
-    loading() {
-      return !this.success && !this.error;
-    }
+    score_today() {
+      return this.history_scores.filter(val => {
+        var today = new Date();
+        return val.day == today.getFullYear() + '-' + parseInt(today.getMonth() + 1) + '-' + today.getDate();
+      })[0] || {score: 0}
+    },
+    progress() {
+      return Math.round(this.score_today.score / this.user.target_score * 100);
+    },
+    streak_count() {
+      var count = 0;
+      for(let i = 0; i < this.history_scores.length; i++) {
+        let val = this.history_scores[i];
+        if(!!val.streak) {
+          count += 1
+        }
+        else {
+          break
+        }
+      }
+      return count;
+    },
   },
   mounted() {
     var app = this;
     this.get_infomation();
+    this.get_history_scores();
   },
   methods: {
     get_infomation() {
-      if (Laravel.user) {
-        this.user = Laravel.user;
-        this.success = true;
-      } else {
-        this.success = false;
-        this.error = true;
-      }
+      var app = this;
+      axios.get('/users/' + Laravel.user.id, {
+        responseType: 'json',
+      })
+      .then(res => {
+        app.user = res.data;
+      })
+      .catch(res => {
+        app.user = Laravel.user;
+      })
+    },
+
+    get_history_scores() {
+      var app = this;
+      axios.get('/c/history-scores/', {
+        responseType: 'json',
+      })
+      .then(res => {
+        app.history_scores = res.data
+      })
+      .catch(res => {
+
+      })
     },
 
     nav_active(id) {
@@ -256,6 +314,13 @@ export default {
   }
   .sosd_card:hover img {
     transform: rotate(360deg);
+  }
+}
+
+.count {
+  span {
+    font-size: 40px;
+    color: #00C35C;
   }
 }
 </style>

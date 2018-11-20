@@ -5,6 +5,18 @@ window.Vue.use(VueRouter);
 import VuePaginate from 'vue-paginate';
 Vue.use(VuePaginate);
 
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+
+window.toastr = require('toastr')
+
+Vue.use(VueToastr2)
+window.notify = new Vue();
+window.flash = function(message, status, title = '') {
+  window.notify.$emit('flash', {message, status, title});
+}
+
+import flash from './components/shared/flash';
 import index from './components/admin/index';
 // import newStructure from './components/structure_sentences/new';
 import indexUsers from './components/admin/users/index';
@@ -72,4 +84,9 @@ const router = new VueRouter({
   routes
 });
 
-const app = new Vue({ router }).$mount('#admin');
+const app = new Vue({
+  router,
+  components: {
+    Flash: flash
+  },
+}).$mount('#admin');

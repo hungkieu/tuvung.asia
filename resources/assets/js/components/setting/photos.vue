@@ -1,14 +1,14 @@
 <template>
-       <div class="profile-avatar uk-card-default text-center">
-           <h4 class="text-left mb-3">Ảnh đại diện</h4>
-         <div class="avatar mx-auto">
-            <a  :href="user.avatar">
-              <img :src="user.avatar" id="avatar-show" />
-            </a>
-          </div>
-          <label class="btn btn-primary rounded  avatar-change" for="file">Thay đổi avatar</label>
-          <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
-        </div>
+ <div class="profile-avatar uk-card-default text-center">
+   <h4 class="text-left mb-3">Ảnh đại diện</h4>
+   <div class="avatar mx-auto">
+    <a  :href="user.avatar">
+      <img :src="user.avatar" id="avatar-show" />
+    </a>
+  </div>
+  <label class="btn btn-primary rounded  avatar-change" for="file">Thay đổi avatar</label>
+  <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
+</div>
 </template>
 <script>
 export default {

@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="reminder uk-card-default">
     <form>
       <h6 class="py-2">Thời gian học tập</h6>
-        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-          <span v-for="item in week" :key="item.key">
-            <input class="uk-checkbox" type="checkbox" name="days" v-model="checkedDaysWeek" :value="item.key"> {{item.name}}
-          </span>
-        </div>
-       
-      <p class="w-100">Vào lúc <input name="time" type="time" class="uk-input  uk-form-small w-25 mx-2  "  v-model="time"/> hằng ngày</p>
-       <button class="btn btn-primary" name="btn-plan" @click="save_plan">Lưu</button>
-      </form> 
+      <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+        <span v-for="item in week" :key="item.key">
+          <input class="uk-checkbox" type="checkbox" name="days" v-model="checkedDaysWeek" :value="item.key"> {{item.name}}
+        </span>
+      </div>
+
+      <p class="w-100">
+        Vào lúc <input name="time" type="time" class="uk-input uk-form-small w-25 mx-2 "  v-model="time"/> hằng ngày
+      </p>
+      <button class="btn btn-primary" name="btn-plan" @click="save_plan">Lưu</button>
+    </form>
   </div>
 </template>
 <script>
@@ -100,7 +102,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .formtaokehoach {
-    width: 700px;
+  .reminder {
+    padding: 20px;
   }
 </style>

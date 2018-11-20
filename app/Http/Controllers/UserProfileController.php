@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -41,7 +42,9 @@ class UserProfileController extends Controller
     */
     public function show($id)
     {
-        return User::findOrFail($id);
+        $user = User::findOrFail($id);
+        if($user->id == Auth::user()->id || Auth::user()->role == 1)
+            return $user;
     }
     /**
     * Show the form for editing the specified resource.
@@ -51,7 +54,7 @@ class UserProfileController extends Controller
     */
     public function edit(Request $request, $id)
     {
-        
+
     }
     /**
     * Update the specified resource in storage.
@@ -70,7 +73,7 @@ class UserProfileController extends Controller
         $user->save();
         if($user->avatar) {
             return $user->avatar;
-        } 
+        }
         if($user->save()){
         return response('create success', 200);
         } else {

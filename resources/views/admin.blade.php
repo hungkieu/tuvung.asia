@@ -7,6 +7,7 @@
 @section('content')
   <div id="admin">
     <nav class="uk-navbar-container sosd-background-primary" uk-navbar style="height: 50px">
+    <Flash></Flash>
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
             <li class="uk-margin-left">
