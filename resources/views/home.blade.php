@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Mèo ham học')
+@section('title', 'Học tiếng anh')
 @section('css')
 <link href="{{ asset('css/uikit.css') }}" rel="stylesheet">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">

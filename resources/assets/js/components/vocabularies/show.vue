@@ -38,31 +38,29 @@
                 <i class="fa fa-volume-up" aria-hidden="true"></i>
               </div>
 
-              <div class="icon" uk-tooltip="Xem thêm" uk-toggle="target: #m_tool">
-                <span uk-icon="more"></span>
+              <div class="icon" uk-tooltip="Thêm từ liên kết ">
+                <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </router-link>
               </div>
 
-              <div id="m_tool" class="sosd_dialog" uk-dropdown="mode: click; pos: bottom-right">
-                <div>
-                  <ul>
-                    <li>
-                      <router-link :to="{name: 'newChildVocab', params: { id: vocabulary.id }}" >
-                        Thêm từ liên kết
-                      </router-link>
-                    </li>
-                    <li>
-                      <router-link :to="{name: 'editVocab', params: { id: vocabulary.id }}" >
-                        Sửa
-                      </router-link>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);">
-                        Xóa
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+              <div class="icon" uk-tooltip="Sửa">
+                <router-link :to="{name: 'editVocab', params: { id: vocabulary.id }}" >
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </router-link>
               </div>
+
+              <div class="icon" uk-tooltip="Xóa" @click="deleteVocab(vocabulary.id)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </div>
+
+              <span v-if="vocabulary.parent_id != 0">
+                <div class="icon" uk-tooltip="Cha" uk-toggle="target: #m_tool">
+                  <router-link v-if="vocabulary.parent_id" :to="{name: 'showVocab', params: {id: vocabulary.parent_id}}">
+                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  </router-link>
+                </div>
+              </span>
             </div>
           </div>
         </div>
@@ -76,8 +74,8 @@
       <div class="uk-container" v-else>
         <div class="sosd_menu">
           <ul>
-              <li @click="grid = true"><span uk-icon="grid"></span> Dạng lưới</li>
-              <li @click="map = true"><span uk-icon="git-branch"></span> Dạng bản đồ</li>
+              <li @click="grid = true" :class="{active: grid}"><span uk-icon="grid"></span> Dạng lưới</li>
+              <li @click="map = true" :class="{active: map}"><span uk-icon="git-branch"></span> Dạng bản đồ</li>
           </ul>
         </div>
         <div class="sosd_vocabularies uk-padding-small uk-child-width-1-5" uk-grid="masonry: true;" v-if="grid">
@@ -143,7 +141,7 @@ export default {
           return types[v];
         })
         .join(',');
-    }
+    },
   },
   watch: {
     grid() {
@@ -199,6 +197,7 @@ export default {
           }, 500);
         });
     },
+
     init_map() {
       var app = this;
       var make = go.GraphObject.make;
@@ -247,6 +246,29 @@ export default {
 
     speach(en) {
       responsiveVoice.speak(en);
+    },
+
+    deleteVocab(_id) {
+      var app = this;
+      $.ajax({
+        url: '/vocabularies',
+        data: {
+          _token: Laravel.csrf_token,
+          id: _id
+        },
+        method: 'delete',
+      })
+      .done(res => {
+        if(app.vocabulary.parent_id != 0) {
+          app.$router.push({name: 'showVocab', params: { id: app.vocabulary.parent_id }});
+        } else {
+          app.$router.push({name: 'indexVocab'});
+        }
+        flash(res, 'success');
+      })
+      .fail(res => {
+        flash(res.responseText, 'error');
+      })
     }
   }
 };
@@ -315,8 +337,12 @@ export default {
           outline: none;
           border-radius: 50%;
           cursor: pointer;
+          color: #333;
           &:hover {
             background: rgb(233, 233, 233);
+          }
+          a {
+            color: #333;
           }
         }
       }
@@ -383,7 +409,7 @@ export default {
       display: inline-block;
       margin-right: 15px;
       padding: 10px;
-      &:hover {
+      &.active, &:hover {
         background: #03b1e8;
         color: white;
       }
