@@ -8,7 +8,7 @@ Vue.use(VuePaginate);
 import index from './components/admin/index';
 // import newStructure from './components/structure_sentences/new';
 import indexUsers from './components/admin/users/index';
-import action from './components/admin/users/action';
+import profile from './components/admin/users/profile';
 import indexVocabularies from './components/admin/vocabularies/index';
 import indexGrammar from './components/admin/grammar/index';
 import indexStructure from './components/admin/structure-grammar/index';
@@ -31,9 +31,9 @@ const routes = [
     name: 'admin_users'
   },
   {
-    path: '/admin/users/action/:id',
-    component: action,
-    name: 'admin_user_action'
+    path: '/admin/users/profile/:id',
+    component: profile,
+    name: 'admin_user_profile'
   },
   {
     path: '/admin/vocabularies',
