@@ -28,8 +28,12 @@ class VocabulariesController extends Controller
 
       if($request->import_image == 'true') {
         $url = basename($request->import_image_url);
-        copy(public_path($request->import_image_url), public_path('/storage/images/'.$url.'.jpeg'));
-        $vocab->image = '/storage/images/'.$url.'.jpeg';
+        if (file_exists(public_path($request->import_image_url))) {
+          copy(public_path($request->import_image_url), public_path('/storage/images/'.$url.'.jpeg'));
+          $vocab->image = '/storage/images/'.$url.'.jpeg';
+        } else {
+          $vocab->image = $request->import_image_url;
+        }
       } else {
         if($request->hasFile('image'))
         {

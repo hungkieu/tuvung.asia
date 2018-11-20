@@ -36,7 +36,7 @@
         <div>
           <label class="uk-form-label">Loại từ</label>
           <div class="uk-form-controls uk-column-1-3" >
-            <label v-for="t in type"> 
+            <label v-for="t in type">
               <input :value="t.value" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               {{t.name}}
             </label>
@@ -68,23 +68,8 @@
       </h3>
       <hr>
 
-      <div v-if="loading">
-        <Loading></Loading>
-      </div>
-
-      <div v-if="error">
-        <b>Vui lòng thử lại</b>
-      </div>
-
-      <div v-if="success">
-        <div uk-grid="mansonry: true" v-if="searches.length > 0">
-          <div class="sosd_images uk-animation-slide-bottom" v-for="v in searches" @click="select($event, v.image)">
-            <img :src="v.image" width="200px" class="">
-          </div>
-        </div>
-        <div v-else>
-          <b>Không có hỉnh ảnh phù hợp</b>
-        </div>
+      <div>
+        <SuggestImage :q='vocabulary.en' @selectImage='select($event)'></SuggestImage>
       </div>
     </div>
     </div>
@@ -94,10 +79,11 @@
 
 <script>
 import Loading from './../shared/loading';
+import SuggestImage from './SuggestImage';
 
 export default {
   components: {
-    Loading: Loading
+    SuggestImage,
   },
   data: function() {
     return {
@@ -226,19 +212,18 @@ export default {
             }
           })
           .then(function(res) {
-            console.log(res);
+            flash('Thêm từ mới thành công', 'success');
             if(res.data.parent_id != 0){
               app.$router.push('/vocabularies/' + res.data.parent_id);
             } else if (res.data.parent_id == 0 ) {
               app.$router.push('/vocabularies/' + res.data.id);
             } else {
               app.$router.push('/vocabularies');
-            } 
+            }
             f.reset();
           })
           .catch(function(res) {
-            console.log(res);
-            alert('Them khong thanh cong, vui long thu lai');
+            flash('Them khong thanh cong, vui long thu lai', 'error');
           });
       } else {
         alert('Bạn phải nhập từ tiếng Anh');
@@ -259,7 +244,7 @@ export default {
       }
     },
 
-    select(e, url) {
+    select(url) {
       this.preview = true;
       this.preview_image_vl = url;
       this.import_image = true;
