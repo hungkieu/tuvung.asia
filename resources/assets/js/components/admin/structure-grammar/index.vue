@@ -1,6 +1,6 @@
 <template>
   <div class="uk-margin-right">
-    <div class="row">
+    <div class="row mx-0">
       <div class="col-12">
         <h4 class="text-left d-inline-block">Danh sách cấu trúc câu</h4>
       <span class="float-right mr-5 my-2">
@@ -17,12 +17,12 @@
         <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
           <thead>
             <tr class="">
-              <th class="uk-table-shrink text-center">Id</th>
-              <th class="uk-table-expand text-center">Cấu trúc</th>
-              <th class="uk-table-expand text-center">Mô tả</th>
-              <th class="text-center">Thuộc danh mục</th>
-              <th class="uk-table-shrink uk-text-nowrap text-center">Người tạo</th>
-              <th class="uk-table-expand text-center">Hành động</th>
+              <th class="uk-table-shrink text-center color-black">Id</th>
+              <th class="uk-table-expand text-center color-black">Cấu trúc</th>
+              <th class="uk-table-expand text-center color-black">Mô tả</th>
+              <th class="text-center color-black">Thuộc danh mục</th>
+              <th class="uk-table-shrink uk-text-nowrap text-center color-black">Người tạo</th>
+              <th class="uk-table-expand text-center color-black">Hành động</th>
             </tr>
           </thead>
             <paginate
@@ -174,7 +174,17 @@ export default {
 <style lang="scss" scoped>
 .color-black {
   color: black !important;
+  font-weight: 500;
 }
+
+a {
+  color: black;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .uk-icon-button {
   cursor: pointer;
 }

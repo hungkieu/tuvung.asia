@@ -25,9 +25,19 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $u = new User;
+        $u->name = $request->name;
+        $u->email = $request->email;
+        $u->phone = $request->phone;
+        $u->role = $request->role;
+        echo($u);
+        if ($u->save()) {
+            return $u;
+        } else {
+            return response('create failed', 400);
+        }
     }
 
     /**

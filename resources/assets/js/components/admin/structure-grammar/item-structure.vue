@@ -8,7 +8,7 @@
                 <option v-for="v in listCategory" :value="v.id">{{v.name}}</option>
             </select>
         </div>
-        <div class="col-6">
+        <div class="col-6 px-0">
             <textarea v-model="post.description"  rows="4" class="uk-textarea w-100 uk-text-emphasis" type="text" name="structure" placeholder="Mô tả"/>
         </div>
         <div class="col-1 text-right">
@@ -52,7 +52,7 @@ export default {
 <style lang="scss" scoped>
 .item-structure {
   background: #f5f5f5;
-  padding: 15px 20px;
+  padding: 15px 0;
   border-radius: 10px;
   margin: 15px;
   font-size: 14px;

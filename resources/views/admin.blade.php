@@ -6,40 +6,49 @@
 @endsection
 @section('content')
   <div id="admin">
-    <nav class="uk-navbar-container sosd-background-primary" uk-navbar>
+    <nav class="uk-navbar-container sosd-background-primary" uk-navbar style="height: 50px">
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
             <li class="uk-margin-left">
               <router-link to="/admin">
-                <h3 class="sosd-color-white">
+                <h4 class="sosd-color-white">
                   Dashboard
-                </h3>
+                </h4>
               </router-link>
             </li>
         </ul>
+      </div>
+      <div class="uk-navbar-right uk-margin-right ">
+          <router-link to="/">
+            <h4 class="sosd-color-white">
+             Trang chủ
+            </h4>
+          </router-link>
+        
       </div>
     </nav>
 
     <div uk-grid>
       <div class="uk-width-1-5 sosd-background-white" uk-height-viewport="expand: true">
-        <ul class="uk-padding-small uk-nav-default uk-nav-parent-icon" uk-nav>
+        <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
           <li>
-              <router-link to="/admin/users">
+              <router-link to="/admin/dashboard">
               Dashboard
             </router-link>
           </li>
+          <hr class="m-0" />
           <li>
             <router-link to="/admin/users">
               Quản lý người dùng
             </router-link>
           </li>
-          <hr>
+          <hr class="m-0" />
           <li>
             <router-link to="/admin/vocabularies">
               Quản lý từ vựng
             </router-link>
           </li>
-          <hr>
+          <hr class="m-0" />
           {{-- <li class="uk-parent">
             <a href="#">Quản lý cấu trúc câu</a>
             <ul class="uk-nav-sub">
@@ -56,26 +65,21 @@
             <ul class="uk-nav-sub">
               <li>
                 <router-link :to="{ name: 'indexStructure' }" >
-                  Danh sách cấu trúc câu
+                  Cấu trúc câu
                 </router-link>
               </li>
               <li>
                 <router-link :to="{ name: 'indexCategoryStructure' }" >
-                  Danh sách danh mục
+                  Danh mục
                 </router-link>
               </li>
             </ul>
           </li>
-          <hr>
-          <li>
-              <router-link to="/admin/statistical">
-                Thống kê
-              </router-link>
-            </li>
+          <hr class="m-0" />
         </ul>
       </div>
 
-      <div class="uk-width-4-5">
+      <div class="uk-width-4-5 pl-3">
         <div class="uk-margin-top">
           <router-view :key="$route.path"></router-view>
         </div>
