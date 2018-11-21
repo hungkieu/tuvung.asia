@@ -21,7 +21,7 @@
         <div>
           <label class="uk-form-label bold">Tiếng Anh <span v-if="!validate.en">( <i class="uk-text-meta uk-text-warning">* Không được để trống </i> )</span></label>
           <div class="uk-form-controls">
-            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
+            <input class="uk-input" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
           </div>
         </div>
 
@@ -154,8 +154,6 @@ export default {
   },
   mounted() {
     var app = this;
-
-    this.search();
 
     if (this.$route.params.id) {
       this.vocabulary.parent_id = this.$route.params.id;
