@@ -57,9 +57,15 @@ class VocabulariesController extends Controller
     $vocab->type = json_encode($request->type);
     $vocab->parent_id = $request->parent_id;
 
-    if($request->hasFile('image'))
-    {
-      $vocab->image = '/storage/'.str_replace('public/', '', $request->file('image')->store('public/images'));
+    if($request->import_image == 'true') {
+      $url = basename($request->import_image_url);
+      copy(public_path($request->import_image_url), public_path('/storage/images/'.$url.'.jpeg'));
+      $vocab->image = '/storage/images/'.$url.'.jpeg';
+    } else {
+      if($request->hasFile('image'))
+      {
+        $vocab->image = '/storage/'.str_replace('public/', '', $request->file('image')->store('public/images'));
+      }
     }
 
     $vocab->user_id = Auth::user()->id;

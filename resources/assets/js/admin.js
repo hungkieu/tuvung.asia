@@ -10,7 +10,9 @@ import index from './components/admin/index';
 import indexUsers from './components/admin/users/index';
 import action from './components/admin/users/action';
 import indexVocabularies from './components/admin/vocabularies/index';
+import editVocabularies from './components/admin/vocabularies/edit';
 import indexGrammar from './components/admin/grammar/index';
+
 import indexStructure from './components/admin/structure-grammar/index';
 import newStructure from './components/admin/structure-grammar/new-structure';
 import newCategoryStructure from './components/admin/structure-grammar/new-category-structure';
@@ -39,6 +41,12 @@ const routes = [
     path: '/admin/vocabularies',
     component: indexVocabularies,
     name: 'admin_vocabularies'
+  },
+  
+  {
+    path: '/admin/vocabularies/:id/edit',
+    component: editVocabularies,
+    name: 'admin_vocabularies_edit'
   },
   {
     path: '/admin/grammar',

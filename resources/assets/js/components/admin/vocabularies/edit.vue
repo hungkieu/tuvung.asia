@@ -4,7 +4,8 @@
     <div class="uk-container">
       <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
       <router-link to="/vocabularies">Từ vựng</router-link> <span uk-icon="icon: chevron-right; "></span>
-      <span>Sửa từ vựng</span>
+      <h3>Sửa từ vựng</h3>
+      <hr>
     </div>
   </div>
     <div class="uk-container">
@@ -55,6 +56,8 @@
               <input type="file" id="file" name="image" style="display: none" @change="preview_image">
               <label for="file" class="preview_image" v-if="preview">
                 <img :src="preview_image_vl" />
+                <input type="hidden" name="import_image" v-model="import_image">
+                <input type="hidden" name="import_image_url" v-model="preview_image_vl">
                 <span class="txt-change-image">Thay đổi ảnh</span>
               </label>
               <label for="file" class="preview" v-else="preview">
@@ -100,7 +103,7 @@
 
 <script>
 
-import Loading from './../shared/loading';
+import Loading from './../../shared/loading';
 export default {
   components: {
     Loading: Loading
@@ -228,11 +231,7 @@ export default {
             app.error = true;
           }, 500);
         });
-    },
-
-
-               
-
+    },       
 
     send(e) {
       var app = this;
@@ -240,14 +239,13 @@ export default {
       var f = document.getElementById('form_create_vocab');
       var formData = new FormData(f);
       axios
-        .post('/vocabularies/' + app.$route.params.id + '/edit', formData, {
+        .post('/admin/vocabularies/' + app.$route.params.id + '/edit', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(function(res) {
-          if (app.$route.params.id) app.$router.push('/vocabularies/' + app.$route.params.id);
-          else app.$router.push('/vocabularies');
+          app.$router.push('/admin/vocabularies');
           f.reset();
         })
         .catch(function(res) {
@@ -265,6 +263,7 @@ export default {
         };
         reader.readAsDataURL(files[0]);
         this.preview = true;
+        this.import_image = false;
       }
     },
     select(e, url) {

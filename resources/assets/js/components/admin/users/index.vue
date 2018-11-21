@@ -39,8 +39,9 @@
                 <td class="uk-text-nowrap text-center">{{ grammars.length }}</td>
                 <td class="uk-text-nowrap text-center">{{ u.score }}</td>
                 <td class="text-center">
-                  <span class="uk-icon-button uk-alert-success" uk-icon="pencil"></span>
-                  <span class="uk-icon-button uk-alert-danger" uk-icon="trash"></span>
+                  <span class="uk-icon-button uk-alert-success" uk-icon="pencil"> </span>
+                  <span class="uk-icon-button uk-alert-danger" uk-icon="trash"> <router-link :to="{name: 'editVocabularies', params: { id: u.id }}" > </router-link> </span>
+                   
                 </td>
                   <!-- model change role -->
         <div id="modal-role" class="uk-flex-top" uk-modal>

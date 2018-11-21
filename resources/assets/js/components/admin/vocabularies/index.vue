@@ -32,7 +32,9 @@
                 </td>
                 <td class="uk-text-nowrap">{{ u.name }}</td>
                 <td>
-                  <span class="uk-icon-button" uk-icon="pencil"></span>
+                  <router-link :to="{name: 'admin_vocabularies_edit', params: { id: u.id }}" >
+                    <span class="uk-icon-button uk-alert-success" uk-icon="pencil"></span>
+                  </router-link>
                   <span class="uk-icon-button" uk-icon="trash"></span>
                 </td>
               </tr>
