@@ -42,7 +42,7 @@
                 <ul class="uk-list uk-alert-success py-3 uk-card-default">
                     <li class="px-3" v-for="u in sortedArray(users)" :key="u.id">{{u.name}} - {{u.score}} point</li>
                 </ul>
-            
+
         </div>
       </div>
     </div>
@@ -123,7 +123,7 @@ export default {
         });
     },
     sortedArray(arr) {
-      return arr.sort((a, b) => a.score > b.score);
+      return arr.sort((a, b) => b.score - a.score);
     }
   }
 };

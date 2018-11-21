@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SuggestImage;
 use Illuminate\Http\Request;
+use App\Vocabulary;
 
 class SuggestImageController extends Controller
 {
@@ -21,7 +22,7 @@ class SuggestImageController extends Controller
                 }
 
                 if(count($arr) < 5) {
-                    $coll = Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->get();
+                    $coll = Vocabulary::where('en', 'like', '%'.$q.'%')->where('image', '!=', null)->get();
                     $arr = $coll->toArray();
                     for($i = 0; $i < count($arr); $i++) {
                         $suggestImage = new SuggestImage;

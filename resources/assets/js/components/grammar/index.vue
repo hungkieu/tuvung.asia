@@ -19,23 +19,26 @@
         <div uk-grid>
           <div class="uk-width-3-4">
           <div class="w-75 px-0 d-inline-block">
-          <div class="suggest uk-width-1-1">     
+          <div class="suggest uk-width-1-1">
             <p v-if="this.$route.params.id != undefined"><router-link :to="{name: 'indexGrammar'}">Quay lại luyện tập</router-link></p>
             <p v-else><i>Gợi ý</i> <button class="btn-hover color-4 mx-3 mb-3" @click="grammarRandom">Đổi gợi ý</button></p>
              <p>Cấu trúc ngữ pháp</p>
+             <h5 class="text-center">
+              {{ listCategory ? listCategory.find(e => (e.id == showGrammar.category_id).name ) : ''}}
+            </h5>
              <h5 class="text-center"><b>{{showGrammar.structure}}</b></h5>
               <!-- <select v-model="showGrammar.structure" class="uk-select mb-3">
                   <option v-for="g in grammars">{{g.structure}}</option>
               </select> -->
                 <p class="mb-1">Mô tả</p>
-            <p>{{showGrammar.description}}</p>
+            <pre style="background: transparent; border: none;">{{showGrammar.description}}</pre>
               <div uk-grid="mansonry: true" v-if="searches.length > 0">
                 <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
                 <img :src="searches[Math.floor(Math.random() * searches.length)].image" width="150px" class="">
                 </div>
               </div>
         </div>
-          <label>Câu của bạn </label>  
+          <label>Câu của bạn </label>
           <textarea name="description" v-model="obj.name" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
           <button class="btn-hover color-9 float-right mt-2" @click="save">Lưu</button>
         </div>
@@ -45,7 +48,7 @@
           <p  class="" v-for="(item, i) in grammarsUser " :key="i" v-if="i<10">
             <router-link :to="'/grammars/edit/' + item.id">
             <span class="des-1" :title="item.name">{{item.name}}</span>
-            </router-link>  
+            </router-link>
             </p>
         </div>
         </div>
