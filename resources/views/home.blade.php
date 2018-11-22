@@ -73,10 +73,10 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/uikit.js') }}"></script>
-<script src="{{ asset('js/uikit-icon.js') }}"></script>
-<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/uikit.js') }}" defer></script>
+<script src="{{ asset('js/uikit-icon.js') }}" defer></script>
+<script src="http://code.responsivevoice.org/responsivevoice.js" defer></script>
 <script>
   @if(session('success'))
     flash("{{session('success')}}", "success");
