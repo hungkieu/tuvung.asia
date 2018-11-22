@@ -43,7 +43,7 @@
         <div class="container">
           <div class="row">
             <div class="col text-center">
-              <h1 class="home_title">Học tiếng anh thật dễ dàng với Mèo Ú</h1>
+              <h1 class="home_title">Học tiếng anh thật dễ dàng với Meohamhoc.com</h1>
               <div class="home_button">
                 <div class="w-100 text-center f-g">
                   <p> Đăng nhập với </p>
