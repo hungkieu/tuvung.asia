@@ -38,6 +38,7 @@ header {
     text-align: center;
     letter-spacing: 0.1em;
     &:hover {
+      box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 0.9);
       border: 1px solid $color-main;
       color: $color-main;
     }
@@ -154,10 +155,14 @@ header {
 }
 
 .contact {
-  padding: 90px 0;
+  background-repeat: no-repeat;
   background-size: cover;
+  background-position: center bottom;
+  background: #0b3e71;
+  background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg),
+  linear-gradient(180deg, #0b3e71, #0d64b0);
+  padding: 90px 0;
   min-height: 100vh;
-  height: 100%;
   .btn-fb,
   .btn-gg {
     background: transparent;
@@ -374,9 +379,12 @@ header {
     border-radius: 50px;
     color: white;
     padding: 10px 20px;
+    &:hover {
+      box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.9);
+    }
   }
   .btn-fb {
-    color: #108BFF;
+    color: blue;
   }
   .btn-gg {
     color: #CC5C21;
