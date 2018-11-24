@@ -10,20 +10,20 @@
   <!-- Navbar -->
 
   <div class="sosd-background-primary">
-    <div class="row p-3">
-      <div class="col-6 d-flex align-items-center">
-        <router-link to="/"class="sosd-a">
-          <b class="sosd-color-white" style="font-size: 16px;">
-            MeoHamHoc.com
-          </b>
-        </router-link>
-      </div>
+    <div class="container-fluid">
+      <div class="row p-2">
+        <div class="col-6 d-flex align-items-center">
+          <router-link to="/"class="sosd-a">
+            <img src="{{ asset('images/logo.png') }}" width="196" alt="">
+          </router-link>
+        </div>
 
 
-      <div class="col-6 justify-content-end d-flex align-items-center">
-        <a class="sosd-color-white" uk-toggle="target: #offcanvas-menu">
-          <span uk-icon="icon: menu; ratio: 1.2"></span>
-        </a>
+        <div class="col-6 justify-content-end d-flex align-items-center">
+          <a class="sosd-color-white" uk-toggle="target: #offcanvas-menu">
+            <span uk-icon="icon: menu; ratio: 1.2"></span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

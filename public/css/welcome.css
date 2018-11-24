@@ -40,7 +40,7 @@ header .btn-login {
   color: #000;
   background: #fff;
   font-weight: 600;
-  border: 1px solid #fff;
+  border: none;
   padding: 5px 20px;
   border-radius: 20px;
   text-align: center;
@@ -48,19 +48,16 @@ header .btn-login {
 }
 
 header .btn-login:hover {
-  border: 1px solid #1f8bf0;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 0.9);
+          box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 0.9);
   color: #1f8bf0;
 }
 
 .header-add {
   -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
           box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-  background: #fff;
+  background: #10abff;
   color: #1f8bf0;
-}
-
-.header-add .btn-login {
-  border: 1px solid black;
 }
 
 .header-add .header-title {
@@ -184,10 +181,14 @@ header .btn-login:hover {
 }
 
 .contact {
-  padding: 90px 0;
+  background-repeat: no-repeat;
   background-size: cover;
+  background-position: center bottom;
+  background: #0b3e71;
+  background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg), -webkit-gradient(linear, left top, left bottom, from(#0b3e71), to(#0d64b0));
+  background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg), linear-gradient(180deg, #0b3e71, #0d64b0);
+  padding: 90px 0;
   min-height: 100vh;
-  height: 100%;
 }
 
 .contact .btn-fb,
@@ -424,8 +425,13 @@ header .btn-login:hover {
   padding: 10px 20px;
 }
 
+.f-g a:hover {
+  -webkit-box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.9);
+          box-shadow: 0px 0px 10px 1px rgba(255, 255, 255, 0.9);
+}
+
 .f-g .btn-fb {
-  color: #108BFF;
+  color: blue;
 }
 
 .f-g .btn-gg {
