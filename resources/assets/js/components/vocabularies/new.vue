@@ -249,6 +249,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.uk-form-label {
+  margin-top: 5px;
+}
+
 .bold {
   font-weight: bold
 }
