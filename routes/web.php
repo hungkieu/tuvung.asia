@@ -4,10 +4,11 @@ Auth::routes();
 
 Route::post('/vocabularies', 'VocabulariesController@create');
 Route::post('/vocabularies/practice', 'VocabulariesController@practice');
+
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
 Route::delete('/vocabularies', 'VocabulariesController@destroy');
-Route::post('users/update/{id}', 'UserProfileController@update');
-Route::get('users/{id}', 'UserProfileController@show');
+Route::post('/users/update/{id}', 'UserProfileController@update');
+Route::get('/users/{id}', 'UserProfileController@show');
 
 Route::get('/ngu-phap-tieng-anh', 'StructureSentencesController@index');
 Route::post('/grammars/create', 'UserGrammarsController@create');
@@ -28,6 +29,10 @@ Route::get('/c/suggest-images/{q}', 'SuggestImageController@search');
 Route::get('/c/history-scores', 'HistoryScoreController@show');
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::post('/users/create', 'UserController@create');
+    Route::post('/users/update/{id}', 'UserController@update');
+    Route::delete('/users/{id}', 'UserController@destroy');
+
     Route::post('/structure-grammars/{id}/new', 'StructureSentencesController@create');
     Route::post('/structure-sentences/update/{id}', 'StructureSentencesController@update');
     Route::get('/structure-sentences', 'StructureSentencesController@indexAdmin');

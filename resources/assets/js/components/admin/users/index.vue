@@ -41,43 +41,22 @@
                   <a class="uk-link-reset" href="">{{ u.name }}</a>
                 </td>
                 <td class="uk-text-truncate" :title="u.email">{{ u.email }}</td>
-                <td class="uk-text-nowrap text-center"><a href="#modal-role" uk-toggle style="color: #32d296">{{ u.role == 1 ? 'Admin' : 'User' }}</a></td>
+                <td class="uk-text-nowrap text-center"><a href="#modal-role" uk-toggle style="color: #32d296" @click="newRole.user = u">{{ u.role == 1 ? 'Admin' : 'User' }}</a></td>
                 <td class="uk-text-nowrap text-center">{{ u.score }}</td>
-                <td class="uk-text-nowrap text-center">{{ grammars.length }}</td>
-                <td class="uk-text-nowrap text-center">{{ u.score }}</td>
+                <td class="uk-text-nowrap text-center">{{ grammars ? grammars.length : 0 }}</td>
+                <td class="uk-text-nowrap text-center">{{ u.score ? u.score : 0 }}</td>
                 <td class="uk-text-nowrap text-center">{{ u.created_at }}</td>
                 <td class="text-center">
                   <router-link :to="'/admin/users/profile/' + u.id">
-                  <span class="uk-icon-button uk-alert-success" title="Xem hồ sơ"> <i class="fa fa-eye" aria-hidden="true"></i></span>
+                  <span class="uk-icon-button uk-alert-success" title="Xem hồ sơ"> 
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    </span>
                   </router-link>
-                  <span v-if="nowUser.id != u.id" class="uk-icon-button uk-alert-danger" uk-icon="trash" title="Xóa người dùng này" @click="del(u)"></span>
+                  <a  href="#modal-del"  uk-toggle @click="delUser = u">
+                  <span v-if="nowUser.id != u.id" class="uk-icon-button uk-alert-danger" uk-icon="trash" title="Xóa người dùng này"></span>
+                  </a>
                 </td>
-                  <!-- model change role -->
-        <div id="modal-role" class="uk-flex-top" uk-modal>
-            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                <button class="uk-modal-close-default" type="button" uk-close></button>
-                <div class="uk-modal-header pt-0 ">
-                    <h5 class="">Đổi vai trò {{ u.name }}</h5>
-                </div>  
-                <div class="uk-modal-body">
-                  <div uk-grid>
-                      <div class="uk-width-1-2">
-                        <input :checked="u.role == 1 ? true : false" @click="changeRole(1)" class="uk-radio mr-3" type="radio" id="radioRoleA" name='role'>
-                        <label for="radioRoleA">Admin</label>
-                      </div>
-                      <div class="uk-width-1-2">
-                        <input :checked="u.role == 0 ? true : false" @click="changeRole(0)" class="uk-radio mr-3" type="radio" id="radioRoleU" name='role'>
-                        <label for="radioRoleU">User</label>
-                      </div>
-                  </div>
-                    
-                </div>
-                <div class="uk-modal-footer uk-text-right pb-0">
-                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="saveRole(u)" >Lưu</button>
-                    <button class="uk-button uk-button-default uk-modal-close" type="button">Hủy</button>
-                </div>
-                </div>
-        </div>
+                  
               </tr>
             </paginate>
         </table>
@@ -94,7 +73,32 @@
           }"
         ></paginate-links>
 
-      
+  <!-- model change role -->
+        <div id="modal-role" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header pt-0 ">
+                    <h5 class="">Đổi vai trò {{ this.newRole.user.name }}</h5>
+                </div>  
+                <div class="uk-modal-body">
+                  <div uk-grid>
+                      <div class="uk-width-1-2">
+                        <input :checked="this.newRole.user.role == 1 ? true : false" @click="changeRole(1)" class="uk-radio mr-3" type="radio" id="radioRoleA" name='role'>
+                        <label for="radioRoleA">Admin</label>
+                      </div>
+                      <div class="uk-width-1-2">
+                        <input :checked="this.newRole.user.role == 0 ? true : false" @click="changeRole(0)" class="uk-radio mr-3" type="radio" id="radioRoleU" name='role'>
+                        <label for="radioRoleU">User</label>
+                      </div>
+                  </div>
+                    
+                </div>
+                <div class="uk-modal-footer uk-text-right pb-0">
+                    <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="saveRole" >Lưu</button>
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Hủy</button>
+                </div>
+              </div>
+        </div>    
 
       <!-- Thêm người dùng -->
       <div id="modal-user" class="uk-flex-top" uk-modal>
@@ -133,6 +137,29 @@
           
         </div>
     </div>
+
+    <!-- Xác nhận xóa người dùng -->
+      <div id="modal-del" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+          <div class="uk-modal-body p-0">
+            <div class="row">
+              <p class="text-center w-100">
+              <span uk-icon="icon: warning; ratio: 2.5" style="color: red"></span>
+              </p>
+              <b class="text-center w-100 mb-3">Bạn có chắc chắn muốn xóa người dùng này ?</b>
+              <p class="text-center w-100">
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                  <button class="uk-button uk-button-primary" type="button" @click="del">Xóa</button>
+                  </p>
+            </div>
+                
+          
+        </div>
+    </div>
+    </div>
+
   </div>
 </template>
 
@@ -143,24 +170,27 @@ export default {
       users: [],
       grammars: [],
       paginate: ['pusers'],
-      newRole: '',
-      newUser: {},
-      nowUser: Laravel.user
+      newRole: {
+        user: {},
+        role: ''
+      },
+      newUser: {
+        name: '',
+        email: '',
+        phone: '',
+        role: 0,
+        password: '12345678'
+      },
+      nowUser: Laravel.user,
+      delUser: {}
     };
   },
   mounted() {
     var app = this;
     this.getGrammarUser();
-    axios
-      .get('/api/v1/users')
-      .then(res => {
-        console.log(res.data);
-        app.users = res.data;
-      })
-      .catch(res => {
-        alert('khong load duoc');
-      });
+    this.getUser();
   },
+
   methods: {
     getGrammarUser() {
       this.user = Laravel.user;
@@ -176,48 +206,68 @@ export default {
     },
     changeRole(role) {
       if (role == 1) {
-        this.newRole = 1;
+        this.newRole.role = 1;
       } else {
-        this.newRole = 0;
+        this.newRole.role = 0;
       }
     },
-    saveRole(user) {
-      const app = this;
-      if (this.users.find(u => u.id == user.id) !== undefined) {
-        this.users.find(u => u.id == user.id).role = this.newRole;
-      }
+
+    getUser() {
+      var app = this;
+      // axios
+      //   .get('/api/v1/users/full')
+      //   .then(function(res) {
+      //     console.log('res');
+      //     console.log(res.data);
+      //     app.users = res.data;
+      //   })
+      //   .catch(function(res) {
+      //     console.log(res);
+      //   });
       axios
-        .post('/users/update/' + app.user.id, user)
-        .then(function(res) {
-          console.log(res);
+        .get('/api/v1/users')
+        .then(res => {
+          console.log(res.data);
+          app.users = res.data;
         })
+        .catch(res => {
+          alert('khong load duoc');
+        });
+    },
+    saveRole() {
+      console.log(this.newRole.user);
+      const app = this;
+      this.newRole.user.role = this.newRole.role;
+      axios
+        .post('/admin/users/update/' + app.newRole.user.id, app.newRole.user)
+        .then(function(res) {})
         .catch(function(res) {
-          alert('Không thành công , vui lòng thử lại !');
+          flash('Không thành công , vui lòng thử lại !', 'error');
         });
     },
     save(e) {
       const app = this;
       axios
-        .post('/v1/users/create', app.newUser)
+        .post('/admin/users/create', app.newUser)
         .then(res => {
-          console.log(res.data);
           UIkit.modal('#modal-user').hide();
           app.users.push({ ...res.data });
         })
         .catch(res => {
-          alert('khong load duoc');
+          flash('Không thành công , vui lòng thử lại !', 'error');
         });
     },
-    del(u) {
+    del() {
       const app = this;
       axios
-        .delete('/v1/users/' + u.id)
+        .delete('/admin/users/' + app.delUser.id)
         .then(res => {
           console.log(res.data);
-          app.users.splice(app.users.indexOf(u), 1);
+          UIkit.modal('#modal-del').hide();
+          app.users.splice(app.users.indexOf(app.delUser), 1);
         })
         .catch(res => {
-          alert('khong load duoc');
+          flash('Không thành công , vui lòng thử lại !', 'error');
         });
     }
   }

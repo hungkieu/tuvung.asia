@@ -182,7 +182,6 @@ export default {
     return {
       user: [],
       grammars: [],
-      newRole: '',
       preview: false,
       vocabularies: []
     };
@@ -196,9 +195,8 @@ export default {
     getUser() {
       var app = this;
       axios
-        .get('/api/v1/users/profile/' + Laravel.user.id)
+        .get('/api/v1/users/profile/' + app.$route.params.id)
         .then(res => {
-          console.log(res.data);
           app.user = res.data;
         })
         .catch(res => {
@@ -235,19 +233,6 @@ export default {
           console.log('err');
         });
     },
-    changeRole(role) {
-      if (role == 1) {
-        this.newRole = 1;
-      } else {
-        this.newRole = 0;
-      }
-    },
-    saveRole(user) {
-      // console.log(user);
-      if (this.users.find(u => u.id == user.id) !== undefined) {
-        this.users.find(u => u.id == user.id).role = this.newRole;
-      }
-    },
     preview_image(e) {
       var files = e.target.files;
       if (files && files[0]) {
@@ -278,13 +263,11 @@ export default {
       axios
         .post('/users/update/' + app.user.id, app.user)
         .then(function(res) {
-          alert('Update thành công !');
           UIkit.modal('#modal-edit-user').hide();
-          console.log(res);
+          flash('Update thành công !', 'success');
         })
         .catch(function(res) {
-          alert('Không thành công , vui lòng thử lại !');
-          console.log(res);
+          flash('Không thành công , vui lòng thử lại !', 'error');
         });
     }
   }
