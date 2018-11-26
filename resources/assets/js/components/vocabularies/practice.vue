@@ -1,27 +1,29 @@
 <template>
   <div>
-    <div v-if="loading">
-      <Loading></Loading>
-    </div>
-
-    <div v-if="error">
-      <b>Vui lòng thử lại</b>
-    </div>
-
-    <div v-if="success">
+    <div>
       <div class="uk-container">
+        <div class="image_cat">
+          <img src="/images/fav.png" alt="">
+        </div>
         <div v-if="p_vocabularies.length >= 5">
 
-          <div>
-          Bạn có {{ p_vocabularies.length }} từ cần ôn tập
-          <button class="uk-button" @click="start">Ôn tập</button>
+          <div class="main text-center">
+            <div>
+
+            </div>
+            <div >
+              Bạn có {{ p_vocabularies.length }} từ cần ôn tập
+            </div>
+            <div class="mt-2">
+              <button class="uk-button uk-button-primary sosd-btn" @click="start">Ôn tập</button>
+            </div>
           </div>
 
           <div class="exam" v-if="inprogress">
             <div class="head">
               <div class="start">huong dan</div>
               <div class="center">
-                <progress class="uk-progress" :value="exam.step" :max="exam.questions.length"></progress>
+                <progress class="uk-progress" :value="quest_correct.length" :max="exam.questions.length"></progress>
               </div>
               <div class="end">
                 <span uk-icon="close" @click="stop"></span>
@@ -30,16 +32,19 @@
             <div class="content">
               <div class="quest">
                 <div v-for="(quest, index) in exam.questions">
-                  <div class="body" v-if="index == exam.step">
+                  <div class="body" v-show="index == exam.step">
                     <div class="image" v-if="quest.correct_answer.image != null">
                       <img :src="quest.correct_answer.image" alt="" height="250px">
                     </div>
                     <div class="question">
                       Từ <b>{{ quest.correct_answer.vi }}</b> trong tiếng anh là?
                     </div>
-                    <div class="choices uk-child-width-1-2" uk-grid>
-                      <div v-for="choice in quest.choices">
-                        <button :class="choice.class" @click="answer(index, choice.id)">{{ choice.en }}</button>
+                    <div class="choices uk-child-width-1-2" uk-grid="first-column:; margin:;">
+                      <div v-for="(choice, index2) in quest.choices">
+                        <button :class="Object.assign(choice.class, {keytip: true})" @click="answer(index, choice.id)">
+                          {{ choice.en }}
+                          <span>{{ index2 + 1 }}</span>
+                        </button>
                       </div>
                     </div>
                     <div class="foot" v-if="quest.answer">
@@ -54,7 +59,9 @@
                           </div>
                         </div>
                         <div class="next uk-width-1-3">
-                          <button @click="next_step" :class="{ success: quest.correct, error: !quest.correct }">Tiếp theo</button>
+                          <button @click="next_step" :class="{ success: quest.correct, error: !quest.correct }">
+                            Tiếp theo
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -73,8 +80,11 @@
             </div>
           </div>
         </div>
-        <div v-else>
-          Không có từ nào cần ôn tập
+        <div v-else class="text-center">
+          <div>Không có từ nào cần ôn tập</div>
+          <div class="mt-2">
+            <button class="uk-button sosd-btn uk-button-primary">Trang chủ</button>
+          </div>
         </div>
       </div>
     </div>
@@ -90,16 +100,15 @@
     },
     data: function() {
       return {
-        error: false,
-        success: false,
-        loading: true,
         inprogress: false,
         exam: {
           questions: [],
           step: 0,
         },
         user: {},
-        vocabularies: []
+        vocabularies: [],
+        key: 0,
+        watch_key: true,
       };
     },
     mounted() {
@@ -114,29 +123,36 @@
           three_days_ago = three_days_ago.setDate(three_days_ago.getDate() - 3);
           return v.last_practice == null || last_practice < three_days_ago;
         })
+      },
+
+      quest_correct() {
+        return this.exam.questions.filter(e => e.correct);
       }
     },
     watch: {
-      error() {
-        if (this.error) {
-          this.success = false;
-          this.loading = false;
-        }
-      },
-      success() {
-        if (this.success) {
-          this.error = false;
-          this.loading = false;
-        }
-      },
-      loading() {
-        if (this.loading) {
-          this.error = false;
-          this.success = false;
-        }
-      },
+      key() {
+        let quest = this.exam.questions[this.exam.step];
+        if(this.watch_key)
+          if([1, 2, 3, 4].includes(+this.key) && quest.answer == false)
+            this.answer(this.exam.step, quest.choices[this.key - 1].id)
+          else if (this.key == "Enter")
+            this.next_step()
+        this.watch_key = false;
+        this.key = 0;
+      }
     },
     methods: {
+      keyboard(o) {
+        var app = this;
+        if(o == true)
+          $(window).on('keypress', function(event) {
+            app.watch_key = true;
+            app.key = event.key;
+          })
+        else
+          $(window).off('keypress')
+      },
+
       get_vocabularies() {
         var app = this;
         $.ajax({
@@ -145,19 +161,15 @@
         })
         .done(res => {
           app.vocabularies = res;
-          setTimeout(function() {
-            app.success = true;
-          }, 100);
         })
         .fail(res => {
-          setTimeout(function() {
-            app.error = true;
-          }, 100);
+          flash('Lỗi tải dữ liệu', 'error');
         });
       },
 
       start() {
         this.inprogress = true;
+        this.keyboard(true);
         var vocabs = this.p_vocabularies.slice(0, 10);
         if(vocabs.length < 5) { return; }
         var questions = vocabs.map(val => {
@@ -190,6 +202,7 @@
         this.get_vocabularies();
         this.exam.step = 0;
         this.inprogress = false;
+        this.keyboard(false);
       },
 
       shuffle(a) {
@@ -204,6 +217,8 @@
       },
 
       answer(quest_index, choice_id) {
+        $('.content').animate({scrollTop: $('.content').height()}, 500);
+
         var quest = this.exam.questions[quest_index];
         quest.choices.forEach(choice => {
           if (quest.correct_answer.id == choice.id) {
@@ -228,9 +243,25 @@
       },
 
       next_step() {
-        this.exam.step += 1;
-        if(this.exam.step >= this.exam.questions.length) {
-          this.exam.step = 999;
+        let index = this.exam.step;
+        let quest = this.exam.questions[index];
+        if(!quest.correct) {
+          quest.answer = false;
+          quest.choices.forEach((choice) => {
+            choice.class.error = false;
+            choice.class.success = false;
+          })
+          var length = this.exam.questions.length;
+          for (let i = index; i < length; i++) {
+            if(this.exam && !this.exam.questions[i + 1]) break;
+            this.exam.questions.splice(i, 1, this.exam.questions[i + 1])
+          }
+          this.exam.questions.splice(length - 1, 1, quest);
+        } else {
+          this.exam.step += 1;
+          if(this.exam.step >= this.exam.questions.length) {
+            this.exam.step = 999;
+          }
         }
       }
     }
@@ -238,6 +269,40 @@
 </script>
 
 <style lang="scss" scoped>
+.image_cat {
+  text-align: center;
+  margin: 20px;
+  img {
+    height: 250px;
+  }
+}
+
+.sosd-btn {
+  border-radius: 15px;
+  &:hover {
+    box-shadow: 0px 0px 10px 1px rgba(30, 135, 240, 0.8);
+  }
+}
+
+.keytip {
+  position: relative;
+  span {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    color: #899194;
+    background: white;
+    border: 1px solid rgb(233, 233, 233);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    font-size: 0.7em;
+  }
+}
+
 .exam {
   width: 100vw;
   height: 100vh;
@@ -281,43 +346,48 @@
       width: 50%;
       .body {
         .image {
-          margin: 40px 0px;
+          margin: 20px 0px 20px 0px;
           text-align: center;
+          img {
+            height: 250px;
+          }
         }
         .question {
           b {
             color: rgb(0, 121, 243);
           }
-          margin-bottom: 40px;
         }
         .choices {
-          .choice {
-            outline: none;
-            border: none;
-            cursor: pointer;
-            width: 75%;
-            padding: 15px 0px;
-            border-radius: 15px;
-            background: white;
-            &:hover {
-              background: rgb(0, 121, 243);
+          div {
+            margin-top: 40px;
+            .choice {
+              outline: none;
+              border: none;
+              cursor: pointer;
+              width: 75%;
+              padding: 15px 0px;
+              border-radius: 15px;
+              background: white;
+              &:hover {
+                box-shadow: 0px 1px 3px 0px rgba(33, 33, 33, 0.3);
+              }
+
+            }
+
+            .success {
+              animation: scale 0.3s linear both;
+              background: rgb(128, 223, 133);
+              color: white;
+            }
+
+            .error {
+              animation: shake 0.5s linear both;
+              background: rgb(255, 38, 104);
               color: white;
             }
           }
-
-          .success {
-            animation: scale 0.3s linear both;
-            background: rgb(128, 223, 133);
-            color: white;
-          }
-
-          .error {
-            animation: shake 0.5s linear both;
-            background: rgb(255, 38, 104);
-            color: white;
-          }
         }
-        padding-bottom: 40px;
+        padding-bottom: 100px;
       }
     }
   }
@@ -419,5 +489,6 @@
       transform: translate3d(4px, 0, 0);
     }
   }
+
 }
 </style>
