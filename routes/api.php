@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/v1/users/create', 'Api\V1\UsersController@create');
+Route::get('/v1/users/full', 'UserController@show');
 Route::get('/v1/users', 'Api\V1\UsersController@index');
 Route::get('/v1/users/profile/{id}', 'Api\V1\UsersController@show');
 Route::get('/v1/users/{id}/vocabularies', 'Api\V1\vocabulariesController@index');

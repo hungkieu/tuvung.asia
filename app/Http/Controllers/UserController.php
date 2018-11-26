@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class UserController extends Controller
 {
@@ -21,9 +23,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $u = new User;
+        $u->name = $request->name;
+        $u->email = $request->email;
+        $u->phone = $request->phone;
+        $u->role = $request->role;
+        $u->password = $request->password;
+        if ($u->save()) {
+            return $u;
+        } else {
+            return response('create failed', 400);
+        }
     }
 
     /**
@@ -43,9 +55,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $user = DB::table('users')
+        ->leftJoin('user_grammars', 'users.id', '=', 'user_grammars.user_id')
+        ->leftJoin('vocabularies', 'users.id', '=', 'vocabularies.user_id')
+        ->select('users.*', 'user_grammars.*', 'vocabularies.*')
+        ->get();
+        return $user;
     }
 
     /**
@@ -68,7 +85,20 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        if ($request->hasFile('avatar')) {
+            $user->avatar = '/storage/'.str_replace('public/', '', $request->file('avatar')->store('public/images'));
+        }
+        $user->fill($request->all());
+        $user->save();
+        if($user->avatar) {
+            return $user->avatar;
+        }
+        if($user->save()){
+        return response('create success', 200);
+        } else {
+        return response('create failed', 400);
+        }
     }
 
     /**
@@ -77,8 +107,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $u = User::find($id);
+        $u->delete();
     }
 }

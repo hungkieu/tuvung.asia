@@ -6,13 +6,14 @@
 @endsection
 @section('content')
   <div id="admin">
-    <nav class="uk-navbar-container sosd-background-primary" uk-navbar style="height: 50px">
+    <nav class="uk-navbar-container sosd-box-shadow" uk-navbar style="height: 50px; background: #fff; color: black">
     <Flash></Flash>
       <div class="uk-navbar-left">
         <ul class="uk-navbar-nav">
             <li class="uk-margin-left">
-              <router-link to="/admin">
-                <h4 class="sosd-color-white">
+              <router-link to="/admin/dashboard">
+                <img src="{{ asset('images/fav.png') }}" width="40" alt="">
+                <h4 class="uk-text-emphasis mb-0 ml-3">
                   Dashboard
                 </h4>
               </router-link>
@@ -21,11 +22,19 @@
       </div>
       <div class="uk-navbar-right uk-margin-right ">
           <router-link to="/">
-            <h4 class="sosd-color-white">
+            <span style="color: black">
              Trang chủ
-            </h4>
+            </span>
           </router-link>
-        
+          <hr style="width: 1px; height: 15px; background: #292b2c; margin: 0 10px " />
+          <form action="/logout" method="post">
+            {{ csrf_field() }}
+            <label for="logout" class="uk-text-emphasis mb-0" style="cursor: pointer">
+            {{-- <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>  --}}
+            Đăng xuất
+            </label>
+            <input type="submit" class="sosd-none" name="logot" id="logout">
+          </form>
       </div>
     </nav>
 
