@@ -83,7 +83,9 @@
         <div v-else class="text-center">
           <div>Không có từ nào cần ôn tập</div>
           <div class="mt-2">
-            <button class="uk-button sosd-btn uk-button-primary">Trang chủ</button>
+            <router-link to="/">
+              <button class="uk-button sosd-btn uk-button-primary">Trang chủ</button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -245,7 +247,7 @@
       next_step() {
         let index = this.exam.step;
         let quest = this.exam.questions[index];
-        if(!quest.correct) {
+        if(quest.correct == false) {
           quest.answer = false;
           quest.choices.forEach((choice) => {
             choice.class.error = false;
@@ -254,7 +256,7 @@
           var length = this.exam.questions.length;
           for (let i = index; i < length; i++) {
             if(this.exam && !this.exam.questions[i + 1]) break;
-            this.exam.questions.splice(i, 1, this.exam.questions[i + 1])
+              this.exam.questions.splice(i, 1, this.exam.questions[i + 1])
           }
           this.exam.questions.splice(length - 1, 1, quest);
         } else {
