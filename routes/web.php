@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/structure-sentences', 'StructureSentencesController@indexAdmin');
     Route::delete('/structure-sentences/{id}', 'StructureSentencesController@destroy');
 
+    Route::get('/category-structure-grammars/index', 'CategoriesStructureSentencesController@index');
     Route::post('/category-structure-grammars/{id}/new', 'CategoriesStructureSentencesController@create');
     Route::post('/category-structure-grammars/{id}/edit', 'CategoriesStructureSentencesController@edit');
     Route::delete('/category-structure-grammars/{id}', 'CategoriesStructureSentencesController@destroy');

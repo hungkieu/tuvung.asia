@@ -136,7 +136,7 @@ export default {
     getCategory() {
       var app = this;
       axios
-        .get('/admin/category-structure-grammars')
+        .get('/admin/category-structure-grammars/index')
         .then(function(res) {
           // console.log(res);
           app.listCategory = res.data;
@@ -145,14 +145,20 @@ export default {
           console.log(res);
         });
     },
+    sortedArr(arr, key, type) {
+      if (type == 'asc') {
+        return arr.sort((a, b) => a[key] - b[key]);
+      }
+      return arr.sort((a, b) => b[key] - a[key]);
+    },
     save(e) {
       var app = this;
       if (app.newCategory.name != '') {
         axios
           .post('/admin/category-structure-grammars/' + app.users.id + '/new', app.newCategory)
           .then(function(res) {
-            alert('Tạo thành công !');
             UIkit.modal('#modal-category').hide();
+            flash('Tạo thành công !', 'success');
             app.listCategory.push({ ...res.data });
             app.newCategory = {
               name: '',
@@ -162,8 +168,7 @@ export default {
             };
           })
           .catch(function(res) {
-            alert('Không thành công , vui lòng thử lại !');
-            console.log(res);
+            flash('Không thành công , vui lòng thử lại !', 'error');
           });
       } else {
         alert('Bạn phải nhập tên danh mục !');
