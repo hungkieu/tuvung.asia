@@ -17,6 +17,9 @@ class CreateUserGrammarsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+            $table->text('structure_name');
+            $table->text('structure_description');
+            $table->integer('total');
             $table->integer('user_id');
             $table->timestamps();
         });

@@ -32,20 +32,20 @@
               </select> -->
                 <p class="mb-1">Mô tả</p>
             <pre style="background: transparent; border: none;">{{showGrammar.description}}</pre>
-              <div uk-grid="mansonry: true" v-if="searches.length > 0">
+              <!-- <div uk-grid="mansonry: true" v-if="searches.length > 0">
                 <div class="sosd_images uk-animation-slide-bottom" v-for="(v, i) in searches" v-if="i<5">
                 <img :src="searches[Math.floor(Math.random() * searches.length)].image" width="150px" class="">
                 </div>
-              </div>
+              </div> -->
         </div>
           <label>Câu của bạn </label>
-          <textarea name="description" v-model="obj.name" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
+          <textarea name="name" v-model="obj.name" id="description-grammar" class="uk-textarea" rows="2" ></textarea>
           <button class="btn-hover color-9 float-right mt-2" @click="save">Lưu</button>
         </div>
         </div>
         <div class="uk-width-1-4 history py-3" v-if="grammarsUser.length > 0">
           <h5>Lịch sử</h5>
-          <p  class="" v-for="(item, i) in grammarsUser " :key="i" v-if="i<10">
+          <p  class="mb-0" v-for="(item, i) in grammarsUser " :key="i" v-if="i<10">
             <router-link :to="'/grammars/edit/' + item.id">
             <span class="des-1" :title="item.name">{{item.name}}</span>
             </router-link>
@@ -80,7 +80,8 @@ export default {
     return {
       obj: {
         name: '',
-        description: ''
+        structure_name: '',
+        structure_description: ''
       },
       grammarsUser: [],
       grammars: [],
@@ -98,7 +99,6 @@ export default {
     this.getStructureSentences();
     this.getCategory();
     this.getGrammarUser();
-    this.search();
   },
   methods: {
     getUser() {
@@ -148,7 +148,8 @@ export default {
             if (app.$route.params.id != undefined) {
               let g = app.grammarsUser.find(e => e.id == app.$route.params.id);
               app.obj.name = g.name;
-              app.obj.description = g.description;
+              app.obj.structure_name = g.structure_name;
+              app.obj.structure_description = g.structure_description;
             }
           })
           .catch(function(res) {
@@ -164,11 +165,8 @@ export default {
         .get(url)
         .then(res => {
           app.searches = res.data;
-          app.success = true;
         })
-        .catch(res => {
-          app.error = true;
-        });
+        .catch(res => {});
     },
     save(e) {
       var app = this;
@@ -196,7 +194,9 @@ export default {
             alert('Sửa khong thanh cong, vui long thu lai');
           });
       } else {
-        app.obj.description = app.showGrammar.id;
+        app.obj.structure_name = app.showGrammar.name;
+        app.obj.structure_description = app.showGrammar.description;
+        console.log(app.obj);
         axios
           .post('/grammars/create', app.obj)
           .then(function(res) {
@@ -210,7 +210,6 @@ export default {
                 console.log(res);
               });
             app.obj.name = '';
-            app.obj.description = '';
           })
           .catch(function(res) {
             console.log(res);
@@ -225,7 +224,7 @@ export default {
       if (this.$route.params.id != undefined) {
         console.log(this.obj);
         console.log(this.grammars.find(e => e.id == 'S + V'));
-
+        this.showGrammar = this.grammarsUser.find(e => e.id == app.$route.params.id);
         // this.showGrammar = this.grammars.find(e => e.structure == this.obj.description);
         // console.log(this.showGrammar);
       } else {
@@ -255,8 +254,9 @@ export default {
 }
 .grammars {
   background: url('/images/bg9.jpg');
-  background-position: right center;
+  background-position: right bottom;
   background-size: cover;
+  min-height: 85vh;
   input,
   textarea {
     color: #000;

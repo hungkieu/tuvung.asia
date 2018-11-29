@@ -83,7 +83,8 @@ class UserGrammarsController extends Controller
     {
         $gram = UserGrammars::find($id);
         $gram->name = $request->name;
-        $gram->description = $request->description;
+        $gram->structure_name = $request->structure_name;
+        $gram->structure_description = $request->structure_description;
   
         $gram->user_id = Auth::user()->id;
     

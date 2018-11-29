@@ -5,16 +5,16 @@ window.Vue.use(VueRouter);
 import VuePaginate from 'vue-paginate';
 Vue.use(VuePaginate);
 
-import VueToastr2 from 'vue-toastr-2'
-import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+import VueToastr2 from 'vue-toastr-2';
+import 'vue-toastr-2/dist/vue-toastr-2.min.css';
 
-window.toastr = require('toastr')
+window.toastr = require('toastr');
 
-Vue.use(VueToastr2)
+Vue.use(VueToastr2);
 window.notify = new Vue();
 window.flash = function(message, status, title = '') {
-  window.notify.$emit('flash', {message, status, title});
-}
+  window.notify.$emit('flash', { message, status, title });
+};
 
 import flash from './components/shared/flash';
 import index from './components/admin/index';
@@ -68,7 +68,7 @@ const routes = [
     name: 'newStructure'
   },
   {
-    path: '/admin/category-structure-grammars/new',
+    path: '/admin/category-structure-grammars',
     component: indexCategoryStructure,
     name: 'indexCategoryStructure'
   },
@@ -88,5 +88,5 @@ const app = new Vue({
   router,
   components: {
     Flash: flash
-  },
+  }
 }).$mount('#admin');
