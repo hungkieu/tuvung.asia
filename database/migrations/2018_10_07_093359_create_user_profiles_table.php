@@ -23,6 +23,8 @@ class CreateUserProfilesTable extends Migration
             $table->integer('role')->default('0');
             $table->integer('target_score')->default(0);
             $table->integer('score')->default(0);
+            $table->integer('vocabulary_total')->default(0);
+            $table->integer('grammar_total')->default(0);
             $table->datetime('last_login')->nullable();
             $table->boolean('is_newbie')->default(true);
         });

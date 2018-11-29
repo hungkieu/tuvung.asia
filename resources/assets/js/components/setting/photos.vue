@@ -1,14 +1,14 @@
 <template>
- <div class="profile-avatar uk-card-default text-center">
-   <h4 class="text-left mb-3">Ảnh đại diện</h4>
-   <div class="avatar mx-auto">
-    <a  :href="user.avatar">
-      <img :src="user.avatar" id="avatar-show" />
-    </a>
+  <div class="profile-avatar uk-card-default text-center">
+    <h4 class="text-left mb-3">Ảnh đại diện</h4>
+    <div class="avatar mx-auto">
+      <a :href="user.avatar" target="_black">
+        <img :src="user.avatar" id="avatar-show">
+      </a>
+    </div>
+    <label class="btn btn-primary rounded avatar-change" for="file">Thay đổi avatar</label>
+    <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
   </div>
-  <label class="btn btn-primary rounded  avatar-change" for="file">Thay đổi avatar</label>
-  <input type="file" id="file" name="avatar" style="display: none" @change="preview_image">
-</div>
 </template>
 <script>
 export default {
@@ -25,13 +25,13 @@ export default {
     var app = this;
     console.log(this.user);
     axios
-      .get('/users/' + id)
+      .get("/users/" + id)
       .then(function(res) {
         console.log(res.data);
         app.user = res.data;
       })
       .catch(res => {
-        alert('khong load duoc');
+        alert("khong load duoc");
       });
   },
   methods: {
@@ -39,19 +39,19 @@ export default {
       var files = e.target.files;
       if (files && files[0]) {
         var f = new FormData();
-        f.append('avatar', files[0]);
+        f.append("avatar", files[0]);
         var app = this;
         axios
-          .post('/users/update/' + this.user.id, f, {
+          .post("/users/update/" + this.user.id, f, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              "Content-Type": "multipart/form-data"
             }
           })
           .then(function(res) {
             app.user.avatar = res.data;
           })
           .catch(function(res) {
-            alert('Không thành công, vui lòng thử lại !');
+            flash("Không thành công , vui lòng thử lại !", "error");
           });
       }
     }

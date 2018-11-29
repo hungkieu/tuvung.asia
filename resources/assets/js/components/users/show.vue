@@ -1,56 +1,57 @@
 <template>
-
- <div class="user sosd-background-white sosd-box-shadow">
+  <div class="user sosd-background-white sosd-box-shadow">
     <div class="clearfix">
-<!-- RIGHT COLUMN -->
-<div class="profile-right">
-  <h4 class="heading">Mức độ thành thạo</h4>
-  <!-- AWARDS -->
-  <div class="awards">
-   <div class="row">
-    <div class="col-md-3 col-sm-6">
-     <div class="award-item w-100">
-      <div class="uk-animation-toggle">
-        <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
-          <p class="uk-text-center">{{grammars.length}}</p>
+      <!-- RIGHT COLUMN -->
+      <div class="profile-right">
+        <h4 class="heading">Mức độ thành thạo</h4>
+        <!-- AWARDS -->
+        <div class="awards">
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <div class="award-item w-100">
+                <div class="uk-animation-toggle">
+                  <div
+                    class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto"
+                  >
+                    <p class="uk-text-center">{{grammars.length}}</p>
+                  </div>
+                </div>
+                <span>Ngữ pháp</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="award-item w-100">
+                <div class="uk-animation-toggle">
+                  <div
+                    class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto"
+                  >
+                    <p class="uk-text-center">{{length_voca}}</p>
+                  </div>
+                </div>
+                <span>Từ vựng</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="award-item w-100">
+                <div class="uk-animation-toggle">
+                  <div
+                    class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto"
+                  >
+                    <p class="uk-text-center">12</p>
+                  </div>
+                </div>
+                <span>Problem Solver</span>
+              </div>
+            </div>
+          </div>
         </div>
+        <hr>
+        <!-- END AWARDS -->
+        <!-- END TABBED CONTENT -->
       </div>
-      <span>Ngữ pháp </span>
+      <!-- END RIGHT COLUMN -->
     </div>
   </div>
-  <div class="col-md-3 col-sm-6">
-   <div class="award-item w-100">
-    <div class="uk-animation-toggle">
-      <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
-        <p class="uk-text-center">{{length_voca}}</p>
-      </div>
-    </div>
-    <span>Từ vựng</span>
-  </div>
-</div>
-<div class="col-md-3 col-sm-6">
- <div class="award-item w-100">
-   <div class="uk-animation-toggle">
-    <div class="uk-card uk-card-default rounded-circle p-3 mb-3 uk-animation-shake uk-alert-success mx-auto">
-      <p class="uk-text-center">12</p>
-    </div>
-  </div>
-  <span>Problem Solver</span>
-</div>
-</div>
-</div>
-</div>
-<hr/>
-<!-- END AWARDS -->
-
-
-<!-- END TABBED CONTENT -->
-</div>
-<!-- END RIGHT COLUMN -->
-</div>
-
-</div>
-
 </template>
 
 <script>
@@ -76,19 +77,19 @@ export default {
       var app = this;
       console.log(this.user);
       axios
-        .get('/users/' + id)
+        .get("/users/" + id)
         .then(function(res) {
           app.user = res.data;
         })
         .catch(res => {
-          alert('khong load duoc');
+          flash("Không load được dữ liệu", "error");
         });
     },
     getGrammarUser() {
       this.user = Laravel.user;
       var app = this;
       axios
-        .get('/grammars/' + app.user.id)
+        .get("/grammars/" + app.user.id)
         .then(function(res) {
           app.grammars = res.data;
         })
@@ -101,12 +102,12 @@ export default {
       var id = this.user.id;
       var app = this;
       axios
-        .get('/api/v1/users/' + id + '/vocabularies/count')
+        .get("/api/v1/users/" + id + "/vocabularies/count")
         .then(function(res) {
           app.length_voca = res.data;
         })
         .catch(res => {
-          alert('khong load duoc');
+          flash("Không load được dữ liệu", "error");
         });
     }
     // formatDate(date) {
@@ -138,10 +139,10 @@ $lightseagreen: lightseagreen;
   display: block;
   font-weight: normal;
 }
-.fancy-checkbox input[type='checkbox'] {
+.fancy-checkbox input[type="checkbox"] {
   display: none;
 }
-.fancy-checkbox input[type='checkbox'] + span {
+.fancy-checkbox input[type="checkbox"] + span {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -151,7 +152,7 @@ $lightseagreen: lightseagreen;
   position: relative;
   font-size: 13px;
 }
-.fancy-checkbox input[type='checkbox'] + span:before {
+.fancy-checkbox input[type="checkbox"] + span:before {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -162,12 +163,12 @@ $lightseagreen: lightseagreen;
   width: 18px;
   height: 18px;
   margin-right: 5px;
-  content: '';
+  content: "";
   border: 1px solid #ccc;
 }
-.fancy-checkbox input[type='checkbox']:checked + span:before {
+.fancy-checkbox input[type="checkbox"]:checked + span:before {
   font-family: FontAwesome;
-  content: '\f00c';
+  content: "\f00c";
   font-size: 12px;
   color: #99a1a7;
   text-align: center;
@@ -175,11 +176,15 @@ $lightseagreen: lightseagreen;
   background: #ededed;
   border: 1px solid #ccc;
 }
-.fancy-checkbox.custom-color-green input[type='checkbox']:checked + span:before {
+.fancy-checkbox.custom-color-green
+  input[type="checkbox"]:checked
+  + span:before {
   color: #53d76a;
   background-color: #fff;
 }
-.fancy-checkbox.custom-bgcolor-green input[type='checkbox']:checked + span:before {
+.fancy-checkbox.custom-bgcolor-green
+  input[type="checkbox"]:checked
+  + span:before {
   color: #fff;
   background-color: #53d76a;
   border-color: #32cf4d;
@@ -383,7 +388,7 @@ $lightseagreen: lightseagreen;
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
-  content: '';
+  content: "";
   width: 8px;
   height: 8px;
   margin-right: 3px;
@@ -400,7 +405,7 @@ $lightseagreen: lightseagreen;
   position: relative;
 }
 .profile-header .profile-stat .stat-item:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
@@ -501,7 +506,7 @@ ul.activity-timeline > li .timestamp {
   color: #a3a3a3;
 }
 ul.activity-timeline > li:after {
-  content: '';
+  content: "";
   display: block;
   border-left: 1px solid #eaeaea;
   width: 1px;
