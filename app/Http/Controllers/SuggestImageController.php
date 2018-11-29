@@ -10,16 +10,17 @@ class SuggestImageController extends Controller
 {
     public function search($q) {
         if(isset($q) || $q != '') {
-            $result = SuggestImage::where('q', 'like', '%'.$q.'%')->get();
+            $result = SuggestImage::where('q', 'like', '%'.$q.'%')->limit(15)->get();
             if(count($result) < 5) {
-                include(app_path() . '/Http/HtmlDomParser.php');
-                $url = 'https://www.bing.com/images/async?q='.$q.'&first=&count=35&relp=35&scenario=ImageBasic&datsrc=N_I&layout=RowBased&mmasync=1&dgState=x*0_y*0_h*0_c*4_i*106_r*21&IG=73D606F821F348A1A73B7D0AABEE00BC&SFX=4&iid=images.5653';
-                $html = file_get_html($url);
+                $ch = curl_init();
+                $url = 'https://www.bing.com/images/async?q='.$q.'&first=2&count=15&relp=15&cw=1351&ch=150&scenario=ImageBasic&datsrc=N_I&layout=RowBased&mmasync=1&dgState=x*0_y*0_h*0_c*5_i*36_r*7&IG=32306E87D43A4486B5CE81DC981EC1E4&SFX=2&iid=images.5653';
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                $html = curl_exec($ch);
+                curl_close($ch);
+                preg_match_all('/<img class="mimg"(.*?)src="(.*?)" ?(.*?)>/', $html, $matches);
 
-                $arr = array();
-                foreach($html->find('img') as $element) {
-                    $arr[] = $element->src;
-                }
+                $arr = $matches[2];
 
                 if(count($arr) < 5) {
                     $coll = Vocabulary::where('en', 'like', '%'.$q.'%')->where('image', '!=', null)->get();
@@ -38,11 +39,11 @@ class SuggestImageController extends Controller
                         $suggestImage->save();
                     }
                 }
-                $result = SuggestImage::where('q', 'like', '%'.$q.'%')->get();
+                $result = SuggestImage::where('q', 'like', '%'.$q.'%')->limit(15)->get();
             }
             return $result;
         } else {
-            return SuggestImage::take(25)->get();
+            return SuggestImage::take(15)->get();
         }
     }
     /**
@@ -52,7 +53,7 @@ class SuggestImageController extends Controller
      */
     public function index()
     {
-        return SuggestImage::take(25)->get();
+        return SuggestImage::take(15)->get();
     }
 
     /**

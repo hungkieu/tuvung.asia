@@ -99,6 +99,19 @@
             <SuggestImage :q="vocabulary.en" @selectImage="select($event)"></SuggestImage>
           </div>
         </div>
+        <div class="uk-margin">
+         <button @click="send" class="uk-button uk-button-primary sosd-color-white">Thêm từ mới</button>
+        </div>
+      </form>
+    </div>
+    <div class="uk-width-2-3">
+      <h3>
+        Hình ảnh gợi ý
+      </h3>
+      <hr>
+
+      <div>
+        <SuggestImage :q='q' @selectImage='select($event)'></SuggestImage>
       </div>
     </div>
   </div>
@@ -125,6 +138,7 @@ export default {
         vi: true,
         type: true
       },
+      q: '',
       type: [
         {
           name: "Danh từ",
@@ -157,7 +171,6 @@ export default {
         type: [],
         parent_id: 0
       },
-      searches: []
     };
   },
   watch: {
@@ -178,6 +191,18 @@ export default {
         this.error = false;
         this.success = false;
       }
+    },
+    vocabulary_en() {
+      var timeout = null;
+      clearTimeout(timeout);
+      setTimeout(() => {
+        this.q = this.vocabulary_en;
+      }, 1500);
+    }
+  },
+  computed: {
+    vocabulary_en() {
+      return this.vocabulary.en;
     }
   },
   mounted() {
