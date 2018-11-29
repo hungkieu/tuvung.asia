@@ -130,7 +130,7 @@ export default {
           app.users = res.data;
         })
         .catch(res => {
-          alert('khong load duoc');
+          flash("Không load được dữ liệu", "error");
         });
     },
     getCategory() {

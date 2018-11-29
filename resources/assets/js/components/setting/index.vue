@@ -1,26 +1,45 @@
 <template>
-<div class="setting">
-<div class="uk-container">
-  <div class="row">
-      <div class="col-3">
+  <div class="setting">
+    <div class="uk-container">
+      <div class="row">
+        <div class="col-3">
           <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
             <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                <li><router-link to='/setting/account'><img src="/svg/user.svg"/>Tài khoản</router-link></li>
-                <li><router-link to='/setting/photos'><img src="/svg/image.svg"/>Ảnh</router-link></li>
-                <li><router-link to='/setting/profile'><img src="/svg/pass.svg"/>Hồ sơ</router-link></li>
-                <!-- <li><router-link to='/setting/notifications'><img src="/svg/bell.svg"/>Thông báo</router-link></li> -->
-                <li><router-link to='/setting/reminder'><img src="/svg/notebook1.svg"/>Kế hoạch học tập</router-link></li>
-                <li><router-link to='/setting/study-goal'><img src="/svg/radar.svg"/>Mục tiêu học tập</router-link></li>
+              <li>
+                <router-link to="/setting/account">
+                  <img src="/svg/user.svg">Tài khoản
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/setting/photos">
+                  <img src="/svg/image.svg">Ảnh
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/setting/profile">
+                  <img src="/svg/pass.svg">Hồ sơ
+                </router-link>
+              </li>
+              <!-- <li><router-link to='/setting/notifications'><img src="/svg/bell.svg"/>Thông báo</router-link></li> -->
+              <li>
+                <router-link to="/setting/reminder">
+                  <img src="/svg/notebook1.svg">Thời gian học tập
+                </router-link>
+              </li>
+              <li>
+                <router-link to="/setting/study-goal">
+                  <img src="/svg/radar.svg">Mục tiêu học tập
+                </router-link>
+              </li>
             </ul>
+          </div>
+        </div>
+        <div class="col-8 uk-animation-slide-bottom">
+          <router-view></router-view>
         </div>
       </div>
-      <div class="col-8 uk-animation-slide-bottom">
-          <router-view></router-view>
-      </div>
+    </div>
   </div>
-</div>
-
-</div>
 </template>
 <script>
 export default {};

@@ -8,7 +8,6 @@ use App\User;
 use App\HistoryScore;
 use Illuminate\Support\Facades\Auth;
 
-
 class VocabulariesController extends Controller
 {
     public function create(Request $request)
@@ -48,6 +47,7 @@ class VocabulariesController extends Controller
             if ($vocab->save()) {
                 $user = User::find(Auth::user()->id);
                 $user->score = $user->score + 50;
+                $user->vocabulary_total = $user->vocabulary_total + 1;
                 $target_score = $user->target_score;
                 $user->save();
 
@@ -72,7 +72,7 @@ class VocabulariesController extends Controller
         }
     }
 
-       public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $vocab = Vocabulary::find($id);
         $vocab->en = $request->en;

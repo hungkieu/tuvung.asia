@@ -1,7 +1,7 @@
 <template>
   <div class="reminder uk-card-default">
     <form>
-      <h6 class="py-2">Thời gian học tập</h6>
+      <h4 class="heading mb-3">Thời gian học tập</h4>
       <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
         <span v-for="item in week" :key="item.key">
           <input class="uk-checkbox" type="checkbox" name="days" v-model="plan.weekday" :value="item.key"> {{item.name}}
@@ -98,9 +98,13 @@
       }
     }
   }
+};
 </script>
 <style lang="scss" scoped>
-  .reminder {
-    padding: 20px;
+.reminder {
+  padding: 30px 50px 50px;
+  .heading {
+    color: black;
   }
+}
 </style>
