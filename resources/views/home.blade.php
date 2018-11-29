@@ -48,6 +48,14 @@
           </router-link>
         </li>
         <li class="uk-nav-divider"></li>
+        @if(Auth::user()->role == 1)
+        <li uk-toggle="target: #offcanvas-menu">
+          <a href="/admin" class="sosd-hover-primary">
+            <span class="uk-margin-small-right" uk-icon="icon: lock"></span> Tính năng quản trị
+          </a>
+        </li>
+        <li class="uk-nav-divider"></li>
+        @endif
         <li uk-toggle="target: #offcanvas-menu">
           <form action="/logout" method="post">
             {{ csrf_field() }}

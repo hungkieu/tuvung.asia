@@ -21,20 +21,20 @@
         </ul>
       </div>
       <div class="uk-navbar-right uk-margin-right ">
-          <router-link to="/">
-            <span style="color: black">
-             Trang chủ
-            </span>
-          </router-link>
-          <hr style="width: 1px; height: 15px; background: #292b2c; margin: 0 10px " />
-          <form action="/logout" method="post">
-            {{ csrf_field() }}
-            <label for="logout" class="uk-text-emphasis mb-0" style="cursor: pointer">
-            {{-- <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>  --}}
-            Đăng xuất
-            </label>
-            <input type="submit" class="sosd-none" name="logot" id="logout">
-          </form>
+        <a href="/">
+          <span style="color: black">
+           Trang chủ
+         </span>
+       </a>
+       <hr style="width: 1px; height: 15px; background: #292b2c; margin: 0 10px " />
+       <form action="/logout" method="post">
+        {{ csrf_field() }}
+        <label for="logout" class="uk-text-emphasis mb-0" style="cursor: pointer">
+          {{-- <span class="uk-margin-small-right" uk-icon="icon: sign-out"></span>  --}}
+          Đăng xuất
+        </label>
+        <input type="submit" class="sosd-none" name="logot" id="logout">
+      </form>
       </div>
     </nav>
 

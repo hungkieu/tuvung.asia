@@ -42,7 +42,7 @@
                   id="search"
                   name="search"
                   type="text"
-                  placeholder="What're we looking for ?"
+                  placeholder="Từ bạn cần tìm?"
                 >
               </transition>
             </div>

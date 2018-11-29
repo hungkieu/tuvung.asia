@@ -29,7 +29,8 @@ import indexDashboard from './components/admin/dashboard/index';
 const routes = [
   {
     path: '/admin',
-    component: index
+    component: index,
+    redirect: '/admin/dashboard',
   },
   // {
   //   path: '/admin/structure_sentences/new',
