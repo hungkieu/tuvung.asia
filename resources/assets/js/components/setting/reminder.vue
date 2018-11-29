@@ -1,7 +1,7 @@
 <template>
   <div class="reminder uk-card-default">
     <form>
-      <h4 class="heading mb-3">Thời gian học tập</h4>
+      <h6 class="py-2">Thời gian học tập</h6>
       <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
         <span v-for="item in week" :key="item.key">
           <input class="uk-checkbox" type="checkbox" name="days" v-model="plan.weekday" :value="item.key"> {{item.name}}
@@ -51,7 +51,7 @@
             key:4
           },
           {
-            id: 'friday	',
+            id: 'friday ',
             name: 'Thứ 6',
             status: false,
             key:5
@@ -84,7 +84,6 @@
           })
           .catch()
       },
-
       save_plan(e) {
         var app = this;
         e.preventDefault();
@@ -98,13 +97,9 @@
       }
     }
   }
-};
 </script>
 <style lang="scss" scoped>
-.reminder {
-  padding: 30px 50px 50px;
-  .heading {
-    color: black;
+  .reminder {
+    padding: 20px;
   }
-}
 </style>

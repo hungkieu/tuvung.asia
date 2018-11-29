@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
             $table->integer('score')->default(0);
             $table->datetime('last_login')->nullable();
             $table->boolean('is_newbie')->default(true);
+            $table->integer('vocabulary_total')->default(0);
+            $table->integer('grammar_total')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

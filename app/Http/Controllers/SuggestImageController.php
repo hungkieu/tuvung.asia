@@ -43,7 +43,7 @@ class SuggestImageController extends Controller
             }
             return $result;
         } else {
-            return SuggestImage::take(15)->get();
+            return SuggestImage::take(15)->orderBy('created_at', 'desc')->get();
         }
     }
     /**
@@ -53,7 +53,7 @@ class SuggestImageController extends Controller
      */
     public function index()
     {
-        return SuggestImage::take(15)->get();
+        return SuggestImage::take(15)->orderBy('created_at', 'desc')->get();
     }
 
     /**

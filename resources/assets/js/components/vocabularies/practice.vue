@@ -137,7 +137,7 @@
         if(this.watch_key)
           if([1, 2, 3, 4].includes(+this.key) && quest.answer == false)
             this.answer(this.exam.step, quest.choices[this.key - 1].id)
-          else if (this.key == "Enter")
+          if (this.key == "Enter" && quest.answer)
             this.next_step()
         this.watch_key = false;
         this.key = 0;
@@ -149,6 +149,7 @@
         if(o == true)
           $(window).on('keypress', function(event) {
             app.watch_key = true;
+            console.log(event);
             app.key = event.key;
           })
         else
