@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use DB;
+use App\Jobs\SendReminderEmail;
+use Carbon\Carbon;
 
 class GuestController extends Controller
 {
@@ -22,14 +25,5 @@ class GuestController extends Controller
     // foreach ($matches[2] as $key => $value) {
     //   echo $value.'</br>';
     // }
-
-    $ch = curl_init();
-    $url = 'https://fptshop.com.vn/may-tinh-xach-tay/dell-xps15-i7-8750h';
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    $html = curl_exec($ch);
-    curl_close($ch);
-    preg_match_all('/<ul class="fs-dttsktul"(.*?)>((.|\n)*?)<\/ul>/', $html, $matches);
-    print_r($matches);
   }
 }

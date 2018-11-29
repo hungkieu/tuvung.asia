@@ -4,13 +4,14 @@ Auth::routes();
 
 Route::post('/vocabularies', 'VocabulariesController@create');
 Route::post('/vocabularies/practice', 'VocabulariesController@practice');
-
 Route::post('/vocabularies/{id}/edit', 'VocabulariesController@update');
 Route::delete('/vocabularies', 'VocabulariesController@destroy');
+
 Route::post('/users/update/{id}', 'UserProfileController@update');
 Route::get('/users/{id}', 'UserProfileController@show');
 
 Route::get('/ngu-phap-tieng-anh', 'StructureSentencesController@index');
+
 Route::post('/grammars/create', 'UserGrammarsController@create');
 Route::post('/grammars/update/{id}', 'UserGrammarsController@update');
 Route::delete('/grammars/{id}', 'UserGrammarsController@destroy');
@@ -23,6 +24,7 @@ Route::post('/password/reset');
 Route::post('/setting/plan', 'UserProfileController@edit_target_score');
 
 Route::post('/setting/reminder', 'TrainingPlanController@create');
+Route::get('/c/training_plans/{id}', 'TrainingPlanController@show');
 
 Route::get('/c/suggest-images/', 'SuggestImageController@index');
 Route::get('/c/suggest-images/{q}', 'SuggestImageController@search');

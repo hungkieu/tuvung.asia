@@ -1,7 +1,7 @@
 <template>
 <div>
   <div uk-grid="mansonry: true" v-if="images.length > 0" class="body">
-    <div class="sosd_images uk-animation-slide-bottom" v-for="v in shuffleImages.slice(0, 10)">
+    <div class="sosd_images uk-animation-slide-bottom" v-for="v in shuffleImages">
       <img :src="v.url" width="200px" uk-tooltip="chọn" class="" @click="select(v.url)">
     </div>
   </div>

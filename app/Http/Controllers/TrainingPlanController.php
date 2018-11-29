@@ -9,18 +9,20 @@ use App\User;
 class TrainingPlanController extends Controller
 {
     //
-    public function create(Request $request) {
-        $plan = new TrainingPlan;
-        $plan->user_id = $request->user_id;
-        $plan->weekday = implode("," , $request->weekday);
-        $plan->time = $request->time;
-       
-    
-        if ($plan->save()) {
-            return response('create success', 200);
-        } else {
-            return response('create failed', 400);
-        }
-        
-      }
+  public function create(Request $request) {
+    $plan = TrainingPlan::firstOrNew(['user_id' => $request->user_id]);
+    $plan->user_id = $request->user_id;
+    $plan->weekday = json_encode($request->weekday);
+    $plan->time = $request->time;
+
+    $plan->save();
+    return $plan;
+  }
+
+  public function show($id) {
+    $plan = TrainingPlan::where('user_id', $id)->first();
+    if($plan) return $plan;
+    return array("weekday" => json_encode(array()),"time" => "21:00", "user_id" => $id);
+  }
+
 }
