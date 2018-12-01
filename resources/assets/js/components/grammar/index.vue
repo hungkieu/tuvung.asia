@@ -25,7 +25,7 @@
       </div>
       <div uk-grid>
         <div class="uk-width-3-4">
-          <div class="w-75 px-0 d-inline-block">
+          <div class="w-100 px-0 d-inline-block">
             <div class="suggest uk-width-1-1">
               <p v-if="this.$route.params.id != undefined">
                 <router-link :to="{name: 'indexGrammar'}">Quay lại luyện tập</router-link>
@@ -37,13 +37,10 @@
               <p>Cấu trúc ngữ pháp</p>
               <h5
                 class="text-center"
-              >{{ listCategory ? listCategory.find(e => (e.id == showGrammar.category_id).name ) : ''}}</h5>
-              <h5 class="text-center">
+              >{{ listCategory ? listCategory.find(e => (e.id == showGrammar.category_id)).name : '122'}}</h5>
+              <h4 class="text-center">
                 <b>{{showGrammar ? showGrammar.structure : '' }}</b>
-              </h5>
-              <!-- <select v-model="showGrammar.structure" class="uk-select mb-3">
-                  <option v-for="g in grammars">{{g.structure}}</option>
-              </select>-->
+              </h4>
               <p class="mb-1">Mô tả</p>
               <pre style="background: transparent; border: none;">{{showGrammar ? showGrammar.description : ''}}</pre>
             </div>
@@ -273,7 +270,7 @@ export default {
 }
 .grammars {
   background: url("/images/bg9.jpg");
-  background-position: right bottom;
+  background-position: center bottom;
   background-size: cover;
   min-height: 85vh;
   input,
