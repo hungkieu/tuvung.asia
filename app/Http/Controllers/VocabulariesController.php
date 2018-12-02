@@ -62,7 +62,6 @@ class VocabulariesController extends Controller
                     $hs->streak = true;
                 }
                 $hs->save();
-
                 return response($vocab, 200);
             } else {
                 return response('create failed', 400);

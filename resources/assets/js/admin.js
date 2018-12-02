@@ -22,6 +22,8 @@ import index from './components/admin/index';
 import indexUsers from './components/admin/users/index';
 import profile from './components/admin/users/profile';
 import indexVocabularies from './components/admin/vocabularies/index';
+import editVocabularies from './components/admin/vocabularies/edit';
+import indexGrammar from './components/admin/grammar/index';
 import indexStructure from './components/admin/structure-grammar/index';
 import newStructure from './components/admin/structure-grammar/new-structure';
 import indexCategoryStructure from './components/admin/structure-grammar/index-category-structure';
@@ -52,7 +54,16 @@ const routes = [
     component: indexVocabularies,
     name: 'admin_vocabularies'
   },
-
+  {
+    path: '/admin/vocabularies/:id/edit',
+    component: editVocabularies,
+    name: 'admin_vocabularies_edit'
+  },
+  {
+    path: '/admin/grammar',
+    component: indexGrammar,
+    name: 'indexGrammar'
+  },
   {
     path: '/admin/structure-grammars',
     component: indexStructure,

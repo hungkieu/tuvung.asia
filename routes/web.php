@@ -1,6 +1,8 @@
 <?php
 
 Auth::routes();
+Route::post('/admin/vocabularies/{id}/edit', 'vocabulariesController@update');
+
 
 Route::post('/vocabularies', 'VocabulariesController@create');
 Route::post('/vocabularies/practice', 'VocabulariesController@practice');
