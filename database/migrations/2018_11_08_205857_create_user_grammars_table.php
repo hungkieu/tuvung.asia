@@ -15,7 +15,7 @@ class CreateUserGrammarsTable extends Migration
     {
         Schema::create('user_grammars', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->text('name');
             $table->text('description')->nullable();
             $table->integer('category_id')->nullable();
             $table->text('structure_name')->nullable();

@@ -49,7 +49,6 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
-
 Route::get('/test', 'GuestController@test');
 Route::get('/admin/{any}', 'AdminController@index')->where('any', '.*');
 Route::get('/{any}', 'HomeController@index')->where('any', '.*');
