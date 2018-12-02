@@ -19,7 +19,11 @@ class vocabulariesController extends Controller
      */
     public function index($id)
     {
-        return Vocabulary::where('user_id', '=', $id)->get();
+        return Vocabulary::where('user_id', '=', $id)->orderBy('created_at', 'desc')->get();
+    }
+
+    public function dictionary($id) {
+        return Vocabulary::where('user_id', '=', $id)->orderBy('en', 'asc')->get();
     }
 
     public function all()
@@ -32,13 +36,9 @@ class vocabulariesController extends Controller
 
     public function search($en)
     {
-        // include(app_path() . '\Http\HtmlDomParser.php');
         if($en == 'all')
             return Vocabulary::where('image', '!=', null)->get();
         return Vocabulary::where('en', 'like', '%'.$en.'%')->where('image', '!=', null)->limit(10)->get();
-        // $url = 'https://www.bing.com/images/search?q='.$en;
-        // $html = file_get_contents($url);
-        // print_r($html);
     }
 
     public function pedigree($id)

@@ -1,6 +1,5 @@
 <template>
 <div>
-
   <div class="sosd_nav">
     <div class="uk-container">
       <router-link to="/">Trang chủ</router-link> <span uk-icon="icon: chevron-right; "></span>
@@ -20,30 +19,30 @@
         <input type="hidden" name="_token" :value="csrf_token">
         <input type="hidden" v-model="vocabulary.parent_id" name="parent_id">
         <div>
-          <label class="uk-form-label">Tiếng Anh</label>
+          <label class="uk-form-label bold">Tiếng Anh <span v-if="!validate.en">( <i class="uk-text-meta uk-text-warning">* Không được để trống </i> )</span></label>
           <div class="uk-form-controls">
-            <input class="uk-input" @change="search" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
+            <input class="uk-input" v-model="vocabulary.en" type="text" name="en" required id="en" tabindex="1">
           </div>
         </div>
 
         <div>
-          <label class="uk-form-label">Tiếng Việt</label>
+          <label class="uk-form-label bold">Tiếng Việt <span v-if="!validate.vi">( <i class="uk-text-meta uk-text-warning">* Không được để trống </i> )</span></label>
           <div class="uk-form-controls">
             <input class="uk-input" type="text" name="vi" v-model="vocabulary.vi" tabindex="2">
           </div>
         </div>
 
         <div>
-          <label class="uk-form-label">Loại từ</label>
+          <label class="uk-form-label bold">Loại từ <span v-if="!validate.type">( <i class="uk-text-meta uk-text-warning">* Bạn chưa chọn loại từ</i> )</span></label>
           <div class="uk-form-controls uk-column-1-3" >
-            <label v-for="t in type"> 
+            <label class="uk-form-label" v-for="t in type">
               <input :value="t.value" class="uk-checkbox" v-model="vocabulary.type" type="checkbox" name="type[]">
               {{t.name}}
             </label>
           </div>
         </div>
         <div>
-          <label class="uk-form-label">Hình ảnh</label>
+          <label class="uk-form-label bold">Hình ảnh</label>
           <div>
             <input type="file" id="file" name="image" style="display: none" @change="preview_image">
             <label for="file" class="preview_image" v-if="preview">
@@ -68,23 +67,8 @@
       </h3>
       <hr>
 
-      <div v-if="loading">
-        <Loading></Loading>
-      </div>
-
-      <div v-if="error">
-        <b>Vui lòng thử lại</b>
-      </div>
-
-      <div v-if="success">
-        <div uk-grid="mansonry: true" v-if="searches.length > 0">
-          <div class="sosd_images uk-animation-slide-bottom" v-for="v in searches" @click="select($event, v.image)">
-            <img :src="v.image" width="200px" class="">
-          </div>
-        </div>
-        <div v-else>
-          <b>Không có hỉnh ảnh phù hợp</b>
-        </div>
+      <div>
+        <SuggestImage :q='q' @selectImage='select($event)'></SuggestImage>
       </div>
     </div>
     </div>
@@ -93,11 +77,10 @@
 </template>
 
 <script>
-import Loading from './../shared/loading';
-
+import SuggestImage from './SuggestImage';
 export default {
   components: {
-    Loading: Loading
+    SuggestImage,
   },
   data: function() {
     return {
@@ -108,6 +91,12 @@ export default {
       preview: false,
       preview_image_vl: '',
       import_image: false,
+      validate: {
+        en: true,
+        vi: true,
+        type: true,
+      },
+      q: '',
       type: [
         {
           name: 'Danh từ',
@@ -140,7 +129,6 @@ export default {
         type: [],
         parent_id: 0
       },
-      searches: []
     };
   },
   watch: {
@@ -161,24 +149,31 @@ export default {
         this.error = false;
         this.success = false;
       }
+    },
+    vocabulary_en() {
+      var timeout = null;
+      clearTimeout(timeout);
+      setTimeout(() => {
+        this.q = this.vocabulary_en;
+      }, 1500);
+    }
+  },
+  computed: {
+    vocabulary_en() {
+      return this.vocabulary.en;
     }
   },
   mounted() {
     var app = this;
-
-    this.search();
-
     if (this.$route.params.id) {
       this.vocabulary.parent_id = this.$route.params.id;
     }
     this.csrf_token = Laravel.csrf_token;
-
     jQuery.extend(jQuery.expr[':'], {
       focusable: function(el, index, selector) {
         return $(el).is('a, button, :input, [tabindex]');
       }
     });
-
     $(document).on('keypress', 'input,select', function(e) {
       if (e.which == 13) {
         e.preventDefault();
@@ -189,36 +184,13 @@ export default {
       }
     });
   },
-
   methods: {
-    search() {
-      var app = this;
-      app.loading = true;
-      var en = app.vocabulary.en;
-      var url = '/api/v1/vocabularies/search/all';
-      if (en != '') url = '/api/v1/vocabularies/search/' + en;
-      axios
-        .get(url)
-        .then(res => {
-          setTimeout(function() {
-            app.searches = res.data;
-            app.success = true;
-          }, 500);
-        })
-        .catch(res => {
-          setTimeout(function() {
-            app.error = true;
-          }, 500);
-        });
-    },
-
     send(e) {
       var app = this;
       e.preventDefault();
       var f = document.getElementById('form_create_vocab');
       var formData = new FormData(f);
-      let input_en = document.getElementById('en');
-      if (input_en.value != '') {
+      if (app.validated()) {
         axios
           .post('/vocabularies', formData, {
             headers: {
@@ -226,25 +198,38 @@ export default {
             }
           })
           .then(function(res) {
-            console.log(res);
+            flash('Thêm từ mới thành công', 'success');
             if(res.data.parent_id != 0){
               app.$router.push('/vocabularies/' + res.data.parent_id);
             } else if (res.data.parent_id == 0 ) {
               app.$router.push('/vocabularies/' + res.data.id);
             } else {
               app.$router.push('/vocabularies');
-            } 
+            }
             f.reset();
           })
           .catch(function(res) {
-            console.log(res);
-            alert('Them khong thanh cong, vui long thu lai');
+            flash('Them khong thanh cong, vui long thu lai', 'error');
           });
       } else {
-        alert('Bạn phải nhập từ tiếng Anh');
+        flash('Bạn chưa nhập đúng trường dữ liệu', 'error');
       }
     },
-
+    validated() {
+      if(this.vocabulary.en.trim().length == 0)
+        this.validate.en = false;
+      else
+        this.validate.en = true;
+      if(this.vocabulary.vi.trim().length == 0)
+        this.validate.vi = false;
+      else
+        this.validate.vi = true;
+      if(this.vocabulary.type.length == 0)
+        this.validate.type = false;
+      else
+        this.validate.type = true;
+      return Object.values(this.validate).every(val => val == true);
+    },
     preview_image(e) {
       var files = e.target.files;
       if (files && files[0]) {
@@ -258,8 +243,7 @@ export default {
         this.import_image = false;
       }
     },
-
-    select(e, url) {
+    select(url) {
       this.preview = true;
       this.preview_image_vl = url;
       this.import_image = true;
@@ -269,6 +253,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.uk-form-label {
+  margin-top: 5px;
+}
+.bold {
+  font-weight: bold
+}
 .sosd_nav {
   box-sizing: border-box;
   background: rgb(247, 247, 247);

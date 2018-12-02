@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavouriteVocabulariesTable extends Migration
+class CreateSuggestImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateFavouriteVocabulariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favourite_vocabularies', function (Blueprint $table) {
+        Schema::create('suggest_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vocabulary_id');
-            $table->integer('user_id');
+            $table->string('q', 191)->nullable();
+            $table->string('url', 191)->nullable();
+
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateFavouriteVocabulariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favourite_vocabularies');
+        Schema::dropIfExists('suggest_images');
     }
 }

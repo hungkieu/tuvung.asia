@@ -5,16 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Laravel</title>
+  <link rel="shortcut icon" type="image/png" href="/images/fav.png"/>
+  <title> Đăng ký</title>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/welcome.css') }}">
 </head>
 <body>
-	<header class="header header-add">
+	<header class="header">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class=" col-3 float-left">
-					<a href="/"><h5 class="header-title">Mèo Ú</h5></a>
+					<a href="/"><img src="{{ asset('images/logo.png') }}" width="256" alt=""></a>
 				</div>
 				<div class=" col-3 float-right">
 					@guest
@@ -36,7 +37,7 @@
 		</div>
 	</header>
 
-	<div class="contact"  id="register" style="background-image: url('{{asset('images/bg2.jpg')}}')">
+	<div class="contact" id="register">
 
 		<div class="container">
 			<div class="row justify-content-center">

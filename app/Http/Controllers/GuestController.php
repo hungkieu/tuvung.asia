@@ -8,16 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use DB;
+use App\Jobs\SendReminderEmail;
+use Carbon\Carbon;
 
 class GuestController extends Controller
 {
-  public function register(Request $request) {
-    $user = User::findOrFail(Auth::user()->id);
-    $user->fill($request->all());
-    $user->role = 1;
-    $user->password = bcrypt($request->password);
-    $user->save();
-    Auth::logout();
-    return redirect()->route('login');
+  public function test() {
+    // $ch = curl_init();
+    // $url = 'https://www.bing.com/images/async?q=dog&first=1&count=5&relp=5&scenario=ImageBasic&datsrc=N_I&layout=RowBased&mmasync=1&dgState=x*0_y*0_h*0_c*4_i*106_r*21&IG=73D606F821F348A1A73B7D0AABEE00BC&SFX=4&iid=images.5653';
+    // curl_setopt($ch, CURLOPT_URL, $url);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    // $html = curl_exec($ch);
+    // curl_close($ch);
+    // preg_match_all('/<img class="mimg"(.*?)src="(.*?)" ?(.*?)>/', $html, $matches);
+    // foreach ($matches[2] as $key => $value) {
+    //   echo $value.'</br>';
+    // }
   }
 }

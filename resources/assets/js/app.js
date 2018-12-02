@@ -3,6 +3,15 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 window.Vue.use(VueRouter);
 
+import VueToastr2 from 'vue-toastr-2'
+import 'vue-toastr-2/dist/vue-toastr-2.min.css'
+
+window.toastr = require('toastr')
+
+Vue.use(VueToastr2)
+
+
+import flash from './components/shared/flash';
 import index from './components/home/index';
 import vocabularies from './components/vocabularies/index';
 import newVocab from './components/vocabularies/new';
@@ -30,6 +39,7 @@ const routes = [
   {
     path: '/vocabularies',
     component: vocabularies,
+    name: 'indexVocab',
     children: []
   },
   {
@@ -60,7 +70,7 @@ const routes = [
   {
     path: '/vocabularies/practice',
     name: 'practiceVocab',
-    component: practice,
+    component: practice
   },
   {
     path: '/vocabularies/:id',
@@ -134,4 +144,14 @@ const router = new VueRouter({
   routes
 });
 
-const app = new Vue({ router }).$mount('#app');
+window.notify = new Vue();
+window.flash = function(message, status, title = '') {
+  window.notify.$emit('flash', {message, status, title});
+}
+
+const app = new Vue({
+  router,
+  components: {
+    Flash: flash
+  }
+}).$mount('#app');

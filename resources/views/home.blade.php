@@ -1,29 +1,29 @@
 @extends('layouts.app')
-@section('title', 'Mèo ham học')
+@section('title', 'Học tiếng anh')
 @section('css')
 <link href="{{ asset('css/uikit.css') }}" rel="stylesheet">
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 @endsection
 @section('content')
 <div id="app" style="overflow: hidden;">
-
+  <Flash></Flash>
   <!-- Navbar -->
 
   <div class="sosd-background-primary">
-    <div class="row p-3">
-      <div class="col-6 d-flex align-items-center">
-        <router-link to="/"class="sosd-a">
-          <b class="sosd-color-white" style="font-size: 16px;">
-            TuVung.Asia
-          </b>
-        </router-link>
-      </div>
+    <div class="container-fluid">
+      <div class="row p-2">
+        <div class="col-6 d-flex align-items-center">
+          <router-link to="/"class="sosd-a">
+            <img src="{{ asset('images/logo.png') }}" width="196" alt="">
+          </router-link>
+        </div>
 
 
-      <div class="col-6 justify-content-end d-flex align-items-center">
-        <a class="sosd-color-white" uk-toggle="target: #offcanvas-menu">
-          <span uk-icon="icon: menu; ratio: 1.2"></span>
-        </a>
+        <div class="col-6 justify-content-end d-flex align-items-center">
+          <a class="sosd-color-white" uk-toggle="target: #offcanvas-menu">
+            <span uk-icon="icon: menu; ratio: 1.2"></span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -37,17 +37,25 @@
               <img src= "{{ Auth::user()->avatar }}" class="rounded-circle" style="width: 90px; height: 90px; object-fit: cover"  />
               {{--  <h5 class="color-primary d-block m-3">{{ Auth::user()->name }}</h5>  --}}
             </li>
-        <li uk-toggle="target: #offcanvas-menu">
+        {{-- <li uk-toggle="target: #offcanvas-menu">
           <router-link to="/user-profile/{{ Auth::user()->id }}" class="sosd-hover-primary">
             <span class="uk-margin-small-right" uk-icon="icon: user"></span> Hồ sơ cá nhân
           </router-link>
-        </li>
+        </li> --}}
         <li uk-toggle="target: #offcanvas-menu">
           <router-link to="/setting/account" class="sosd-hover-primary">
             <span class="uk-margin-small-right" uk-icon="icon: cog"></span> Cài đặt
           </router-link>
         </li>
         <li class="uk-nav-divider"></li>
+        @if(Auth::user()->role == 1)
+        <li uk-toggle="target: #offcanvas-menu">
+          <a href="/admin" class="sosd-hover-primary">
+            <span class="uk-margin-small-right" uk-icon="icon: lock"></span> Tính năng quản trị
+          </a>
+        </li>
+        <li class="uk-nav-divider"></li>
+        @endif
         <li uk-toggle="target: #offcanvas-menu">
           <form action="/logout" method="post">
             {{ csrf_field() }}
@@ -73,8 +81,13 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/uikit.js') }}"></script>
-<script src="{{ asset('js/uikit-icon.js') }}"></script>
-<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
+<script src="{{ asset('js/uikit.js') }}" defer></script>
+<script src="{{ asset('js/uikit-icon.js') }}" defer></script>
+<script src="http://code.responsivevoice.org/responsivevoice.js" defer></script>
+<script>
+  @if(session('success'))
+    flash("{{session('success')}}", "success");
+  @endif
+</script>
 @endsection

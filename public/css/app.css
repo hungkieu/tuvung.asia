@@ -79,11 +79,34 @@ body {
           align-items: center;
   height: 40px;
   width: 100%;
-  background: #eeeeee;
+  color: white;
+  background: #042340;
 }
 
 #app footer a {
   text-indent: 5px;
+}
+
+nav a:hover {
+  text-decoration: none;
+}
+
+ul.uk-nav-default.uk-nav-parent-icon.uk-nav a {
+  padding: 15px !important;
+  font-size: 16px;
+  color: #000 !important;
+}
+
+ul.uk-nav-default.uk-nav-parent-icon.uk-nav a:hover {
+  font-weight: 500;
+  background: lightskyblue;
+  color: #fff !important;
+}
+
+ul.uk-nav-default.uk-nav-parent-icon.uk-nav .router-link-active {
+  font-weight: 500;
+  background: lightskyblue;
+  color: #fff !important;
 }
 
 /*!

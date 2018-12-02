@@ -22,6 +22,6 @@ class SocialAuthController extends Controller
     $user->save();
     auth()->login($user);
 
-    return redirect()->to('/');
+    return redirect()->to('/')->with('success', 'Đăng nhập thành công!');
   }
 }

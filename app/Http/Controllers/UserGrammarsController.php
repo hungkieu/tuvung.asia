@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use App\UserGrammars;
 use App\User;
 
@@ -29,10 +30,17 @@ class UserGrammarsController extends Controller
         $grammar = new UserGrammars;
         $grammar->name = $request->name;
         $grammar->description = $request->description;
+        $grammar->category_id = $request->category_id;
+        $grammar->structure_name = $request->structure_name;
+        $grammar->structure_description = $request->structure_description;
         $grammar->user_id = Auth::user()->id;
         
         if ($grammar->save()) {
-            return response('create success', 200);
+            $user = User::find(Auth::user()->id);
+            $user->score = $user->score + 10;
+            $user->grammar_total = $user->grammar_total + 1;
+            $user->save();
+            return response($grammar, 200);
         } else {
             return response('create failed', 400);
         }
@@ -82,8 +90,9 @@ class UserGrammarsController extends Controller
     {
         $gram = UserGrammars::find($id);
         $gram->name = $request->name;
-        $gram->description = $request->description;
-  
+        $gram->structure_name = $request->structure_name;
+        $gram->structure_description = $request->structure_description;
+       
         $gram->user_id = Auth::user()->id;
     
         if ($gram->save()) {

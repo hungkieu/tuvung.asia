@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificationsTable extends Migration
+class CreateHistoryScoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('history_scores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('image')->nullable();
-            $table->text('content')->nullable();
-            $table->string('link')->nullable();
-            $table->integer('status')->nullable();
+            $table->date('day')->nullable();
+            $table->integer('score')->default(0);
+            $table->boolean('streak')->default(false);
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('history_scores');
     }
 }
